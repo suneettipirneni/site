@@ -20,15 +20,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" style={{ fontFeatureSettings: "cv02, cv03, cv04, cv11" }}>
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"
+      ></link>
       <body
-        className={`${inter.className} dark:text-white text-black mx-auto h-screen flex flex-col items-center bg-[url('/background.png')] dark:bg-zinc-950 bg-150 bg-cover w-full pt-5 px-5`}
+        className={`${inter.className} dark:text-white bg-black text-black mx-auto h-screen flex flex-col items-center bg-[url('/background.png')] dark:bg-zinc-950 bg-150 bg-cover bg-fixed w-full pt-5 px-5`}
       >
         <Header
           tabs={[
             { name: "Home", href: "/", icon: <BsHouseFill /> },
             {
-              name: "About",
-              href: "about/",
+              name: "Blog",
+              href: "blog/",
               icon: <IoInformationCircleSharp />,
             },
             {
@@ -39,7 +43,7 @@ export default function RootLayout({
             { name: "Contact", href: "contact/", icon: <IoPersonSharp /> },
           ]}
         />
-        {children}
+        <div className="p-5 h-full w-full max-w-[900px]">{children}</div>
       </body>
     </html>
   );

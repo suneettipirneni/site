@@ -1,0 +1,160 @@
+---
+author: Suneet Tipirneni
+datetime: 2023-02-25T17:39:37.984Z
+title: "Haskell and Rust: A love story"
+slug: haskell-and-rust
+featured: true
+draft: false
+tags:
+  - language design
+  - haskell
+  - rust
+  - functional programming
+ogImage: "https://images.unsplash.com/photo-1533659124865-d6072dc035e1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1364&q=80"
+description: "Haskell and Rust are two languages that are very different, but they have a lot in common. In this post I go over how Haskell has influenced Rust and how Rust has influenced Haskell."
+---
+
+## Simon Says
+
+I recently watched a video about Simon Peyton's Jones take on Haskell. (In case you don't know Simon, he's a prolific scientist in the field of functional programming concepts) One thing from the video really struck me, it was the diagram created comparing safety/purity with utility.
+
+![Haskell vs Rust](/assets/usefulness-diagram.png "A diagram where the x-axis represents safety, and the y axis represents utility.")
+
+The video was recorded 11 years ago so the video quality isn't particularly great. However, Simon put C in the top left indicating it was an extremely useful, but unsafe language. He then put Haskell in the bottom right indicating it was a safe language, but not particularly useful.
+
+He then continues to explain that languages are trying to move towards the top right. Haskell would do this by moving up (increasing utility) and other languages would do this by moving right (increasing safety). Simon notes that many languages are moving right via "cross pollination" of ideas from and to Haskell. Despite this commentary being documented 11 years ago, it holds up very well today. However, it now seems we have a new contender for the top right, Rust.
+
+You can watch the full video [here](https://youtu.be/iSmkqocn0oQ)
+
+## Rust
+
+Rust is a systems programming language that is designed to be safe, fast, and concurrent. It is a language that is intended to be a replacement for C/C++. I'm sure you've heard terms like "blazing fast" and "memory safe" thrown around when talking about Rust. However, one aspect that is often overlooked is the design influence Rust has had. More specifically, the way purity-focused design choices of Haskell have influenced Rust.
+
+### Type Classes
+
+Typeclasses are the main mechanism for allowing ad-hoc polymorphism in haskell and it makes a _mostly complete_ return in rust. Typeclasses can be thought of as interfaces in other languages. They are however, more powerful. Rather than coupling interface implementation with a data declaration, typeclasses can be opted into after the fact. This allows for a more flexible and powerful design it also eliminates the need for upcasting and downcasting in most scenarios.
+
+The influence from haskell is extremely clear here. Let's take a look at some examples.
+
+#### Haskell
+
+```haskell
+class Driveable a where
+  drive :: a -> String
+
+data Car = Car
+
+instance Driveable Car where
+  drive _ = "Vroom vroom"
+```
+
+#### Rust
+
+```rust
+trait Driveable {
+  fn drive(&self) -> String;
+}
+
+struct Car;
+
+impl Driveable for Car {
+  fn drive(&self) -> String {
+    "Vroom vroom".to_string()
+  }
+}
+```
+
+Rust even has blanket implementations for typeclasses.
+
+```haskell
+instance Driveable a => Driveable (Maybe a) where
+  drive (Just a) = drive a
+  drive Nothing = "Nothing to drive"
+```
+
+#### Rust
+
+```rust
+impl<T: Driveable> Driveable for Option<T> {
+  fn drive(&self) -> String {
+    if let Some(a) = self {
+      return a.drive()
+    }
+
+    "Nothing to drive".to_string()
+  }
+}
+```
+
+### Monads
+
+Rust follows some of the ubiquitous monads found in haskell, for example `Option` is analogous to `Maybe` and `Result` is analogous to `Either`. But what's the point of using monads? Why not have manual null checks, and try-catch?. We use monads because they allow side-effects in a controlled manner. We can traverse data structures with chains of possibly missing data with confidence.
+
+#### `Option<T>`
+
+```rust
+struct D {
+  e: u32,
+}
+
+struct C {
+  d: Option<D>,
+}
+
+struct B {
+  c: Option<C>,
+}
+
+struct A {
+  b: Option<B>,
+}
+
+let x = A {
+  b: Some(B {
+    c: None,
+  }),
+};
+
+// Safely resolves to 0
+let y = x.b.and_then(|b| b.c).and_then(|c| c.d).and_then(|d| d.e).unwrap_or(0);
+```
+
+Even with the minefield of possibly missing values the `Option` monad gives us the safety we need to traverse the data structure.
+
+#### `Result<T, E>`
+
+`Result` in rust is an even more interesting case of haskell influence. Unlike `Option`, `Result`s have a syntactic sugar `?` for safely "unwrapping" the value. However upon closer inspection you may realize that `?` is just the monadic bind operator often used in haskell.
+
+#### Haskell
+
+```haskell
+newtype Error = Error String
+
+foo :: Either Error Int
+foo = do
+  x <- Right 5 -- <- is the bind operator
+  let y = 6 + x -- We can treat x as a normal `Int` due to the monadic bind
+  return y -- return is the wrapping method
+```
+
+#### Rust
+
+```rust
+struct Error(String);
+
+fn foo() -> Result<i32, Error> {
+    let x = Ok(5)?; // ? is the bind operator
+    let y = x + 6; // We can treat x as a normal `i32` due to the monadic bind
+    Ok(y) // `Ok` is the wrapping method
+}
+```
+
+It's crazy to see these comparisons, because rust in certain scenarios almost "borrows" the do blocks from haskell, and it does it in a way that feels at home for both imperative and functional programmers. It's also worth noting that the `?` operator is not the only way to unwrap a `Result`. You can also use the `match` expression. But for the sake of brevity rust programmers and haskell programmers have embraced syntactic sugar. Overall these monads shows how the "safe" paradigms of haskell have influenced rust.
+
+### Algebraic Data Types
+
+Algebraic data types are highly useful for modeling data. I'm not going to compare and contrast rust and haskell here, instead you can take a look at [my other blog post on sum types](/posts/beauty-of-sum-types#other-languages)
+
+## Conclusion - Rust: The intersection of Haskell and C/C++
+
+I am of the firm opinion that rust is the language that finally gives us the idealistic "top right" corner of Simon's diagram. However rust may be considered the first however it most likely won't be the last. The cross pollination of ideas between languages in completely different paradigms has benefited us all. In conclusion it's important to remind ourselves that no one language has all the answers, but we can learn from each other and build better languages.

@@ -1,0 +1,143 @@
+---
+author: Suneet Tipirneni
+datetime: 2023-01-27T16:29:54.746Z
+title: We have partial application at home
+slug: partial-application-at-home
+featured: true
+draft: false
+tags:
+  - functional programming
+  - rust
+ogImage: "https://images.unsplash.com/photo-1599509109467-abd5a84210c4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80"
+description: We're partially aware we're using partial application, but we don't know what it is. In this post I go over what partial application is various ways it can be emulated in rust.
+---
+
+## What is partial application?
+
+Partial application is a technique used in functional programming create a new function from an existing function where
+specific arguments are set. A classic example of this is the `bind` function in JavaScript. The function returns a new function given a
+the existing function and some arguments you would like to apply to it.
+
+```js title="add.js"
+function add(a, b) {
+  return a + b;
+}
+
+const addOne = add.bind(null, 1);
+
+addOne(2); // 3
+```
+
+As shown above, `bind` creates a new reusable function from `add` where the first argument to `add` is always `1`.
+
+## Why is this useful?
+
+Partially applied functions improve the usability and portabilty of functional code. By providing predefined arguments to a function,
+callers in other locations within your codebase have less arguments/dependencies to worry about. It also greatly simplifies function composition.
+Without partial application, the example above would have to be written as:
+
+```js title="add.js"
+function addOne(b) {
+  return add(1, b);
+}
+```
+
+This has the same end result, but has more boilerplate.
+
+## You've been using partial application this whole time
+
+If you're not familiar with functional programming then you're most likely familiar with OOP concepts like objects. In rust and in
+many other languages you can create objects(structs/classes) with constructors. A constructor is nothing more than a function to create
+and instance of an object.
+
+There's something special about these objects though, all of its instance methods have access to the instance-specific fields via an
+implicity provided `self` parameter. I'll show you what I'm getting at by emulating partial application via rust structs.
+
+```rust title="main.rs"
+fn add(a: i32, b: i32) -> i32 {
+  a + b
+}
+
+pub struct AddN(i32);
+
+impl AddN {
+  pub fn call(&self, b: i32) -> i32 {
+    add(self.0, b)
+  }
+}
+
+fn main() {
+  let add_one = AddN(1);
+  println!("{}", add_one.call(2)); // 3
+}
+
+```
+
+This is a form of partial application. The constructor is the function that is partially applied
+and the `self` parameter is the partially applied arguments. More specifically, our partially applied argument
+is `self.0`. Whenever `add_one` is called we don't need to provide a `self` argument to `call`, further proving
+this to be a roundabout way to do partial application.
+
+Another approach would be to use a closure:
+
+```rust title="main.rs"
+fn add(a: i32, b: i32) -> i32 {
+  a + b
+}
+
+fn main() {
+  let add_one = |b: i32| add(1, b);
+  println!("{}", add_one(2)); // 3
+}
+```
+
+This is much more ergonomic than the struct approach.
+
+Here's a spicy one using nightly rust:
+
+```rust title="main.rs"
+#![feature(unboxed_closures, fn_traits)]
+
+fn add(x: i32, y: i32) -> i32 {
+    return x + y
+}
+
+struct AddOne;
+
+impl FnMut<(i32,)> for AddOne {
+    extern "rust-call" fn call_mut(
+        &mut self,
+        args: (i32,)
+    ) -> i32 {
+        return 24;
+    }
+}
+
+impl FnOnce<(i32,)> for AddOne {
+    type Output = i32;
+    extern "rust-call" fn call_once(self, args: (i32,)) -> i32 {
+        add(1, args.0)
+    }
+}
+
+impl Fn<(i32,)> for AddOne {
+    extern "rust-call" fn call(&self, args: (i32,)) -> i32 {
+        add(1, args.0)
+    }
+}
+
+fn main() {
+    println!("{:?}", AddOne(3)) // 4
+}
+```
+
+There's a good amount of redundancy, because `FnOnce` and `FnMut` need to be implemented in order to implement `Fn`. But it's kinda cool because unlike the vanilla rust
+struct approach there's no indirection, you can call the struct as a function directly.
+
+## So what's the point?
+
+I think understanding how a feature can be _emulated_ in a language can help developers understand how it might be implemented under-the-hood.
+And as a result give a better understanding of limitations and behaviours of the feature. If languages like rust or java ever implement partial application
+it may just be compiled to an example shown above. In fact, you can see this in the wild with the [`partial_application` crate for rust](https://github.com/Emerentius/partial_application/blob/master/src/lib.rs), where it
+cleverly uses a macro to create a partially applied function by generating closures. Anyways partial application is cool but it's also something that's more
+ubiquitous than you might think. I hope this post helped you understand it a little better.

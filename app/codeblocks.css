@@ -1,0 +1,23 @@
+div[data-rehype-pretty-code-fragment] {
+  @apply rounded-lg;
+  @apply border border-gray-600;
+  @apply my-7;
+}
+
+div[data-rehype-pretty-code-fragment] pre {
+  @apply overflow-hidden;
+  @apply p-5;
+  @apply dark:bg-black/20;
+
+  @apply overflow-x-auto;
+}
+
+div[data-rehype-pretty-code-title] {
+  @apply text-sm;
+  @apply font-bold;
+  @apply text-gray-400;
+  @apply w-full;
+  @apply bg-gray-800;
+  @apply px-5 py-2;
+  @apply font-mono text-white;
+}

@@ -1,3 +1,4 @@
 @tailwind base;
+@import "./codeblocks.css";
 @tailwind components;
 @tailwind utilities;

@@ -1,0 +1,130 @@
+---
+author: Suneet Tipirneni
+datetime: 2023-02-02T15:52:55.052Z
+title: Lazy sequences
+slug: lazy-sequences
+featured: false
+draft: false
+tags:
+  - concepts
+ogImage: "https://images.unsplash.com/photo-1648443524209-d65b2930a743?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+description: Don't do more work unless you need to.
+---
+
+# Lazy Sequences
+
+Lazy sequences or lazily resolved sequences are highly useful for more situations than you might originally think. Before we talk about their benefits, we first
+need to explain what these lazy sequences are and how they work.
+
+# What is a lazy sequence?
+
+A lazy sequence can be succinctly described as a sequence of elements with an unknown length where each element only exists until you try to access it. The most
+common example of this in the wild are iterators. Let's compare a traditional array and an iterator:
+
+An a array is usually described as a block of continuous memory
+
+![alt text](/assets/array-diagram.png "A visual representation of continuous memory.")
+
+All of this memory is made available and you can access any index in $O(1)$ time
+using each memory block's address.
+
+Now let's visualize an iterator:
+
+![alt text](/assets/iterator-diagram.png "A visual representation of non-continuous memory via an iterator.")
+
+As shown above, an iterator simply returns values when calling its `next()` method. The value of each element isn't known until `next()` is called
+and the memory isn't contiguous like arrays. In other words, it's a lazy sequence. We only get elements when we request elements. As a side effect, you can't access
+indices because elements are built up over successive calls to `next()`. In addition, you won't always know the length of the sequence. This may cause you to question why
+you'd want to use these at all in the first place.
+
+# Why would we want to use these?
+
+## Memory Saving Measures
+
+### Case Study: HashMaps
+
+You may have noticed that across many different languages, hash map implementations always have an `entries()` method which returns an iterator of key-value pairs. Why
+do they return an iterator? The answer simply comes down to memory efficiency. HashMaps store two separated arrays of keys and values, having `entries()` return an
+array would require the hash map implementation to keep track of which values map to other values and to store the associations in another array. As a result you'd have doubled the memory footprint of the hashmap. In addition, if you end up updating an already existing value in the hashmap, you will incur a performance penalty because the
+entry array will also need to be updated.
+
+Converting `.entries()` to an iterator allows us to present hashmap entries in a sequence-like API, without the costs of using an array.
+
+## Deferred Computation/Execution
+
+Many REST API's offer a way to paginate results. It might be nice to present these paginated results in a sequence-like interface to the user of an API wrapper. Opting to use
+an array is quite problematic. The first issue with this is that you will likely hit a rate limit by paging too much at once. Assuming you don't hit a rate limit you'd be sending out a lot of requests that aren't initiated on the user's behalf. Instead you can use an async iterator to lazily return each page from the api. We can see how our library API could look in rust using the [nightly `async_iterators` feature](https://doc.rust-lang.org/stable/std/async_iter/trait.AsyncIterator.html):
+
+```rust
+while let Some(page) = page_iter.next().await {
+  // Do something with each page
+  ...
+}
+```
+
+## Infinite Sequences
+
+You can represent an array of infinite items. Iterators allow you to model infinite sequences like natural numbers and the fibonacci. This may not be a practical application
+for many people but it's kinda cool. I coded up a demo of [this in typescript](https://gist.github.com/suneettipirneni/1243e6beaae7d94c9935191fe81e9651) just for fun.
+
+# Consuming iterators
+
+## Imperative Usage
+
+Many languages can implicitly call on `.next()` iterable items with for loops. For example in js:
+
+```js
+for (const [key, value] of map.entries()) {
+  console.log(`${key} = ${value}`);
+}
+```
+
+You can actually forgo the `entries` method call since javascript will implicitly call `[Symbol.iterator]` on normal objects.
+
+Rust also has syntactic sugar for this, similiar to js you can avoid accessing the an iterator on an object directly by implementing `IntoIterator`
+
+```rust
+for (key, value) in map {
+  println!("{:?} = {:?}", key, value)
+}
+```
+
+## Declarative Usage
+
+In rust even when given an `Vec` you canonically use an iterator to operate on it's elements:
+
+```rust
+let numbers = vec![1, 2, 3, 4]
+let doubled = numbers
+  .iter()
+  .map(|e| e * 2)
+  .filter(|e| e < 3);
+
+println!("{:?}", doubled) // [4, 6, 8]
+```
+
+## Aside: I think iterators + functional operations are much better.
+
+An iterator here is actually more useful than using a functional operator that applies something to the whole vector immediately. You probably have noticed we
+call a `.filter` operation after a `map` operation. If we consumed the entire array for each operation we'd be doing an O(n) operation twice, one for mapping and
+one for filtering.
+
+In javascript the entire array is consumed when using functional operations on an array. So successive map calls end up being far more inefficient than a single map call:
+
+```js
+[1, 2, 3, 4, 5].map((e) => e * 2).map((e) => e + 3);
+
+[1, 2, 3, 4, 5].map((e) => e * 2 + 3);
+```
+
+The former code is theoretically twice as slow as the latter. While this particular example is contrived, it may be a performance footgun for some developers. In rust, this situation is mostly avoided by requiring an iterator to use functional operations.
+
+JavaScript is somewhat addressing these issues by introducing [iterator-helpers](https://github.com/tc39/proposal-iterator-helpers) into the official spec.
+
+## Conclusion
+
+Just like any other language feature lazy sequences like iterators are tools that are built for specific scenarios. Use iterators when any of the following applies to a sequence:
+
+- Each element of the sequence is expensive to compute.
+- One element relies on the previous element being computed.
+- You want to provide users with a sequence-like interface, but don't want to use memory in order to do so.
