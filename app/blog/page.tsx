@@ -6,7 +6,7 @@ export default function AboutPage() {
   const featuredPosts = allPosts.filter((post) => post.featured);
 
   return (
-    <div className="flex flex-col space-y-5 w-full">
+    <div className="flex flex-col space-y-5 w-full md:pb-10 pb-5">
       <Title>Featured</Title>
       {featuredPosts.map((entry) => (
         <BlogEntry key={entry.title} post={entry} />
