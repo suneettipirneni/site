@@ -30,6 +30,12 @@ You can watch the full video [here](https://youtu.be/iSmkqocn0oQ)
 
 Rust is a systems programming language that is designed to be safe, fast, and concurrent. It is a language that is intended to be a replacement for C/C++. I'm sure you've heard terms like "blazing fast" and "memory safe" thrown around when talking about Rust. However, one aspect that is often overlooked is the design influence Rust has had. More specifically, the way purity-focused design choices of Haskell have influenced Rust.
 
+<InfoBlock kind="info" title="All of Rust's Influences">
+  I don't cover all of the langauge influences for rust in this post. You can
+  find the official documented influences to rust
+  [here](https://doc.rust-lang.org/reference/influences.html).
+</InfoBlock>
+
 # Type Classes
 
 Typeclasses are the main mechanism for allowing ad-hoc polymorphism in haskell and it makes a _mostly complete_ return in rust. Typeclasses can be thought of as interfaces in other languages. They are however, more powerful. Rather than coupling interface implementation with a data declaration, typeclasses can be opted into after the fact. This allows for a more flexible and powerful design it also eliminates the need for upcasting and downcasting in most scenarios.
@@ -79,6 +85,18 @@ impl<T: Driveable> Driveable for Option<T> {
   }
 }
 ```
+
+<InfoBlock kind="info" title="Pattern Matching in Rust">
+  Rust has pattern matching like Haskell. In my example I use `if let ...` to pattern match on the `Option` type as it is the most concise for matching a specific case. However you can also use `match` to pattern match on multiple cases.
+
+```rust
+match self {
+  Some(a) => a.drive(),
+  None => "Nothing to drive".to_string(),
+}
+```
+
+</InfoBlock>
 
 # Monads
 

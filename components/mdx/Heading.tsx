@@ -1,5 +1,6 @@
 export interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   level: number;
+  className?: string;
 }
 
 const headingLevelMappings = {
@@ -20,7 +21,7 @@ const headingTextSizes = {
   6: "text-sm",
 };
 
-export function Heading({ level, ...props }: HeadingProps) {
+export function Heading({ level, className, ...props }: HeadingProps) {
   if (level > 6 || level < 1) {
     throw new Error(`Heading level ${level} is not supported.`);
   }
@@ -30,9 +31,10 @@ export function Heading({ level, ...props }: HeadingProps) {
 
   return (
     <HeadingComponent
+      // @ts-expect-error
       className={`font-bold ${
         headingTextSizes[level as keyof typeof headingTextSizes]
-      } mb-4 mt-7 flex flex-row items-center`}
+      } ${className}`}
       {...props}
     />
   );
