@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/Button";
-import { Heading } from "@/components/Heading";
+import { HeroText } from "@/components/HeroText";
 import { Profile } from "@/components/Profile";
 import { Subtitle } from "@/components/Subtitle";
 import { AiFillGithub } from "react-icons/ai";
@@ -27,9 +27,9 @@ export default function Home() {
   return (
     <div className="flex flex-col justify-center items-center h-full space-y-10">
       <Profile />
-      <Heading className="max-w-[600px] line-clamp-3 text-center">
+      <HeroText className="max-w-[600px] line-clamp-3 text-center">
         <Balancer>{"Hello! I'm Suneet and this is a website"}</Balancer>
-      </Heading>
+      </HeroText>
       <Subtitle className="max-w-[450px] text-center text-slate-500 dark:text-slate-500">
         <Balancer>
           {

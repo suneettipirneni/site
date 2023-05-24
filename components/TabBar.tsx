@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 const Link = motion(NextLink);
 
-export function Header({
+export function TabBar({
   tabs,
 }: {
   tabs: { name: string; href: string; icon?: ReactNode }[];

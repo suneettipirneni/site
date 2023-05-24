@@ -9,6 +9,8 @@ import { Plugin } from "unified";
 import { Node } from "unist-util-visit/lib";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import remarkGfm from "remark-gfm";
 
 export const Post = defineDocumentType(() => ({
   name: "Post",
@@ -60,7 +62,7 @@ const inlineCodePlugin: Plugin = () => {
   // in question has a direct text child.
 
   const inlineBlockStyle =
-    "p-1 bg-red-400 text-black dark:text-white dark:bg-gray-800 border border-gray-600 rounded-md";
+    "p-1 bg-white/50 text-black dark:text-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md";
 
   const inlineCodePredicate = (node: Node) => {
     if (node.type !== "element") {
@@ -109,6 +111,8 @@ export default makeSource({
       inlineCodePlugin,
       remarkMath,
       rehypeKatex,
+      [rehypeAutolinkHeadings, { behavior: "prepend" }],
+      remarkGfm,
     ],
   },
 });

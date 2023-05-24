@@ -3,7 +3,7 @@ author: Suneet Tipirneni
 datetime: 2023-02-25T17:39:37.984Z
 title: "Haskell and Rust: A love story"
 slug: haskell-and-rust
-featured: true
+featured: false
 draft: false
 tags:
   - language design
@@ -26,19 +26,17 @@ He then continues to explain that languages are trying to move towards the top r
 
 You can watch the full video [here](https://youtu.be/iSmkqocn0oQ)
 
-## Rust
+# Rust
 
 Rust is a systems programming language that is designed to be safe, fast, and concurrent. It is a language that is intended to be a replacement for C/C++. I'm sure you've heard terms like "blazing fast" and "memory safe" thrown around when talking about Rust. However, one aspect that is often overlooked is the design influence Rust has had. More specifically, the way purity-focused design choices of Haskell have influenced Rust.
 
-### Type Classes
+# Type Classes
 
 Typeclasses are the main mechanism for allowing ad-hoc polymorphism in haskell and it makes a _mostly complete_ return in rust. Typeclasses can be thought of as interfaces in other languages. They are however, more powerful. Rather than coupling interface implementation with a data declaration, typeclasses can be opted into after the fact. This allows for a more flexible and powerful design it also eliminates the need for upcasting and downcasting in most scenarios.
 
 The influence from haskell is extremely clear here. Let's take a look at some examples.
 
-#### Haskell
-
-```haskell
+```haskell title="drivable.hs"
 class Driveable a where
   drive :: a -> String
 
@@ -48,9 +46,7 @@ instance Driveable Car where
   drive _ = "Vroom vroom"
 ```
 
-#### Rust
-
-```rust
+```rust title="drivable.rs"
 trait Driveable {
   fn drive(&self) -> String;
 }
@@ -66,15 +62,13 @@ impl Driveable for Car {
 
 Rust even has blanket implementations for typeclasses.
 
-```haskell
+```haskell title="drivable.hs"
 instance Driveable a => Driveable (Maybe a) where
   drive (Just a) = drive a
   drive Nothing = "Nothing to drive"
 ```
 
-#### Rust
-
-```rust
+```rust title="drivable.rs"
 impl<T: Driveable> Driveable for Option<T> {
   fn drive(&self) -> String {
     if let Some(a) = self {
@@ -86,11 +80,11 @@ impl<T: Driveable> Driveable for Option<T> {
 }
 ```
 
-### Monads
+# Monads
 
 Rust follows some of the ubiquitous monads found in haskell, for example `Option` is analogous to `Maybe` and `Result` is analogous to `Either`. But what's the point of using monads? Why not have manual null checks, and try-catch?. We use monads because they allow side-effects in a controlled manner. We can traverse data structures with chains of possibly missing data with confidence.
 
-#### `Option<T>`
+## `Option<T>`
 
 ```rust
 struct D {
@@ -121,13 +115,11 @@ let y = x.b.and_then(|b| b.c).and_then(|c| c.d).and_then(|d| d.e).unwrap_or(0);
 
 Even with the minefield of possibly missing values the `Option` monad gives us the safety we need to traverse the data structure.
 
-#### `Result<T, E>`
+## `Result<T, E>`
 
 `Result` in rust is an even more interesting case of haskell influence. Unlike `Option`, `Result`s have a syntactic sugar `?` for safely "unwrapping" the value. However upon closer inspection you may realize that `?` is just the monadic bind operator often used in haskell.
 
-#### Haskell
-
-```haskell
+```haskell title="error.hs"
 newtype Error = Error String
 
 foo :: Either Error Int
@@ -137,9 +129,7 @@ foo = do
   return y -- return is the wrapping method
 ```
 
-#### Rust
-
-```rust
+```rust title="error.rs"
 struct Error(String);
 
 fn foo() -> Result<i32, Error> {

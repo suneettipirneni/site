@@ -1,4 +1,5 @@
 import { BlogEntry } from "@/components/BlogEntry";
+import { Title } from "@/components/Title";
 import { allPosts } from "contentlayer/generated";
 
 export default function AboutPage() {
@@ -6,11 +7,11 @@ export default function AboutPage() {
 
   return (
     <div className="flex flex-col space-y-5 w-full">
-      <h1 className="text-4xl font-bold">Featured</h1>
+      <Title>Featured</Title>
       {featuredPosts.map((entry) => (
         <BlogEntry key={entry.title} post={entry} />
       ))}
-      <h1 className="text-4xl font-bold">All Posts</h1>
+      <Title>All Posts</Title>
       {allPosts.map((entry) => (
         <BlogEntry key={entry.title} post={entry} />
       ))}

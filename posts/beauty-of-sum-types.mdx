@@ -3,7 +3,7 @@ author: Suneet Tipirneni
 datetime: 2023-01-26T23:42:11.356Z
 title: Sum types are pretty cool you should use them
 slug: beauty-of-sum-types
-featured: true
+featured: false
 draft: false
 tags:
   - patterns
@@ -14,9 +14,9 @@ description: I love sum types, in fact I love them so much I wrote a whole blog 
 # Sum Types, the most underrated types
 
 The sum type the is best thing to come out since sliced bread. In my early days of programming my life was constricted to the domain
-of open product types. Behaviour was shared through inheritance and polymorphism. I never knew I wanted sum types until I had them.
+of open product types. Behavior was shared through inheritance and polymorphism. I never knew I wanted sum types until I had them.
 
-## The problem with open types
+# The problem with open types
 
 Consider a Java interface defined like so:
 
@@ -106,7 +106,7 @@ void takeCareOfHousePets(List<HousePet> animals) {
 I've just realized that I can't exhaustively handle all the cases for `HousePet` since it's always open to be implemented. So instead I throw an error.
 This works great! I _know_ the only two cases that are `HousePet`s are `Dog` and `Cat`, so I shouldn't have to worry about the exception being thrown, right?
 
-## A wrench thrown into the works
+# A wrench thrown into the works
 
 Well, a user of my library decides to implement `HousePet` for their own `Animal` variant:
 
@@ -136,7 +136,7 @@ hack to get around the fact that you can't exhaustively match on a product type.
 
 This is where sum types come to the rescue.
 
-## Sum types to the rescue
+# Sum types to the rescue
 
 In earlier versions of java the concept of a sum type was essentially using an enum with an associated value:
 
@@ -171,7 +171,7 @@ void takeCareOfHousePets(List<HousePet> animals) {
 Notice that we don't need a `default` case in our switch statement. This is because we've exhaustively matched on all the variants of `HousePet`. This is core benefit
 of sum types. We can be sure that we've handled all the cases. The type cannot contain any extra variants beyond the ones we've defined.
 
-## Modern Java makes sum types easier
+# Modern Java makes sum types easier
 
 You may have noticed that the enum approach introduces an unwanted level of indirection. Modern versions of java introduce the concept
 of sealed types. This allows us to define our sum type like so:
@@ -214,7 +214,7 @@ void takeCareOfHousePets(List<HousePet> animals) {
 }
 ```
 
-## Other languages
+# Other languages
 
 The world of programming is made up of more than just java. Other languages have their own ways of handling sum types. Let's look at a few of them.
 
@@ -300,7 +300,7 @@ function takeCareOfHousePets(animals: HousePet[]) {
 }
 ```
 
-## Conclusion
+# Conclusion
 
 I should make it clear that polymorphic types are not useless by any means. Both sum types and polymorphic types are two different ways of modeling two different types of data.
 

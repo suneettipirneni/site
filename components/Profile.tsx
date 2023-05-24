@@ -2,8 +2,13 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import NextImage, { ImageProps } from "next/image";
+
+import profilePic from "@/public/me.png";
 
 import { DiscordStatus } from "./DiscordStatus";
+
+const Image = motion<Omit<ImageProps, "layout">>(NextImage);
 
 export function Profile() {
   const [isHovering, setIsHovering] = useState(false);
@@ -25,8 +30,10 @@ export function Profile() {
       onHoverEnd={() => setIsHovering(false)}
     >
       <AnimatePresence>
-        <motion.div
+        <Image
           layout
+          src={profilePic}
+          alt="Profile Picture"
           className="h-[100px] w-[100px] rounded-full bg-[url('https://avatars.githubusercontent.com/u/77477100?v=4')] bg-cover"
         />
 

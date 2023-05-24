@@ -1,8 +1,10 @@
+import { HeroText } from "@/components/HeroText";
+
 export default function AboutPage() {
   return (
     <div>
-      <h1>Project Page</h1>
-      <p>This is the project page</p>
+      <HeroText>Under construction</HeroText>
+      <img src="https://i.gifer.com/Q5wh.gif" alt="Under construction gif" />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Header } from "@/components/Header";
+import { TabBar } from "@/components/TabBar";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { BsHouseFill } from "react-icons/bs";
@@ -20,14 +20,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" style={{ fontFeatureSettings: "cv02, cv03, cv04, cv11" }}>
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"
-      ></link>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"
+        />
+      </head>
+
       <body
-        className={`${inter.className} dark:text-white bg-black text-black mx-auto h-screen flex flex-col items-center bg-[url('/background.png')] dark:bg-zinc-950 bg-150 bg-cover bg-fixed w-full pt-5 px-5`}
+        className={`${inter.className} dark:text-white bg-neutral-50 text-black mx-auto h-screen flex flex-col items-center bg-[url('/background.png')] dark:bg-zinc-950 bg-150 bg-cover bg-fixed w-full md:pt-5 md:px-5 max-w-[1000px] py-2 px-2`}
       >
-        <Header
+        <TabBar
           tabs={[
             { name: "Home", href: "/", icon: <BsHouseFill /> },
             {
@@ -40,10 +43,9 @@ export default function RootLayout({
               href: "projects/",
               icon: <HiCodeBracketSquare />,
             },
-            { name: "Contact", href: "contact/", icon: <IoPersonSharp /> },
           ]}
         />
-        <div className="p-5 h-full w-full max-w-[900px]">{children}</div>
+        <div className="p-2 md:p-5 h-full w-full">{children}</div>
       </body>
     </html>
   );

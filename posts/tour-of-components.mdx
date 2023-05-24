@@ -1,0 +1,88 @@
+---
+author: Suneet Tipirneni
+datetime: 2023-05-24T00:36:35.230Z
+title: A tour of MDX components
+slug: tour-of-mdx-components
+featured: false
+draft: false
+tags:
+  - meta
+ogImage: "https://images.unsplash.com/photo-1604782206219-3b9576575203?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1897&q=80"
+description: A post solely dedicated to the components used in this blog.
+---
+
+# Code Blocks
+
+## Basic
+
+```typescript
+import { Component } from "react";
+
+export default class MyComponent extends Component {
+  render() {
+    return <div>Hello World</div>;
+  }
+}
+```
+
+## With Title
+
+```typescript title="MyComponent.tsx"
+import { Component } from "react";
+
+export default class MyComponent extends Component {
+  render() {
+    return <div>Hello World</div>;
+  }
+}
+```
+
+# Headings
+
+# H1
+
+## H2
+
+### H3
+
+#### H4
+
+##### H5
+
+###### H6
+
+# Lists
+
+- Item 1
+- Item 2
+- Item 3
+
+# Math
+
+## Inline Math
+
+This is an example of inline math: $x^2 + y^2 = z^2$
+
+## Block Math
+
+$$
+\begin{aligned}
+  x^2 + y^2 &= z^2 \\
+  x^2 + y^2 - z^2 &= 0 \\
+  (x + y - z)(x - y + z) &= 0 \\
+  (x + y - z) &= 0 \text{ or } (x - y + z) = 0 \\
+  x + y &= z \text{ or } x - y = -z
+\end{aligned}
+$$
+
+# Tables
+
+| Assignment                                                                                             | Date      |
+| ------------------------------------------------------------------------------------------------------ | --------- |
+| Report of findings of research from listed foundational work                                           | 6/10/2023 |
+| Creation of proof-of-concept training dataset for images of text.                                      | 6/25/2023 |
+| Code with experiementation via pytorch and available source code of realistic text-in-image generation | 7/20/2023 |
+
+# Images
+
+![alt text](/assets/array-diagram.png "A sample screenshot.")
