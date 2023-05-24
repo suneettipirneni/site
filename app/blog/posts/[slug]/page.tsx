@@ -47,7 +47,7 @@ export default function Post({ params }: { params: { slug: string } }) {
           </time>
         </div>
       </div>
-      <div className="md:col-start-2">
+      <div className="md:col-start-2" id="post-main">
         <MDXComponent components={mdxComponents} />
       </div>
       <Outline

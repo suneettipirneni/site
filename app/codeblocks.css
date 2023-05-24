@@ -25,8 +25,13 @@ pre[data-theme="dark"] {
 div[data-rehype-pretty-code-fragment] {
   @apply rounded-lg;
   @apply border border-gray-300 dark:border-gray-600;
-  @apply my-7;
   @apply overflow-clip;
+}
+
+#post-main {
+  & > div[data-rehype-pretty-code-fragment] {
+    @apply mb-7;
+  }
 }
 
 div[data-rehype-pretty-code-fragment] pre {

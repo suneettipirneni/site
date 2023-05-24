@@ -42,7 +42,9 @@ export function InfoBlock({ title, kind, children }: InfoBlockProps) {
         {open ? <FaChevronDown /> : <FaChevronRight />}
       </button>
 
-      <div className={`${open ? "flex flex-col" : "hidden"} col-span-2`}>
+      <div
+        className={`${open ? "flex flex-col gap-y-5" : "hidden"} col-span-2`}
+      >
         {children}
       </div>
     </div>
