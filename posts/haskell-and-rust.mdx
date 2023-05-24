@@ -141,10 +141,10 @@ fn foo() -> Result<i32, Error> {
 
 It's crazy to see these comparisons, because rust in certain scenarios almost "borrows" the do blocks from haskell, and it does it in a way that feels at home for both imperative and functional programmers. It's also worth noting that the `?` operator is not the only way to unwrap a `Result`. You can also use the `match` expression. But for the sake of brevity rust programmers and haskell programmers have embraced syntactic sugar. Overall these monads shows how the "safe" paradigms of haskell have influenced rust.
 
-### Algebraic Data Types
+# Algebraic Data Types
 
 Algebraic data types are highly useful for modeling data. I'm not going to compare and contrast rust and haskell here, instead you can take a look at [my other blog post on sum types](/posts/beauty-of-sum-types#other-languages)
 
-## Conclusion - Rust: The intersection of Haskell and C/C++
+# Conclusion - Rust: The intersection of Haskell and C/C++
 
 I am of the firm opinion that rust is the language that finally gives us the idealistic "top right" corner of Simon's diagram. However rust may be considered the first however it most likely won't be the last. The cross pollination of ideas between languages in completely different paradigms has benefited us all. In conclusion it's important to remind ourselves that no one language has all the answers, but we can learn from each other and build better languages.

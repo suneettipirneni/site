@@ -5,6 +5,7 @@ import { BsHouseFill } from "react-icons/bs";
 import { IoInformationCircleSharp, IoPersonSharp } from "react-icons/io5";
 import { HiCodeBracketSquare } from "react-icons/hi2";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -46,6 +47,7 @@ export default function RootLayout({
           ]}
         />
         <div className="p-2 md:p-5 h-full w-full">{children}</div>
+        <Analytics />
       </body>
     </html>
   );
