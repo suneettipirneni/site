@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 import { MDXComponents } from "mdx/types";
 import { Heading } from "./Heading";
 import { Paragraph } from "./Paragraph";
@@ -18,6 +17,8 @@ export const mdxComponents: MDXComponents = {
   h6: (props) => <Heading level={6} {...props} />,
   p: (props) => <Paragraph {...props} />,
   footer: (props) => <Footer {...props} />,
+  // Alt text should be provided from source
+  // eslint-disable-next-line jsx-a11y/alt-text
   img: (props) => <Image alt="" {...props} />,
   a: (props) => <Anchor {...props} />,
   ul: (props) => <List {...props} />,

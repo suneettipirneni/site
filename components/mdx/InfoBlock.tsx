@@ -31,16 +31,20 @@ export function InfoBlock({ title, kind, children }: InfoBlockProps) {
     <div
       className={`grid grid-cols-[80%_1fr] rounded-lg p-3 border mb-5 gap-y-4 ${mappedStyles[kind]}`}
     >
-      <h1 className="flex col-start-1 text-lg font-bold items-center gap-2">
+      <h1
+        className="flex col-start-1 text-lg font-bold items-center gap-2 cursor-pointer"
+        onClick={() => setOpen(!open)}
+      >
         <span>{mappedIcons[kind]}</span>
         {title}
       </h1>
-      <button
-        className="col-span-1 justify-self-end"
+
+      <div
+        className="col-span-1 justify-self-end self-center cursor-pointer"
         onClick={() => setOpen(!open)}
       >
         {open ? <FaChevronDown /> : <FaChevronRight />}
-      </button>
+      </div>
 
       <div
         className={`${open ? "flex flex-col gap-y-5" : "hidden"} col-span-2`}
