@@ -22,6 +22,10 @@ pre[data-theme="dark"] {
   }
 }
 
+div[data-rehype-pretty-code-fragment] code {
+  @apply grid;
+}
+
 div[data-rehype-pretty-code-fragment] {
   @apply rounded-lg;
   @apply border border-gray-300 dark:border-gray-600;
@@ -51,6 +55,11 @@ div[data-rehype-pretty-code-title] {
   @apply border-b border-gray-300 dark:border-gray-600;
 }
 
+div[data-rehype-pretty-code-fragment] .line--highlighted {
+  @apply dark:bg-gray-400/20;
+  @apply rounded-md;
+}
+
 code {
   counter-reset: line;
 }
@@ -62,7 +71,7 @@ code > .line::before {
   /* Other styling */
   display: inline-block;
   width: 1rem;
-  margin-right: 2rem;
+  margin-right: 1rem;
   text-align: right;
   color: gray;
 }

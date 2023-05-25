@@ -35,16 +35,17 @@ export default function Post({ params }: { params: { slug: string } }) {
           <FaArrowLeft />
           Back
         </Link>
-        <div className="mb-8">
+        <div className="mb-8 space-y-5">
           <h1 className="text-3xl font-bold">
             <Balancer>{post.title}</Balancer>
           </h1>
           <time
             dateTime={post.datetime}
-            className="mb-1 text-sm text-gray-600 dark:text-gray-300"
+            className="text-sm text-gray-600 dark:text-gray-300"
           >
             {format(parseISO(post.datetime), "LLLL d, yyyy")}
           </time>
+          <p className="text-gray-600 dark:text-gray-300">{post.description}</p>
         </div>
       </div>
       <div className="md:col-start-2" id="post-main">
