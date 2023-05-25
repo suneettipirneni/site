@@ -1,7 +1,7 @@
 ---
 author: Suneet Tipirneni
 datetime: 2023-02-02T15:52:55.052Z
-title: Lazy sequences
+title: Lazy Sequences
 slug: lazy-sequences
 featured: false
 draft: false
@@ -101,7 +101,7 @@ let doubled = numbers
 println!("{:?}", doubled) // [4, 6, 8]
 ```
 
-## Aside: I think iterators + functional operations are much better.
+<InfoBlock kind="info" title="I think iterators + functional operations are much better.">
 
 An iterator here is actually more useful than using a functional operator that applies something to the whole vector immediately. You probably have noticed we
 call a `.filter` operation after a `map` operation. If we consumed the entire array for each operation we'd be doing an O(n) operation twice, one for mapping and
@@ -115,9 +115,11 @@ In javascript the entire array is consumed when using functional operations on a
 [1, 2, 3, 4, 5].map((e) => e * 2 + 3);
 ```
 
-The former code is theoretically twice as slow as the latter. While this particular example is contrived, it may be a performance footgun for some developers. In rust, this situation is mostly avoided by requiring an iterator to use functional operations.
+The former code is theoretically twice as slow as the latter due to a new array being created after every operation. While this particular example is contrived, it may be a performance footgun for some developers. In rust, this situation is mostly avoided by requiring an iterator to use functional operations.
 
 JavaScript is somewhat addressing these issues by introducing [iterator-helpers](https://github.com/tc39/proposal-iterator-helpers) into the official spec.
+
+</InfoBlock>
 
 # Conclusion
 

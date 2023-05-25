@@ -30,7 +30,7 @@ export function useActiveSlug(headers: HeadingNode[]) {
         const element = document.getElementById(id);
 
         if (!element) {
-          throw new Error(`Cannot find heading with id: ${node}`);
+          throw new Error(`Cannot find heading with id: ${node.text}`);
         }
 
         elements.push(element);

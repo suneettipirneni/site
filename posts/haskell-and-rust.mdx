@@ -98,6 +98,118 @@ match self {
 
 </InfoBlock>
 
+# Type Inference
+
+Type inference is what allows developers to omit type information in areas where the compiler can infer the type. Both Rust and Haskell take advantage of the HM type inference algorithm. This results in less explicit type annotations needed overall.
+
+Let's take a look at this in action.
+
+First let's introduce a new data structure in both rust and haskell that defines a person.
+
+```rust title="person.rs"
+struct Person {
+  age: u32,
+}
+```
+
+```haskell title="person.hs"
+newtype = Person { age :: Int }
+```
+
+Each language offers a typeclass to convert a string to a data structure. For rust we implement [`FromStr`](https://doc.rust-lang.org/std/str/trait.FromStr.html) and for haskell we create an instance of [`Read`](https://hackage.haskell.org/package/base-4.18.0.0/docs/Text-Read.html#g:1).
+
+```rust title="person.rs"
+impl FromStr for Person {
+  type Err = ();
+
+  fn from_str(s: &str) -> Result<Self, Self::Err> {
+    Ok(Person {
+      age: s.parse().unwrap(),
+    })
+  }
+}
+```
+
+```haskell title="person.hs"
+instance Read Person where
+  readsPrec _ s = [(Person (read s), "")]
+```
+
+Now when we parse a string into a person we can omit the type information.
+
+```rust title="main.rs"
+fn introduce(person: &Person) {
+  println!("I am {} years old", person.age);
+}
+
+fn main() {
+  let person: Person = "3".parse().unwrap();
+  let p_age = person.age; // inference
+  introduce(&num);
+}
+```
+
+```haskell title="type-inference.hs"
+introduce :: Person -> IO ()
+introduce person = putStrLn $ "I am " ++ show (age person) ++ " years old"
+
+main = do
+  let person = parse "3"
+  let pAge = age person -- Int of 3
+```
+
+The compiler successfully picks up the type of `num` and `pAge` without us having to explicitly define it.
+
+But how does it know which type we wanted? How did it know we wanted a `Person` rather than a `String` or any other type for that matter?
+
+Unlike other languages in Rust and Haskell types can be inferred by _usage_. In the example above both languages deduce the type of `person` because it is
+used as a parameter in `introduce`. Since `introduce` expects a `Person` the compiler can deduce that `person` must be a `Person`. The best part is we don't need
+to know how the type inference algorithm works to take advantage of it.
+
+Let's take a look at a similar example in Java.
+
+```java title="Person.java"
+public class Person {
+  public int age;
+}
+```
+
+```java title="TypeInference.java"
+public class TypeInference {
+  public static void introduce(Person person) {
+    System.out.println("I am " + person.age + " years old");
+  }
+
+  public static Person parsePerson(String s) {
+    var person = new Person();
+    person.age = Integer.parseInt(s);
+    return person;
+  }
+  public static void main(String[] args) {
+    var person = parsePerson("3");
+    var pAge = person.age;
+    introduce(person);
+  }
+}
+```
+
+In Java we have to explicitly define a method for parsing a `Person`. This is because Java uses _local type inference_. All type information is captured at the declaration site. This means that the compiler has no way of knowing what type we want until we 1) use explicit annotations or 2) provide a value that can be used to infer the type. This is
+less robust than Haskell and Rust since the method is proprietary and not polymorphic (`parse()` and `read` can be reused in multiple contexts for different data structures unlike `parsePerson`).
+
+<InfoBlock kind="info" title="Ad-Hoc Polymorphism">
+  There are two forms of polymorphism used in programming languages
+
+- Ad-Hoc Polymorphism
+- Parametric Polymorphism
+
+Ad-Hoc polymorphism is polymorphism where the behavior of a function/method changes based on it's arguments. In our examples above the return value of `read` and `parse` have a different return type based on the inferred type of the variable `person`.
+
+Parametric polymorphism is polymorphism where the behavior of a function/method does not change based on it's arguments. In our examples above the return value of `introduce` and Java's `parsePerson` is always the same regardless of the type of `person`. However, it can work on any type that is covariant with `Person`.
+
+Despite this, Java does support ad-hoc polymorphism via overloading. For example, `System.out.println` has multiple implementations based on the type of the argument. Overloading is less extensible than the typeclass approach because only the owner of the type can define new implementations. In Haskell and Rust anyone can define a new implementation for a typeclass on any object they own.
+
+</InfoBlock>
+
 # Monads
 
 Rust follows some of the ubiquitous monads found in haskell, for example `Option` is analogous to `Maybe` and `Result` is analogous to `Either`. But what's the point of using monads? Why not have manual null checks, and try-catch?. We use monads because they allow side-effects in a controlled manner. We can traverse data structures with chains of possibly missing data with confidence.
