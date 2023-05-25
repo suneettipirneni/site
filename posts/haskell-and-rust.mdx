@@ -100,7 +100,7 @@ match self {
 
 # Type Inference
 
-Type inference is what allows developers to omit type information in areas where the compiler can infer the type. Both Rust and Haskell take advantage of the HM type inference algorithm. This results in less explicit type annotations needed overall.
+Type inference is what allows developers to omit type information in areas where the compiler can infer the type. Both Rust and Haskell take advantage of the [HM type inference algorithm](https://en.wikipedia.org/wiki/Hindley%E2%80%93Milner_type_system). This results in less explicit type annotations needed overall.
 
 Let's take a look at this in action.
 
@@ -113,7 +113,7 @@ struct Person {
 ```
 
 ```haskell title="person.hs"
-newtype = Person { age :: Int }
+newtype Person = Person { age :: Int }
 ```
 
 Each language offers a typeclass to convert a string to a data structure. For rust we implement [`FromStr`](https://doc.rust-lang.org/std/str/trait.FromStr.html) and for haskell we create an instance of [`Read`](https://hackage.haskell.org/package/base-4.18.0.0/docs/Text-Read.html#g:1).
