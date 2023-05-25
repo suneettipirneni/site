@@ -8,13 +8,18 @@ export default function AboutPage() {
   return (
     <div className="flex flex-col space-y-5 w-full md:pb-10 pb-5">
       <Title>Featured</Title>
-      {featuredPosts.map((entry) => (
-        <BlogEntry key={entry.title} post={entry} />
-      ))}
+      <div className="flex flex-col md:space-y-5">
+        {featuredPosts.map((entry) => (
+          <BlogEntry key={entry.title} post={entry} />
+        ))}
+      </div>
+
       <Title>All Posts</Title>
-      {allPosts.map((entry) => (
-        <BlogEntry key={entry.title} post={entry} />
-      ))}
+      <div className="flex flex-col md:space-y-5">
+        {allPosts.map((entry) => (
+          <BlogEntry key={entry.title} post={entry} />
+        ))}
+      </div>
     </div>
   );
 }

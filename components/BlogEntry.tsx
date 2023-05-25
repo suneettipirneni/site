@@ -12,7 +12,7 @@ export function BlogEntry({ post }: BlogEntryProps) {
   return (
     <Link
       href={post.url}
-      className="flex flex-col space-y-3 w-full p-3 md:p-4 bg-gray-200/40 dark:bg-white/5 dark:hover:bg-white/10 rounded-xl border dark:border-white/20 border-gray-400/10"
+      className="flex flex-col space-y-3 w-full p-3 md:p-4 border-t md:bg-gray-200/40 md:dark:bg-white/5 dark:hover:bg-white/10 md:rounded-xl md:border border-gray-500/30 dark:border-gray-600 md:dark:border-white/20 md:border-gray-400/10"
     >
       <h1 className="text-xl font-bold">
         <Balancer>{post.title}</Balancer>
