@@ -2,7 +2,7 @@ import type { Options } from "rehype-pretty-code";
 
 export const rehypePrettyCodeOptions: Partial<Options> = {
   theme: {
-    dark: "one-dark-pro",
+    dark: "dark-plus",
     light: "light-plus",
   },
   onVisitHighlightedLine(node) {
