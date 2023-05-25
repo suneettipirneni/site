@@ -63,7 +63,7 @@ const inlineCodePlugin: Plugin = () => {
   // in question has a direct text child.
 
   const inlineBlockStyle =
-    "p-1 bg-white/50 text-black dark:text-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md";
+    "py-[0.5px] px-1 bg-white/50 text-black dark:text-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md";
 
   const inlineCodePredicate = (node: Node) => {
     if (node.type !== "element") {

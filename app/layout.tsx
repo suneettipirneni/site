@@ -1,6 +1,6 @@
 import { TabBar } from "@/components/TabBar";
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import { BsHouseFill } from "react-icons/bs";
 import { IoInformationCircleSharp, IoPersonSharp } from "react-icons/io5";
 import { HiCodeBracketSquare } from "react-icons/hi2";
@@ -8,6 +8,11 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-mono",
+});
 
 export const metadata = {
   title: "Suneet Tipirneni",
@@ -29,7 +34,7 @@ export default function RootLayout({
       </head>
 
       <body
-        className={`${inter.className} dark:text-white bg-neutral-50 text-black mx-auto h-screen flex flex-col items-center bg-[url('/background2.png')] dark:bg-zinc-950 bg-150 bg-cover bg-no-repeat w-full md:pt-5 md:px-5 max-w-[1000px] py-2 px-2`}
+        className={`${inter.className} ${jetBrainsMono.variable} dark:text-white bg-neutral-50 text-black mx-auto h-screen flex flex-col items-center bg-[url('/background2.png')] dark:bg-zinc-950 bg-150 bg-cover bg-no-repeat w-full md:pt-5 md:px-5 max-w-[1000px] py-2 px-2`}
       >
         <TabBar
           tabs={[

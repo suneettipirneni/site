@@ -7,6 +7,9 @@ module.exports = {
     "./contentlayer.config.ts",
   ],
   theme: {
+    fontFamily: {
+      mono: "var(--font-mono)",
+    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
