@@ -11,6 +11,7 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkGfm from "remark-gfm";
+import { h, s } from "hastscript";
 
 export const Post = defineDocumentType(() => ({
   name: "Post",
@@ -111,7 +112,31 @@ export default makeSource({
       inlineCodePlugin,
       remarkMath,
       rehypeKatex,
-      [rehypeAutolinkHeadings, { behavior: "prepend" }],
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: "prepend",
+          properties: {
+            class:
+              "autolink-header hidden group-hover:inline-block absolute -ml-8",
+            ariaHidden: true,
+            tabIndex: -1,
+          },
+          content: [
+            s(
+              "span",
+              {
+                xmlns: "http://www.w3.org/2000/svg",
+                width: 24,
+                height: 24,
+                fill: "currentColor",
+                viewBox: "0 0 24 24",
+              },
+              "#"
+            ),
+          ],
+        },
+      ],
       remarkGfm,
     ],
   },

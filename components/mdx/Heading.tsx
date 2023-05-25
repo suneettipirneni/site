@@ -21,7 +21,12 @@ const headingTextSizes = {
   6: "text-sm",
 };
 
-export function Heading({ level, className, ...props }: HeadingProps) {
+export function Heading({
+  level,
+  className,
+  children,
+  ...props
+}: HeadingProps) {
   if (level > 6 || level < 1) {
     throw new Error(`Heading level ${level} is not supported.`);
   }
@@ -30,12 +35,14 @@ export function Heading({ level, className, ...props }: HeadingProps) {
     headingLevelMappings[level as keyof typeof headingLevelMappings];
 
   return (
+    // @ts-expect-error
     <HeadingComponent
-      // @ts-expect-error
-      className={`font-bold ${
+      className={`flex flex-row group font-bold gap-x-2 -ml-4 pl-4 ${
         headingTextSizes[level as keyof typeof headingTextSizes]
       } ${className}`}
       {...props}
-    />
+    >
+      {children}
+    </HeadingComponent>
   );
 }

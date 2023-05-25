@@ -5,6 +5,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
 /* Here we specify the "spacing" between primitive mdx elements. The
 reason we do this is to allow the mdx components to be used in other places
 without large margins. */

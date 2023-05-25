@@ -1,8 +1,4 @@
-"use client";
-
 import type { HeadingNode } from "@/util/HeaderTree";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 export interface OutlineProps {
   headings: HeadingNode[];
@@ -14,16 +10,14 @@ export interface OutlineNodeProps {
 }
 
 export function OutlineNode({ node }: OutlineNodeProps) {
-  const path = usePathname();
-
   return (
     <div className="flex flex-col space-y-1">
-      <Link
-        href={`${path}#${node.slug}`}
+      <a
+        href={`#${node.slug}`}
         className="text-sm line-clamp-1 text-gray-600 dark:text-gray-400 text-ellipsis hover:underline"
       >
         {node.text}
-      </Link>
+      </a>
       <div className="flex flex-col">
         {node.children.map((child) => (
           <div className="ml-3" key={child.slug}>
