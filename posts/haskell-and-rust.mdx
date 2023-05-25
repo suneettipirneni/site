@@ -143,7 +143,7 @@ fn introduce(person: &Person) {
 }
 
 fn main() {
-  let person: Person = "3".parse().unwrap(); // Inferred to be a Person
+  let person = "3".parse().unwrap(); // Inferred to be a Person
   let p_age = person.age; // u32 of 3
   introduce(&num);
 }
