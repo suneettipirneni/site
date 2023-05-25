@@ -143,8 +143,8 @@ fn introduce(person: &Person) {
 }
 
 fn main() {
-  let person: Person = "3".parse().unwrap();
-  let p_age = person.age; // inference
+  let person: Person = "3".parse().unwrap(); // Inferred to be a Person
+  let p_age = person.age; // u32 of 3
   introduce(&num);
 }
 ```
@@ -154,8 +154,9 @@ introduce :: Person -> IO ()
 introduce person = putStrLn $ "I am " ++ show (age person) ++ " years old"
 
 main = do
-  let person = parse "3"
+  let person = parse "3" -- Inferred to be a Person
   let pAge = age person -- Int of 3
+  introduce person
 ```
 
 The compiler successfully picks up the type of `num` and `pAge` without us having to explicitly define it.
