@@ -21,14 +21,26 @@ common example of this in the wild are iterators. Let's compare a traditional ar
 
 An a array is usually described as a block of continuous memory
 
-![alt text](/assets/array-diagram.png "A visual representation of continuous memory.")
+<Image
+  src="/assets/array-diagram.png"
+  title="A visual representation of continuous memory."
+  width={251}
+  height={82}
+  alt="Five squares in a row, each with a number in them and a memory address below them."
+/>
 
 All of this memory is made available and you can access any index in $O(1)$ time
 using each memory block's address.
 
 Now let's visualize an iterator:
 
-![alt text](/assets/iterator-diagram.png "A visual representation of non-continuous memory via an iterator.")
+<Image
+  src="/assets/iterator-diagram.png"
+  title="A visual representation of non-continuous memory via an iterator."
+  width={391}
+  height={321}
+  alt="A series of squares with numbers in them, each with a memory address below them. The memory addresses are not in order."
+/>
 
 As shown above, an iterator simply returns values when calling its `next()` method. The value of each element isn't known until `next()` is called
 and the memory isn't contiguous like arrays. In other words, it's a lazy sequence. We only get elements when we request elements. As a side effect, you can't access
