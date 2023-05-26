@@ -8,7 +8,9 @@ export function Image(props: HTMLAttributes<HTMLImageElement> & ImageProps) {
         className="rounded-lg overflow-clip border border-gray-300 dark:border-gray-600"
         {...props}
       />
-      <p className="text-center font-medium p-3 w-full grow">{props.title}</p>
+      <p className="text-sm text-center font-medium p-3 w-full grow">
+        {props.title}
+      </p>
     </div>
   );
 }
