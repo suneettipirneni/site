@@ -18,7 +18,7 @@ without large margins. */
   & > h1 {
     @apply mt-8 pt-10;
     @apply mb-7;
-    @apply border-t border-gray-600/20 dark:border-gray-600/50;
+    @apply border-t border-gray-400/30 dark:border-gray-600/50;
   }
 
   & > h2 {
