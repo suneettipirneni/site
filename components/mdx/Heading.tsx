@@ -37,9 +37,11 @@ export function Heading({
   return (
     // @ts-expect-error
     <HeadingComponent
-      className={`flex flex-row group font-bold gap-x-2 -ml-4 pl-4 ${
+      className={`flex flex-row group font-bold gap-x-2 ${
         headingTextSizes[level as keyof typeof headingTextSizes]
-      } ${className}`}
+      } ${className} ${
+        level === 1 && "border-t border-gray-600/20 dark:border-gray-600/50"
+      }`}
       {...props}
     >
       {children}

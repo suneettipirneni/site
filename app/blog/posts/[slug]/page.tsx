@@ -46,7 +46,7 @@ export default function Post({ params }: { params: { slug: string } }) {
 
   return (
     <article className="relative z-10 py-4 md:py-8 md:grid md:grid-rows(1fr, 100%, 1fr) md:grid-cols-[1fr_min(700px,100%)_1fr] gap-x-10">
-      <div className="col-start-2 mb-8">
+      <div className="col-start-2 mb-2">
         <Link
           href="/blog"
           className="text-xl font-medium flex flex-row items-center gap-2 md:my-10 my-5"
@@ -54,7 +54,7 @@ export default function Post({ params }: { params: { slug: string } }) {
           <FaArrowLeft />
           Back
         </Link>
-        <div className="mb-8 space-y-5">
+        <div className="space-y-5">
           <h1 className="text-3xl font-bold">
             <Balancer>{post.title}</Balancer>
           </h1>
@@ -66,7 +66,6 @@ export default function Post({ params }: { params: { slug: string } }) {
           </time>
           <p className="text-gray-600 dark:text-gray-300">{post.description}</p>
         </div>
-        <Separator className="mt-2" />
       </div>
       <div className="md:col-start-2" id="post-main">
         <MDXComponent components={mdxComponents} />

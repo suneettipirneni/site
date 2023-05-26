@@ -115,10 +115,9 @@ export default makeSource({
       [
         rehypeAutolinkHeadings,
         {
-          behavior: "prepend",
+          behavior: "append",
           properties: {
-            class:
-              "autolink-header hidden group-hover:inline-block absolute -ml-8",
+            class: "autolink-header hidden group-hover:inline-block",
             ariaHidden: true,
             tabIndex: -1,
           },
