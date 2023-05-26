@@ -4,7 +4,6 @@ import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 import { IoInformationCircleSharp, IoWarning } from "react-icons/io5";
 import { MdDangerous } from "react-icons/md";
 import { useState } from "react";
-import { Heading } from "./Heading";
 
 export interface InfoBlockProps {
   title: string;

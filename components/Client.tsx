@@ -7,8 +7,6 @@ import { ReactNode } from "react";
 export default function Client({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
-  console.log(pathname);
-
   return (
     <AnimatePresence mode="wait">
       <motion.div

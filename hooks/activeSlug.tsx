@@ -21,7 +21,6 @@ export function useActiveSlug(headers: HeadingNode[]) {
       const elements: HTMLElement[] = [];
 
       nodes.forEach((node) => {
-        console.log(node.slug);
         if (node.children.length > 0) {
           elements.push(...idCallback(node.children));
         }

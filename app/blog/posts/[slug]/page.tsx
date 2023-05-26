@@ -7,7 +7,6 @@ import Balancer from "react-wrap-balancer";
 import { serializeHeadings } from "@/util/HeaderTree";
 import { Outline } from "@/components/Outline";
 import { mdxComponents } from "@/components/mdx/components";
-import { Separator } from "@/components/Separator";
 import type { Metadata } from "next";
 
 export const generateStaticParams = async () =>

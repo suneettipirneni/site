@@ -23,7 +23,7 @@ export function BlogEntry({ post }: BlogEntryProps) {
       <p className="text-lg text-gray-700 dark:text-gray-300 line-clamp-2">
         {post.description}
       </p>
-      <div className="flex flex-row items-center space-x-2 overflow-x-auto">
+      <div className="flex flex-row items-center gap-2 flex-wrap">
         {post.tags.map((tag) => (
           <TagChip key={tag} name={tag} />
         ))}

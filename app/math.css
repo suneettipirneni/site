@@ -4,4 +4,5 @@
   @apply rounded-lg;
   @apply p-5;
   @apply text-lg;
+  @apply overflow-x-auto;
 }
