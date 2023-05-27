@@ -12,7 +12,7 @@ ogImage: "https://images.unsplash.com/photo-1599509109467-abd5a84210c4?ixlib=rb-
 description: We're partially aware we're using partial application, but we don't know what it is. In this post I go over what partial application is various ways it can be emulated in rust.
 ---
 
-## What is partial application?
+# What is partial application?
 
 Partial application is a technique used in functional programming create a new function from an existing function where
 specific arguments are set. A classic example of this is the `bind` function in JavaScript. The function returns a new function given a
@@ -30,7 +30,7 @@ addOne(2); // 3
 
 As shown above, `bind` creates a new reusable function from `add` where the first argument to `add` is always `1`.
 
-## Why is this useful?
+# Why is this useful?
 
 Partially applied functions improve the usability and portabilty of functional code. By providing predefined arguments to a function,
 callers in other locations within your codebase have less arguments/dependencies to worry about. It also greatly simplifies function composition.
@@ -44,7 +44,7 @@ function addOne(b) {
 
 This has the same end result, but has more boilerplate.
 
-## You've been using partial application this whole time
+# You've been using partial application this whole time
 
 If you're not familiar with functional programming then you're most likely familiar with OOP concepts like objects. In rust and in
 many other languages you can create objects(structs/classes) with constructors. A constructor is nothing more than a function to create
@@ -134,7 +134,7 @@ fn main() {
 There's a good amount of redundancy, because `FnOnce` and `FnMut` need to be implemented in order to implement `Fn`. But it's kinda cool because unlike the vanilla rust
 struct approach there's no indirection, you can call the struct as a function directly.
 
-## So what's the point?
+# So what's the point?
 
 I think understanding how a feature can be _emulated_ in a language can help developers understand how it might be implemented under-the-hood.
 And as a result give a better understanding of limitations and behaviours of the feature. If languages like rust or java ever implement partial application
