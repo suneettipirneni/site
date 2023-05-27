@@ -2,6 +2,7 @@
 
 import { useActiveSlug } from "@/hooks/activeSlug";
 import type { HeadingNode } from "@/util/HeaderTree";
+import { memo } from "react";
 
 export interface OutlineProps {
   headings: HeadingNode[];
@@ -13,7 +14,7 @@ export interface OutlineNodeProps {
   activeSlug: string;
 }
 
-export function OutlineNode({ node, activeSlug }: OutlineNodeProps) {
+export const OutlineNode = memo(({ node, activeSlug }: OutlineNodeProps) => {
   const isActive = activeSlug === node.slug;
 
   return (
@@ -36,7 +37,7 @@ export function OutlineNode({ node, activeSlug }: OutlineNodeProps) {
       </div>
     </div>
   );
-}
+});
 
 export function Outline({ headings, className }: OutlineProps) {
   const activeSlug = useActiveSlug(headings);
