@@ -28,7 +28,7 @@ div[data-rehype-pretty-code-fragment] code {
 
 div[data-rehype-pretty-code-fragment] {
   @apply rounded-lg;
-  @apply border border-gray-300 dark:border-gray-600;
+  @apply border border-gray-300 dark:border-white/25;
   @apply overflow-clip;
 }
 
@@ -50,9 +50,9 @@ div[data-rehype-pretty-code-title] {
   @apply font-bold;
   @apply font-mono dark:text-white;
   @apply w-full;
-  @apply dark:bg-gray-800 bg-white/30;
+  @apply dark:bg-white/10 bg-white/30;
   @apply px-5 py-2;
-  @apply border-b border-gray-300 dark:border-gray-600;
+  @apply border-b border-gray-300 dark:border-white/25;
 }
 
 div[data-rehype-pretty-code-fragment] .line--highlighted {

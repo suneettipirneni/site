@@ -1,6 +1,6 @@
 .math.math-display {
-  @apply dark:bg-gray-800 bg-white/30;
-  @apply border border-gray-300 dark:border-gray-600;
+  @apply dark:bg-white/10 bg-white/30;
+  @apply border border-gray-300 dark:border-white/25;
   @apply rounded-lg;
   @apply p-5;
   @apply text-lg;

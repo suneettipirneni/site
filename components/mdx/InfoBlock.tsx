@@ -18,7 +18,7 @@ const mappedIcons = {
 };
 
 const mappedStyles = {
-  info: "dark:bg-gray-800 bg-white/30 border-gray-300 dark:border-gray-600",
+  info: "dark:bg-white/10 bg-white/30 border-gray-300 dark:border-white/25",
   warning: "bg-yellow-400/50 border-yellow-400",
   danger: "bg-red-400/50 border-red-400",
 };
