@@ -14,7 +14,10 @@ export interface OutlineNodeProps {
   activeSlug: string;
 }
 
-export const OutlineNode = memo(({ node, activeSlug }: OutlineNodeProps) => {
+export const OutlineNode = memo(function OutlineNode({
+  node,
+  activeSlug,
+}: OutlineNodeProps) {
   const isActive = activeSlug === node.slug;
 
   return (
