@@ -44,7 +44,7 @@ Rust is a systems programming language that is designed to be safe, fast, and co
 
 # Type Classes
 
-Typeclasses are the main mechanism for allowing ad-hoc polymorphism in haskell and it makes a _mostly complete_ return in rust. Typeclasses can be thought of as interfaces in other languages. They are however, more powerful. Rather than coupling interface implementation with a data declaration, typeclasses can be opted into after the fact. This allows for a more flexible and powerful design it also eliminates the need for upcasting and downcasting in most scenarios.
+Typeclasses are the main mechanism for allowing ad-hoc polymorphism in haskell and it makes a _mostly complete_ return in rust. Typeclasses can be thought of as interfaces in other languages. They are, however, more powerful. Rather than coupling interface implementation with a data declaration, typeclasses can be opted into after the fact. This allows for a more flexible and powerful design while also eliminating the need for upcasting and downcasting in most scenarios.
 
 The influence from haskell is extremely clear here. Let's take a look at some examples.
 
@@ -165,11 +165,11 @@ main = do
   introduce person
 ```
 
-The compiler successfully picks up the type of `num` and `pAge` without us having to explicitly define it.
+The compiler successfully picks up the type of `p_age` and `pAge` without us having to explicitly define it.
 
 But how does it know which type we wanted? How did it know we wanted a `Person` rather than a `String` or any other type for that matter?
 
-Unlike other languages in Rust and Haskell types can be inferred by _usage_. In the example above both languages deduce the type of `person` because it is
+Unlike other languages, Rust and Haskell types can be inferred by _usage_. In the example above both languages deduce the type of `person` because it is
 used as a parameter in `introduce`. Since `introduce` expects a `Person` the compiler can deduce that `person` must be a `Person`. The best part is we don't need
 to know how the type inference algorithm works to take advantage of it.
 

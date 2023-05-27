@@ -14,7 +14,7 @@ description: I love sum types, in fact I love them so much I wrote a whole blog 
 # Sum Types, the most underrated types
 
 The sum type the is best thing to come out since sliced bread. In my early days of programming my life was constricted to the domain
-of open product types. Behavior was shared through inheritance and polymorphism. I never knew I wanted sum types until I had them.
+of open types, with a sprinkle of enums and booleans. Behavior was shared through inheritance and polymorphism. I never knew I wanted sum types until I had them.
 
 # The problem with open types
 
@@ -131,8 +131,8 @@ takeCareOfHousePets(new List<>(new Dog("Fido", 3), new Cat("Garfield", 5), new S
 
 My code wasn't designed for people to add their own variants. However, due to the nature of access-control and interfaces, they can.
 
-Many jaded java developers would simply accept throwing an exception as a valid solution to this problem. However exception throwing is a last resort. It's a
-hack to get around the fact that you can't exhaustively match on a product type. I would be so much better if this could be validated at compiled time.
+Many jaded java developers would simply accept throwing an exception as a valid solution to this problem. However, exception throwing is a last resort. It's a
+hack to get around the fact that you can't exhaustively match on a product type. A more elegant solution could be validate this kind of error at compile-time.
 
 This is where sum types come to the rescue.
 
@@ -153,7 +153,7 @@ public enum HousePet {
 }
 ```
 
-So why do we call this a sum type? It's called a sum type because the type is the sum of all of its variants. In this case, the type is the sum of `Dog` and `Cat`.
+So why do we call this a sum type? It's called a sum type because the type is the sum of all of its variants. In this case, the type is the sum of `Dog` and `Cat`. Notice also how this enum is closed. We can't add any more variants to it. This allows `HousePet` to be exhaustively matched on.
 
 Let's look at how we can handle this sum type:
 
@@ -201,7 +201,9 @@ public final record Snake(String name, int age, String sound) implements HousePe
 // Error: Cannot implement `HousePet`, `Snake` is not a permitted type
 ```
 
-The type is now closed for extension. And we can gaurantee that we've handled all the cases for `HousePet` by pattern matching `instanceof`:
+The type is now closed for extension and we get a nice compile-time error.
+
+We can guarantee that we've handled all the cases for sealed classes like `HousePet` by pattern matching `instanceof`:
 
 ```java title="Main.java"
 void takeCareOfHousePets(List<HousePet> animals) {
