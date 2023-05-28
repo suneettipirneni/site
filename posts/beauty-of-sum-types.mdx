@@ -308,7 +308,6 @@ I should make it clear that polymorphic types are not useless by any means. Both
 
 For reference:
 
-When you have a type that is meant to be implemented, or is used to show a contract is satisfied. Use polymorphic types to model this. For example, if you want to model shapes, you can introduce an
-interface with a `getArea()` method. This allows you introduce new shapes under the `Shape` type umbrella.
-
-When you have a limited set of variants that may or may not be covariant with each other. Use sum types to model this. See our `HousePet` example above.
+- When you have a type that is meant to be implemented, or is used to show a contract is satisfied. Use polymorphic types to model this. For example, if you want to model shapes, you can introduce an
+  interface with a `getArea()` method. This allows you introduce new shapes under the `Shape` type umbrella.
+- When you have a limited set of variants that may or may not be covariant with each other. Use sum types to model this. See our `HousePet` example above.
