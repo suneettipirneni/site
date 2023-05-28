@@ -1,17 +1,14 @@
 import GithubSlugger from "github-slugger";
 import { defineDocumentType, makeSource } from "@contentlayer/source-files";
 import rehypePrettyCode from "rehype-pretty-code";
-import { rehypePrettyCodeOptions } from "./rehypeOptions";
+import { rehypePrettyCodeOptions } from "./rehype/options/rehypePrettyCodeOptions";
 import rehypeSlug from "rehype-slug";
-import { visit } from "unist-util-visit";
-import { Element, Text } from "hast";
-import { Plugin } from "unified";
-import { Node } from "unist-util-visit/lib";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkGfm from "remark-gfm";
-import { h, s } from "hastscript";
+import { inlineCodePlugin } from "./rehype/plugins/inlineCode";
+import { rehypeAutolinkHeadingsOptions } from "./rehype/options/rehypeAutoLinkHeadingsOptions";
 
 export const Post = defineDocumentType(() => ({
   name: "Post",
@@ -55,53 +52,6 @@ export const Post = defineDocumentType(() => ({
   },
 }));
 
-// This logic was used from https://github.com/delbaoliveira/website/blob/187ed8ea3cd4b78122148227cd060666227be555/lib/rehyePrettyCode.ts
-const inlineCodePlugin: Plugin = () => {
-  // This check can disambiguate inline code against code within a codeblock
-  // by checking the presence of data on the element. If the element contains data
-  // it is in a codeblock, otherwise it is inline. Finally we check if the element
-  // in question has a direct text child.
-
-  const inlineBlockStyle =
-    "py-[0.5px] px-1 bg-white/50 text-black dark:text-white dark:bg-white/10 border border-gray-300 dark:border-gray-600 rounded-md";
-
-  const inlineCodePredicate = (node: Node) => {
-    if (node.type !== "element") {
-      return false;
-    }
-
-    const element = node as Element;
-
-    return Boolean(
-      element.tagName === "code" &&
-        Object.keys(element.properties ?? []).length === 0 &&
-        element.children.some((n: any) => n.type === "text")
-    );
-  };
-
-  return (tree: Node) => {
-    tree.type === "";
-    visit(tree, inlineCodePredicate, (node: Node) => {
-      const element = node as Element;
-
-      const textNode = element.children.find(
-        (node) => node.type === "text"
-      ) as Element;
-
-      if (!textNode) {
-        return;
-      }
-
-      textNode.type = "element";
-      textNode.tagName = "code";
-      textNode.properties = { className: [inlineBlockStyle] };
-      // @ts-expect-error
-      textNode.children = [{ type: "text", value: textNode.value }];
-      element.tagName = "span";
-    });
-  };
-};
-
 export default makeSource({
   contentDirPath: "posts",
   documentTypes: [Post],
@@ -112,30 +62,7 @@ export default makeSource({
       inlineCodePlugin,
       remarkMath,
       rehypeKatex,
-      [
-        rehypeAutolinkHeadings,
-        {
-          behavior: "append",
-          properties: {
-            class: "autolink-header hidden group-hover:inline-block",
-            ariaHidden: true,
-            tabIndex: -1,
-          },
-          content: [
-            s(
-              "span",
-              {
-                xmlns: "http://www.w3.org/2000/svg",
-                width: 24,
-                height: 24,
-                fill: "currentColor",
-                viewBox: "0 0 24 24",
-              },
-              "#"
-            ),
-          ],
-        },
-      ],
+      [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions],
       remarkGfm,
     ],
   },

@@ -34,7 +34,7 @@ export default function RootLayout({
       </head>
 
       <body
-        className={`${inter.className} ${jetBrainsMono.variable} dark:text-white bg-neutral-50 text-black mx-auto h-screen flex flex-col items-center bg-[url('/background2.png')] dark:bg-zinc-950 bg-150 bg-cover bg-no-repeat w-full md:pt-5 md:px-5 max-w-[1000px] py-2 px-2`}
+        className={`${inter.className} ${jetBrainsMono.variable} dark:text-white bg-neutral-50 text-black mx-auto h-screen flex flex-col items-center bg-[url('/background-light.png')] dark:bg-[url('/background-dark.png')] dark:bg-zinc-950 bg-150 bg-cover bg-no-repeat w-full md:pt-5 md:px-5 max-w-[1000px] py-2 px-2`}
       >
         <TabBar
           tabs={[

@@ -45,6 +45,10 @@ div[data-rehype-pretty-code-fragment] pre {
   @apply overflow-x-auto;
 }
 
+div[data-rehype-pretty-code-fragment] {
+  @apply post:mb-4;
+}
+
 div[data-rehype-pretty-code-title] {
   @apply text-sm;
   @apply font-bold;
@@ -82,4 +86,12 @@ code[data-line-numbers-max-digits="2"] > .line::before {
 
 code[data-line-numbers-max-digits="3"] > .line::before {
   width: 3rem;
+}
+
+code[data-inline-code="true"] {
+  @apply py-[0.5px] px-1;
+  @apply bg-white/50 dark:bg-white/10;
+  @apply text-black dark:text-white;
+  @apply border border-gray-300 dark:border-gray-600;
+  @apply rounded-md;
 }

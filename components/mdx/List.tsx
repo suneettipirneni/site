@@ -6,7 +6,9 @@ export function List({
 }: HtmlHTMLAttributes<HTMLUListElement> & { ordered?: boolean }) {
   return (
     <ul
-      className={`${ordered ? "list-decimal" : "list-disc"} list-inside`}
+      className={`${
+        ordered ? "list-decimal" : "list-disc"
+      } list-inside post:mb-4`}
       {...props}
     />
   );

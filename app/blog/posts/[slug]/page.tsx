@@ -66,7 +66,7 @@ export default function Post({ params }: { params: { slug: string } }) {
           <p className="text-gray-600 dark:text-gray-300">{post.description}</p>
         </div>
       </div>
-      <div className="md:col-start-2" id="post-main">
+      <div data-post className="md:col-start-2">
         <MDXComponent components={mdxComponents} />
       </div>
       <Outline

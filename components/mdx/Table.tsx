@@ -2,10 +2,7 @@ import { HTMLAttributes, HtmlHTMLAttributes } from "react";
 
 export function Table(props: HtmlHTMLAttributes<HTMLTableElement>) {
   return (
-    <div
-      data-table-container
-      className="rounded-lg dark:bg-white/10 bg-white/30 border border-gray-300 dark:border-white/25 overflow-clip"
-    >
+    <div className="rounded-lg dark:bg-white/10 bg-white/30 border border-gray-300 dark:border-white/25 overflow-clip post:mb-4">
       <table
         className=" divide-y divide-gray-300 dark:divide-white/25"
         {...props}

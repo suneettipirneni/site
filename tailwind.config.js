@@ -1,3 +1,6 @@
+const plugin = require("tailwindcss/plugin");
+const colors = require("tailwindcss/colors");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -5,6 +8,7 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./contentlayer.config.ts",
+    "./rehype/**/*.ts",
   ],
   theme: {
     fontFamily: {
@@ -18,5 +22,9 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addVariant }) {
+      addVariant("post", "[data-post=true]>&");
+    }),
+  ],
 };

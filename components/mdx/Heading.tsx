@@ -13,12 +13,12 @@ const headingLevelMappings = {
 };
 
 const headingTextSizes = {
-  1: "text-3xl",
-  2: "text-2xl",
-  3: "text-xl",
-  4: "text-lg",
-  5: "text-md",
-  6: "text-sm",
+  1: "text-3xl post:mt-8 post:pt-10 post:mb-7 post:font-bold post:border-t post:border-gray-400/30 post:dark:border-gray-600/50",
+  2: "text-2xl post:mb-6",
+  3: "text-xl post:mb-5",
+  4: "text-lg post:mb-4",
+  5: "text-md post:mb-4",
+  6: "text-sm post:mb-4",
 };
 
 export function Heading({
@@ -39,7 +39,7 @@ export function Heading({
     <HeadingComponent
       className={`flex flex-row group font-bold gap-x-2 ${
         headingTextSizes[level as keyof typeof headingTextSizes]
-      } ${className}`}
+      } ${className ?? ""}`}
       {...props}
     >
       {children}
