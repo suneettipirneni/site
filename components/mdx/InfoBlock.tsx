@@ -28,7 +28,8 @@ export function InfoBlock({ title, kind, children }: InfoBlockProps) {
 
   return (
     <div
-      className={`grid grid-cols-[80%_1fr] rounded-lg p-3 border mb-5 gap-y-4 ${mappedStyles[kind]}`}
+      data-info-block
+      className={`grid grid-cols-[80%_1fr] rounded-lg p-3 border gap-y-4 ${mappedStyles[kind]}`}
     >
       <h1
         className="flex col-start-1 text-lg font-bold items-center gap-2 cursor-pointer"

@@ -44,4 +44,36 @@ without large margins. */
   & > p {
     @apply mb-4;
   }
+
+  & > ul {
+    @apply mb-4;
+  }
+
+  & > ol {
+    @apply mb-4;
+  }
+
+  & > blockquote {
+    @apply mb-4;
+  }
+
+  & > table {
+    @apply mb-4;
+  }
+
+  & > div[data-image-container] {
+    @apply mb-4;
+  }
+
+  & > div[data-table-container] {
+    @apply mb-4;
+  }
+
+  & > div[data-info-block] {
+    @apply mb-5;
+  }
+
+  & > div[data-figure] {
+    @apply mb-4;
+  }
 }

@@ -5,8 +5,17 @@ import { Footer } from "./Footer";
 import { Image } from "./Image";
 import { Anchor } from "./Anchor";
 import { List } from "./List";
-import { Table, TableCell, TableRow } from "./Table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableHeadingCell,
+  TableRow,
+} from "./Table";
 import { InfoBlock } from "./InfoBlock";
+import { BlockQuote } from "./BlockQuote";
+import { Figure } from "./Figure";
 
 export const mdxComponents: MDXComponents = {
   h1: (props) => <Heading level={1} {...props} />,
@@ -20,8 +29,14 @@ export const mdxComponents: MDXComponents = {
   Image,
   a: (props) => <Anchor {...props} />,
   ul: (props) => <List {...props} />,
+  ol: (props) => <List ordered {...props} />,
   table: (props) => <Table {...props} />,
+  thead: (props) => <TableHeader {...props} />,
+  th: (props) => <TableHeadingCell {...props} />,
   tr: (props) => <TableRow {...props} />,
   td: (props) => <TableCell {...props} />,
+  tbody: (props) => <TableBody {...props} />,
   InfoBlock: (props) => <InfoBlock {...props} />,
+  blockquote: (props) => <BlockQuote {...props} />,
+  Figure,
 };
