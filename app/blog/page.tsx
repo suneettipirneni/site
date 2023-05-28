@@ -14,11 +14,13 @@ export default function AboutPage() {
         ))}
       </div>
 
-      <Title>All Posts</Title>
+      <Title>Other Posts</Title>
       <div className="flex flex-col md:space-y-5">
-        {allPosts.map((entry) => (
-          <BlogEntry key={entry.title} post={entry} />
-        ))}
+        {allPosts
+          .filter((entry) => !entry.featured)
+          .map((entry) => (
+            <BlogEntry key={entry.title} post={entry} />
+          ))}
       </div>
     </div>
   );
