@@ -6,3 +6,7 @@
   @apply text-lg;
   @apply overflow-x-auto;
 }
+
+div[data-post="true"] > .math.math-display {
+  @apply mb-4;
+}

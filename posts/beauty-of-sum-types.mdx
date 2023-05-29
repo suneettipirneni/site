@@ -16,7 +16,118 @@ description: I love sum types, in fact I love them so much I wrote a whole blog 
 The sum type the is best thing to come out since sliced bread. In my early days of programming my life was constricted to the domain
 of open types, with a sprinkle of enums and booleans. Behavior was shared through inheritance and polymorphism. I never knew I wanted sum types until I had them.
 
+# A Soft Introduction to Type Theory
+
+Type theory is simply a formal way of defining types. You can think of it to be similar to runtime analysis, but for types.
+
+I first want to show you that a type can be expressed as a set of all it's possible values.
+
+For example, the type `boolean` can be represented like so:
+
+$$
+\text{boolean} = \{\text{true}, \text{false}\}
+$$
+
+Because a boolean can only be `true` or `false`.
+
+A char could be represented as (assuming it's a-z):
+
+$$
+\text{char} = \{\text{'a'}, \text{'b'}, \text{'c'}, \dots, \text{'z'}\}
+$$
+
+Again, because a char can only be one of the letters in the alphabet from a-z.
+
+Make sure you grasp this representation of types, as it's the basis for the rest of this section.
+
+## Sum Types
+
+Given an enum:
+
+```java title="Color.java"
+enum Color {
+  RED,
+  GREEN,
+  BLUE
+}
+```
+
+We can represent the type `Color` as:
+
+$$
+\text{Color} = \{\text{RED}, \text{GREEN}, \text{BLUE}\}
+$$
+
+As `Color` can only be `RED`, `GREEN`, or `BLUE`. Note how it can't be two of these at the same time.
+
+Let's count the number of possible values for `Color`. We can do this by counting the number of elements in the set:
+
+$$
+\begin{aligned}
+|\text{Color}| &= |\{\text{RED}, \text{GREEN}, \text{BLUE}\}| \\
+             &= 3
+\end{aligned}
+$$
+
+<InfoBlock kind="info" title="What is |x|?">
+    The notation $|x|$ is known as the **cardinality** of a set. It's simply the number of elements in a set. For example if we have a set $x = \{1, 2, 3\}$, then $|x| = 3$.
+</InfoBlock>
+
+If we add another color to `Color`, say `YELLOW`, then the set of all possible values for `Color` would be:
+
+$$
+\begin{aligned}
+|\text{Color}| &= |\{\text{RED}, \text{GREEN}, \text{BLUE}, \text{YELLOW}\}| \\
+               &= 4
+\end{aligned}
+$$
+
+By now, you should see a very clear pattern, the number of possible types for `Color` is the number of enum variants it has.
+
+In other words, if we take the sum of the number of variants in an enum, we get the number of possible types for that enum. Because of this, enums are known as **sum types**.
+
+In fact `boolean`s are sum types too! Recall $|\text{boolean}| = 2$, and there are two variants for `boolean`, `true` and `false`. therefore `boolean` is a sum type.
+
+## Product Types
+
+Let's introduce a more complex type, a class with two fields:
+
+```java title="Container.java"
+class Container {
+  boolean foo;
+  boolean bar;
+}
+```
+
+Unlike the sum types we've seen so far, `Container` can be multiple types at the same time. It can be `foo=true, bar=true`, `foo=true, bar=false`, `foo=false, bar=true`, or `foo=false, bar=false`.
+
+What's the set of all possible types for `Container`? Well, we can represent it as:
+
+$$
+\text{Container} = \{\{\text{true, true}\}, \{\text{true, false}\}, \{\text{false, true}\}, \{\text{false, false}\}\}
+$$
+
+Notice something interesting? The set of all possible values for `Container` is the cartesian product of the set of all possible values for `boolean` with itself.
+
+We could also represent `Container` as a product of two `boolean`s:
+
+$$
+\begin{aligned}
+\text{Container} &= \text{boolean} \times \text{boolean} \\
+                 &= \{\text{true}, \text{false}\} \times \{\text{true}, \text{false}\} \\
+                 & = \{\{\text{true, true}\}, \{\text{true, false}\}, \{\text{false, true}\}, \{\text{false, false}\}\}
+\end{aligned}
+$$
+
+By this, we can assume that if another field `boolean baz` was added to `Container`, the set of all possible values for `Container` would be $\text{boolean} \times \text{boolean} \times \text{boolean}$.
+
+`Container` is known as a **product type** for this specific reason, the set of types it represents is the _product_ of the types it's composed of.
+
+However, if we want to be more specific we can say that `Container` is a **product of sum types**. This is because `boolean` is a sum type, and `Container` is a product of `boolean`s.
+
 # The problem with open types
+
+An **open** type can be thought of as a type that can be extended or implemented by any data structure. For example, in Java, class can implement the `Iterator<T>` interface.
 
 Consider a Java interface defined like so:
 
@@ -152,8 +263,6 @@ public enum HousePet {
   }
 }
 ```
-
-So why do we call this a sum type? It's called a sum type because the type is the sum of all of its variants. In this case, the type is the sum of `Dog` and `Cat`. Notice also how this enum is closed. We can't add any more variants to it. This allows `HousePet` to be exhaustively matched on.
 
 Let's look at how we can handle this sum type:
 
