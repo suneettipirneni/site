@@ -38,4 +38,5 @@ next-env.d.ts
 .contentlayer
 
 # yarn
-.yarn
+.yarn/cache
+.yarn/install-state.gz

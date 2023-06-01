@@ -18,7 +18,7 @@ export function TabBar({
     tab.replaceAll("/", "") === path.toLowerCase().replaceAll("/", "");
 
   return (
-    <div className="flex backdrop-blur flex-row justify-between p-1 rounded-full bg-black/5 dark:bg-black/30 shadow-sm border z-0 border-gray-400/10 dark:border-gray-800">
+    <div className="flex sticky top-6 backdrop-blur flex-row justify-between p-1 rounded-full bg-black/5 dark:bg-black/30 shadow-sm border z-0 border-gray-400/10 dark:border-gray-800">
       {tabs.map((tab, index) => (
         <Link
           key={tab.name}
