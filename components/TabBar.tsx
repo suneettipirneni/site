@@ -24,8 +24,10 @@ export function TabBar({
           key={tab.name}
           layout
           className={`flex flex-row items-center justify-between z-10 transition text-md lg:text-2xl relative px-4 py-1 font-[600] ${
-            isActive(tab.href) ? "text-black dark:text-black" : "text-black/70"
-          } dark:text-white`}
+            isActive(tab.href)
+              ? "text-black dark:text-black"
+              : "text-black/70 dark:text-white"
+          }`}
           href={`/${tab.href}`}
         >
           {isActive(tab.href) && (
