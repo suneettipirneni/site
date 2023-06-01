@@ -18,13 +18,13 @@ export function TabBar({
     tab.replaceAll("/", "") === path.toLowerCase().replaceAll("/", "");
 
   return (
-    <div className="flex flex-row justify-between p-1 rounded-full bg-black/5 dark:bg-black/30 shadow-sm border z-0 border-gray-400/10 dark:border-gray-800">
+    <div className="flex backdrop-blur flex-row justify-between p-1 rounded-full bg-black/5 dark:bg-black/30 shadow-sm border z-0 border-gray-400/10 dark:border-gray-800">
       {tabs.map((tab, index) => (
         <Link
           key={tab.name}
           layout
           className={`flex flex-row items-center justify-between z-10 transition text-md lg:text-2xl relative px-4 py-1 font-[600] ${
-            isActive(tab.href) ? "text-white" : "text-black/50"
+            isActive(tab.href) ? "text-black dark:text-black" : "text-black/70"
           } dark:text-white`}
           href={`/${tab.href}`}
         >
@@ -37,7 +37,7 @@ export function TabBar({
                 duration: 0.5,
               }}
               layoutId="selectedTab"
-              className="absolute inset-0 -z-10 dark:bg-white/30 bg-black/30 rounded-full"
+              className="absolute inset-0 -z-10 dark:bg-white bg-white rounded-full"
             />
           )}
 
