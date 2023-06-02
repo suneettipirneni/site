@@ -23,6 +23,7 @@ export const Post = defineDocumentType(() => ({
     datetime: { type: "date", required: true },
     tags: { type: "list", of: { type: "string" }, required: true },
     ogImage: { type: "string", required: true },
+    blurDataURL: { type: "string", required: false },
     description: { type: "string", required: true },
   },
   computedFields: {
