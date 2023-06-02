@@ -9,6 +9,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkGfm from "remark-gfm";
 import { inlineCodePlugin } from "./rehype/plugins/inlineCode";
 import { rehypeAutolinkHeadingsOptions } from "./rehype/options/rehypeAutoLinkHeadingsOptions";
+import { codeTitleBarPlugin } from "./rehype/plugins/codeTitleBar";
 
 export const Post = defineDocumentType(() => ({
   name: "Post",
@@ -61,6 +62,7 @@ export default makeSource({
       [rehypePrettyCode, rehypePrettyCodeOptions],
       rehypeSlug,
       inlineCodePlugin,
+      codeTitleBarPlugin,
       remarkMath,
       rehypeKatex,
       [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions],

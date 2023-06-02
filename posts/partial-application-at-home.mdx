@@ -18,7 +18,7 @@ Partial application is a technique used in functional programming create a new f
 specific arguments are set. A classic example of this is the `bind` function in JavaScript. The function returns a new function given a
 the existing function and some arguments you would like to apply to it.
 
-```js title="add.js"
+```js
 function add(a, b) {
   return a + b;
 }
@@ -36,7 +36,7 @@ Partially applied functions improve the usability and portabilty of functional c
 callers in other locations within your codebase have less arguments/dependencies to worry about. It also greatly simplifies function composition.
 Without partial application, the example above would have to be written as:
 
-```js title="add.js"
+```js
 function addOne(b) {
   return add(1, b);
 }
@@ -53,7 +53,7 @@ and instance of an object.
 There's something special about these objects though, all of its instance methods have access to the instance-specific fields via an
 implicity provided `self` parameter. I'll show you what I'm getting at by emulating partial application via rust structs.
 
-```rust title="main.rs"
+```rust
 fn add(a: i32, b: i32) -> i32 {
   a + b
 }
@@ -80,7 +80,7 @@ this to be a roundabout way to do partial application.
 
 Another approach would be to use a closure:
 
-```rust title="main.rs"
+```rust
 fn add(a: i32, b: i32) -> i32 {
   a + b
 }
@@ -93,9 +93,9 @@ fn main() {
 
 This is much more ergonomic than the struct approach.
 
-Here's a spicy one using nightly rust:
+Here's a spicy one using nightly features:
 
-```rust title="main.rs"
+```rust
 #![feature(unboxed_closures, fn_traits)]
 
 fn add(x: i32, y: i32) -> i32 {

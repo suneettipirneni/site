@@ -49,7 +49,7 @@ Typeclasses are the main mechanism for allowing ad-hoc polymorphism in haskell a
 
 The influence from haskell is extremely clear here. Let's take a look at some examples.
 
-```haskell title="drivable.hs"
+```haskell
 class Driveable a where
   drive :: a -> String
 
@@ -59,7 +59,7 @@ instance Driveable Car where
   drive _ = "Vroom vroom"
 ```
 
-```rust title="drivable.rs"
+```rust
 trait Driveable {
   fn drive(&self) -> String;
 }
@@ -75,13 +75,13 @@ impl Driveable for Car {
 
 Rust even has blanket implementations for typeclasses.
 
-```haskell title="drivable.hs"
+```haskell
 instance Driveable a => Driveable (Maybe a) where
   drive (Just a) = drive a
   drive Nothing = "Nothing to drive"
 ```
 
-```rust title="drivable.rs"
+```rust
 impl<T: Driveable> Driveable for Option<T> {
   fn drive(&self) -> String {
     if let Some(a) = self {
@@ -113,19 +113,19 @@ Let's take a look at this in action.
 
 First let's introduce a new data structure in both rust and haskell that defines a person.
 
-```rust title="person.rs"
+```rust
 struct Person {
   age: u32,
 }
 ```
 
-```haskell title="person.hs"
+```haskell
 newtype Person = Person { age :: Int }
 ```
 
 Each language offers a typeclass to convert a string to a data structure. For rust we implement [`FromStr`](https://doc.rust-lang.org/std/str/trait.FromStr.html) and for haskell we create an instance of [`Read`](https://hackage.haskell.org/package/base-4.18.0.0/docs/Text-Read.html#g:1).
 
-```rust title="person.rs"
+```rust
 impl FromStr for Person {
   type Err = ();
 
@@ -137,14 +137,14 @@ impl FromStr for Person {
 }
 ```
 
-```haskell title="person.hs"
+```haskell
 instance Read Person where
   readsPrec _ s = [(Person (read s), "")]
 ```
 
 Now when we parse a string into a person we can omit the type information.
 
-```rust title="main.rs"
+```rust
 fn introduce(person: &Person) {
   println!("I am {} years old", person.age);
 }
@@ -156,7 +156,7 @@ fn main() {
 }
 ```
 
-```haskell title="type-inference.hs"
+```haskell
 introduce :: Person -> IO ()
 introduce person = putStrLn $ "I am " ++ show (age person) ++ " years old"
 
@@ -176,13 +176,13 @@ to know how the type inference algorithm works to take advantage of it.
 
 Let's take a look at a similar example in Java.
 
-```java title="Person.java"
+```java
 public class Person {
   public int age;
 }
 ```
 
-```java title="TypeInference.java"
+```java
 public class TypeInference {
   public static void introduce(Person person) {
     System.out.println("I am " + person.age + " years old");
@@ -257,7 +257,7 @@ Even with the minefield of possibly missing values the `Option` monad gives us t
 
 `Result` in rust is an even more interesting case of haskell influence. Unlike `Option`, `Result`s have a syntactic sugar `?` for safely "unwrapping" the value. However upon closer inspection you may realize that `?` is just the monadic bind operator often used in haskell.
 
-```haskell title="error.hs"
+```haskell
 newtype Error = Error String
 
 foo :: Either Error Int
@@ -267,7 +267,7 @@ foo = do
   return y -- return is the wrapping method
 ```
 
-```rust title="error.rs"
+```rust
 struct Error(String);
 
 fn foo() -> Result<i32, Error> {

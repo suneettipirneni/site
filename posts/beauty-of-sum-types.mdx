@@ -190,7 +190,7 @@ I'll then make sure `Dog` and `Cat` implement `HousePet`:
 
 This is great! I can now use a constraint to handle cases specifically for `HousePet`s:
 
-```java title="Animal.java"
+```java
 void takeCareOfHousePets(List<HousePet> animals) {
   for (Animal animal : animals) {
     animal.takeCareOf();
@@ -200,7 +200,7 @@ void takeCareOfHousePets(List<HousePet> animals) {
 
 I also need to handle specific tasks for each kind of `HousePet`, so I do this:
 
-```java title="Animal.java"
+```java
 void takeCareOfHousePets(List<HousePet> animals) {
   for (Animal animal : animals) {
     if (animal instanceof Dog) {
@@ -235,7 +235,7 @@ record Snake(String name, int age, String sound) implements HousePet {
 
 When they call `takeCareOfHousePets` they get an exception thrown. This is because I didn't handle the case for `Snake` in my `takeCareOfHousePets` method.
 
-```java title="Main.java"
+```java
 // Exception: Not sure how to handle Snake[name=Sneaky, age=1, sound=Hiss]
 takeCareOfHousePets(new List<>(new Dog("Fido", 3), new Cat("Garfield", 5), new Snake("Sneaky", 1)));
 ```
@@ -266,7 +266,7 @@ public enum HousePet {
 
 Let's look at how we can handle this sum type:
 
-```java title="Main.java"
+```java
 void takeCareOfHousePets(List<HousePet> animals) {
   for (HousePet animalVariant : animals) {
     switch (animal) {
@@ -314,7 +314,7 @@ The type is now closed for extension and we get a nice compile-time error.
 
 We can guarantee that we've handled all the cases for sealed classes like `HousePet` by pattern matching `instanceof`:
 
-```java title="Main.java"
+```java
 void takeCareOfHousePets(List<HousePet> animals) {
   for (HousePet animal : animals) {
     switch (animal) {
@@ -333,7 +333,7 @@ The world of programming is made up of more than just java. Other languages have
 
 Rust takes a similar approach to java with the concept of enums and associated values:
 
-```rust title="housepet.rs"
+```rust
 enum HousePet {
   Dog(Dog),
   Cat(Cat),
@@ -347,7 +347,7 @@ This behaviour allows rust enums to be more flexible than java enums in some ins
 
 In terms of syntax, Haskell takes a different approach to sum types. It uses the `|` (union) operator to define variants:
 
-```haskell title="HousePet.hs"
+```haskell
 data HousePet = Dog Dog | Cat Cat
 ```
 
@@ -357,14 +357,14 @@ Similar to rust, each variant can be disjoint from the others.
 
 Typescript is similiar to haskell syntax-wise but uses types as-is rather than wrapping them in distinct named variants:
 
-```typescript title="HousePet.ts"
+```typescript
 type HousePet = Dog | Cat;
 ```
 
 Because sum types in typescript don't have nominal labels, you can't match on them directly like you do in haskell or rust. Instead you need to use `instanceof` checks
 against the types:
 
-```typescript title="index.ts"
+```typescript
 function takeCareOfHousePets(animals: HousePet[]) {
   for (const animal of animals) {
     if (animal instanceof Dog) {
@@ -379,7 +379,7 @@ function takeCareOfHousePets(animals: HousePet[]) {
 However, this doesn't cover cases where objects are used instead of classes. We can't check `instanceof` on objects. So we need to use a different approach. We can use
 something called a "discriminant property" to identify the type of the object. This is a property that is unique to each variant. For example, we could add a `type` to each variant:
 
-```typescript title="HousePet.ts"
+```typescript
 type Dog = {
   type: "dog";
   name: string;
