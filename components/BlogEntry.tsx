@@ -13,16 +13,16 @@ export function BlogEntry({ post }: BlogEntryProps) {
   return (
     <Link
       href={post.url}
-      className="@container flex flex-col w-full hover:bg-gray-200/50 dark:hover:bg-white/5 rounded-2xl transition-all hover:scale-105"
+      className="@container flex flex-col w-full space-y-3 hover:bg-gray-200/50 dark:hover:bg-white/5 rounded-2xl transition-all hover:scale-105"
     >
       <Image
-        className="w-full h-[120px] md:@md:h-[200px] object-cover rounded-xl @md:rounded-2xl"
+        className="w-full hidden md:block h-[100px] md:@md:h-[200px] object-cover rounded-xl @md:rounded-xl"
         src={post.ogImage}
         width={500}
         height={400}
         alt={post.title}
       />
-      <div className="flex flex-col w-full h-full gap-2 p-3">
+      <div className="flex flex-col w-full h-full gap-2">
         <span className="flex flex-col">
           <h1 className="text-xl font-bold">
             <Balancer>{post.title}</Balancer>

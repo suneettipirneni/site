@@ -8,14 +8,14 @@ export default function AboutPage() {
   return (
     <div className="flex flex-col space-y-5 w-full md:pb-10 pb-5">
       <Title>Featured</Title>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-7">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-12 md:gap-y-10">
         {featuredPosts.map((entry) => (
           <BlogEntry key={entry.title} post={entry} />
         ))}
       </div>
 
       <Title>Other Posts</Title>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-7 gap-y-12 md:gap-y-10">
         {allPosts
           .filter((entry) => !entry.featured)
           .map((entry) => (
