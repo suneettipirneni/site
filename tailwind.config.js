@@ -26,5 +26,6 @@ module.exports = {
     plugin(function ({ addVariant }) {
       addVariant("post", "[data-post=true]>&");
     }),
+    require("@tailwindcss/container-queries"),
   ],
 };
