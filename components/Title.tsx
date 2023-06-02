@@ -6,9 +6,7 @@ export function Title({
   className?: string;
 }) {
   return (
-    <h1
-      className={`${className} text-xl sm:text-2xl lg:text-3xl font-bold text-left`}
-    >
+    <h1 className={`${className} text-2xl lg:text-3xl font-bold text-left`}>
       {children}
     </h1>
   );
