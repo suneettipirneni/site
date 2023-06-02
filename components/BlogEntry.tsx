@@ -13,10 +13,10 @@ export function BlogEntry({ post }: BlogEntryProps) {
   return (
     <Link
       href={post.url}
-      className="@container flex flex-col w-full border-t bg-white dark:bg-black dark:hover:bg-black/40 rounded-xl border border-gray-500/20 dark:border-gray-700 dark:border-white/20"
+      className="@container flex flex-col w-full hover:bg-gray-200/50 dark:hover:bg-white/5 rounded-2xl transition-all hover:scale-105"
     >
       <Image
-        className="w-full h-[100px] @md:h-[200px] object-cover rounded-t-xl border-b border-gray-500/30"
+        className="w-full h-[120px] md:@md:h-[200px] object-cover rounded-xl @md:rounded-2xl"
         src={post.ogImage}
         width={500}
         height={400}
@@ -32,7 +32,7 @@ export function BlogEntry({ post }: BlogEntryProps) {
           </time>
         </span>
 
-        <p className="text-sm @md:text-md text-gray-700 dark:text-gray-300 overflow-ellipsis line-clamp-4 mb-auto">
+        <p className="text-sm @md:text-md text-gray-700 dark:text-gray-300 overflow-ellipsis line-clamp-4">
           {post.description}
         </p>
         <div className="flex flex-row items-end gap-2 flex-wrap">
