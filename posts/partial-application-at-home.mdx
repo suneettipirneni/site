@@ -20,7 +20,7 @@ the existing function and some arguments you would like to apply to it.
 
 ```js
 function add(a, b) {
-  return a + b;
+	return a + b;
 }
 
 const addOne = add.bind(null, 1);
@@ -38,7 +38,7 @@ Without partial application, the example above would have to be written as:
 
 ```js
 function addOne(b) {
-  return add(1, b);
+	return add(1, b);
 }
 ```
 

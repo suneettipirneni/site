@@ -6,44 +6,44 @@ import { Balancer } from "react-wrap-balancer";
 import Image from "next/image";
 
 export interface BlogEntryProps {
-  post: Post;
+	post: Post;
 }
 
 export function BlogEntry({ post }: BlogEntryProps) {
-  return (
-    <div className="@container flex flex-col w-full space-y-3 pt-5 first:pt-0 md:pt-0">
-      <Link
-        href={post.url}
-        className="relative overflow-hidden h-[200px] z-10 rounded-xl"
-      >
-        <Image
-          className="absolute w-full h-[200px] object-cover rounded-xl transition-all duration-300 ease-in-out hover:scale-105"
-          src={post.ogImage}
-          width={500}
-          height={400}
-          alt={post.title}
-        />
-      </Link>
+	return (
+		<div className="flex w-full flex-col space-y-3 pt-5 @container first:pt-0 md:pt-0">
+			<Link
+				href={post.url}
+				className="relative z-10 h-[200px] overflow-hidden rounded-xl"
+			>
+				<Image
+					className="absolute h-[200px] w-full rounded-xl object-cover transition-all duration-300 ease-in-out hover:scale-105"
+					src={post.ogImage}
+					width={500}
+					height={400}
+					alt={post.title}
+				/>
+			</Link>
 
-      <div className="flex flex-row items-end gap-2 flex-wrap">
-        {post.tags.map((tag) => (
-          <TagChip key={tag} name={tag} />
-        ))}
-      </div>
-      <div className="flex flex-col w-full gap-2">
-        <Link href={post.url} className="flex flex-col">
-          <h1 className="text-xl font-bold hover:underline">
-            <Balancer>{post.title}</Balancer>
-          </h1>
-        </Link>
+			<div className="flex flex-row flex-wrap items-end gap-2">
+				{post.tags.map((tag) => (
+					<TagChip key={tag} name={tag} />
+				))}
+			</div>
+			<div className="flex w-full flex-col gap-2">
+				<Link href={post.url} className="flex flex-col">
+					<h1 className="text-xl font-bold hover:underline">
+						<Balancer>{post.title}</Balancer>
+					</h1>
+				</Link>
 
-        <p className="text-sm @md:text-md text-gray-700 dark:text-gray-300 overflow-ellipsis line-clamp-4">
-          {post.description}
-        </p>
-      </div>
-      <time className="text-gray-600 text-sm dark:text-gray-300/80">
-        {format(parseISO(post.datetime), "LLLL d, yyyy")}
-      </time>
-    </div>
-  );
+				<p className="@md:text-md line-clamp-4 overflow-ellipsis text-sm text-gray-700 dark:text-gray-300">
+					{post.description}
+				</p>
+			</div>
+			<time className="text-sm text-gray-600 dark:text-gray-300/80">
+				{format(parseISO(post.datetime), "LLLL d, yyyy")}
+			</time>
+		</div>
+	);
 }

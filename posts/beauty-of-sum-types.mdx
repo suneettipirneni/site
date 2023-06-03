@@ -366,13 +366,13 @@ against the types:
 
 ```typescript
 function takeCareOfHousePets(animals: HousePet[]) {
-  for (const animal of animals) {
-    if (animal instanceof Dog) {
-      animal.walk();
-    } else if (animal instanceof Cat) {
-      animal.cleanLitterBox();
-    }
-  }
+	for (const animal of animals) {
+		if (animal instanceof Dog) {
+			animal.walk();
+		} else if (animal instanceof Cat) {
+			animal.cleanLitterBox();
+		}
+	}
 }
 ```
 
@@ -381,17 +381,17 @@ something called a "discriminant property" to identify the type of the object. T
 
 ```typescript
 type Dog = {
-  type: "dog";
-  name: string;
-  age: number;
-  sound: string;
+	type: "dog";
+	name: string;
+	age: number;
+	sound: string;
 };
 
 type Cat = {
-  type: "cat";
-  name: string;
-  age: number;
-  sound: string;
+	type: "cat";
+	name: string;
+	age: number;
+	sound: string;
 };
 
 type HousePet = Dog | Cat;
@@ -401,13 +401,13 @@ Now we can disambiguate `HousePet` objects by checking the `type` property:
 
 ```typescript
 function takeCareOfHousePets(animals: HousePet[]) {
-  for (const animal of animals) {
-    if (animal.type === "dog") {
-      animal.walk();
-    } else if (animal.type === "cat") {
-      animal.cleanLitterBox();
-    }
-  }
+	for (const animal of animals) {
+		if (animal.type === "dog") {
+			animal.walk();
+		} else if (animal.type === "cat") {
+			animal.cleanLitterBox();
+		}
+	}
 }
 ```
 

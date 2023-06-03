@@ -1,11 +1,11 @@
 export function Subtitle({
-  children,
-  className,
+	children,
+	className,
 }: {
-  children: React.ReactNode;
-  className?: string;
+	children: React.ReactNode;
+	className?: string;
 }) {
-  return (
-    <h1 className={`${className} text-lg sm:text-2xl text-left`}>{children}</h1>
-  );
+	return (
+		<h1 className={`${className} text-left text-lg sm:text-2xl`}>{children}</h1>
+	);
 }

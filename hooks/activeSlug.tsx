@@ -3,53 +3,53 @@ import { useEffect, useState } from "react";
 
 // Hook adapted from https://nickymeuleman.netlify.app/blog/table-of-contents
 export function useActiveSlug(headers: HeadingNode[]) {
-  const [activeSlug, setActiveSlug] = useState(``);
+	const [activeSlug, setActiveSlug] = useState(``);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSlug(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: `0% 0% -80% 0%` }
-    );
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						setActiveSlug(entry.target.id);
+					}
+				});
+			},
+			{ rootMargin: `0% 0% -80% 0%` }
+		);
 
-    const idCallback = (nodes: HeadingNode[]) => {
-      const elements: HTMLElement[] = [];
+		const idCallback = (nodes: HeadingNode[]) => {
+			const elements: HTMLElement[] = [];
 
-      nodes.forEach((node) => {
-        if (node.children.length > 0) {
-          elements.push(...idCallback(node.children));
-        }
+			nodes.forEach((node) => {
+				if (node.children.length > 0) {
+					elements.push(...idCallback(node.children));
+				}
 
-        const { slug: id } = node;
-        const element = document.getElementById(id);
+				const { slug: id } = node;
+				const element = document.getElementById(id);
 
-        if (!element) {
-          throw new Error(`Cannot find heading with id: ${node.text}`);
-        }
+				if (!element) {
+					throw new Error(`Cannot find heading with id: ${node.text}`);
+				}
 
-        elements.push(element);
-      });
+				elements.push(element);
+			});
 
-      return elements;
-    };
+			return elements;
+		};
 
-    const elements = idCallback(headers);
+		const elements = idCallback(headers);
 
-    elements.forEach((element) => {
-      observer.observe(element);
-    });
+		elements.forEach((element) => {
+			observer.observe(element);
+		});
 
-    return () => {
-      elements.forEach((element) => {
-        observer.unobserve(element);
-      });
-    };
-  }, [headers]);
+		return () => {
+			elements.forEach((element) => {
+				observer.unobserve(element);
+			});
+		};
+	}, [headers]);
 
-  return activeSlug;
+	return activeSlug;
 }

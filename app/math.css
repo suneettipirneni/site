@@ -1,12 +1,12 @@
 .math.math-display {
-  @apply dark:bg-white/10 bg-white/30;
-  @apply border border-gray-300 dark:border-white/25;
-  @apply rounded-lg;
-  @apply p-5;
-  @apply text-lg;
-  @apply overflow-x-auto;
+	@apply bg-white/30 dark:bg-white/10;
+	@apply border border-gray-300 dark:border-white/25;
+	@apply rounded-lg;
+	@apply p-5;
+	@apply text-lg;
+	@apply overflow-x-auto;
 }
 
 div[data-post="true"] > .math.math-display {
-  @apply mb-4;
+	@apply mb-4;
 }
