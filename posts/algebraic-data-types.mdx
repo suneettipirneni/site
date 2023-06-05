@@ -1,50 +1,68 @@
 ---
 author: Suneet Tipirneni
 datetime: 2023-01-26T23:42:11.356Z
-title: Sum types are pretty cool you should use them
-slug: beauty-of-sum-types
+title: "Algebraic Data Types - Predictable Code is Robust Code"
+slug: algebraic-data-types
 featured: true
 draft: false
 tags:
   - patterns
-ogImage: "/headers/sum-types.png"
-description: I love sum types, in fact I love them so much I wrote a whole blog post about them. In this post I go over why sum types are special and how they can be used to make your code safer and more robust.
+ogImage: "/headers/algebraic-data-types.png"
+description: I love algebraic types, in fact I love them so much I wrote a whole blog post about them. In this post I go over why algebraic data types are special and how they can be used to make your code safer and more robust.
 ---
 
-# Sum Types, the most underrated types
+# Introduction
 
-The sum type the is best thing to come out since sliced bread. In my early days of programming my life was constricted to the domain
-of open types, with a sprinkle of enums and booleans. Behavior was shared through inheritance and polymorphism. I never knew I wanted sum types until I had them.
+Algebraic data types are types that are often used by millions of developers every day. In fact as time goes on, more and more languages are adopting algebraic data types as a core feature. There's no better time than
+the present to learn about them.
 
 # A Soft Introduction to Type Theory
 
 Type theory is simply a formal way of defining types. You can think of it to be similar to runtime analysis, but for types.
 
-I first want to show you that a type can be expressed as a set of all it's possible values.
+<InfoBlock kind="info" title="Notation">
+  The next few sections will use a bit of set notation. Here's a quick refresher on the basics:
 
-For example, the type `boolean` can be represented like so:
+- $\in$ means "is an element of". For example, $1 \in \{1, 2, 3\}$ holds.
+- $\subseteq$ means "is a subset of". For example, $\{1, 2\} \subseteq \{1, 2, 3\}$ holds.
+- $| |$ means "cardinality of" it counts the size of lenght of the set. For example, $|\{1, 2, 3\}| = 3$.
+- $\times$ means "cartesian product of". For example:
+  $$
+  \{1, 2\} \times \{3, 4\} = \{(1, 3), (1, 4), (2, 3), (2, 4)\}
+  $$
+- $\notin$ means "is not an element of" it is the opposite of $\in$. For example, $1 \notin \{2, 3\}$ holds.
 
+</InfoBlock>
+
+I first want to show you that a type can be expressed as a set of all it's possible values. For example, the type `boolean` can be represented like so:
+
+<Figure caption="The set of all possible values the boolean type can take on.">
 $$
 \text{boolean} = \{\text{true}, \text{false}\}
 $$
-
-Because a boolean can only be `true` or `false`.
+</Figure>
 
 A char could be represented as (assuming it's a-z):
 
+<Figure caption="The set of all possible types a char can take on.">
 $$
 \text{char} = \{\text{'a'}, \text{'b'}, \text{'c'}, \dots, \text{'z'}\}
 $$
+</Figure>
 
 Again, because a char can only be one of the letters in the alphabet from a-z.
 
-Make sure you grasp this representation of types, as it's the basis for the rest of this section.
+This representation is useful because it gives us a structured way to model types. For example, if we ask ourselves,
+"is `true` assignable to `boolean`? We simply see if $\text{true} \in \text{boolean}$ holds. On the contrary, if we ask ourselves,
+"is `1` assignable to `boolean`? We can see that $\text{1} \notin \text{boolean}$ holds. Neat!
 
 ## Sum Types
 
+Things with algebraic data types get interesting when we start to apply operations to them. Let's start with a simple example.
+
 Given an enum:
 
-```java title="Color.java"
+```java
 enum Color {
   RED,
   GREEN,
@@ -69,10 +87,6 @@ $$
 \end{aligned}
 $$
 
-<InfoBlock kind="info" title="What is |x|?">
-    The notation $|x|$ is known as the **cardinality** of a set. It's simply the number of elements in a set. For example if we have a set $x = \{1, 2, 3\}$, then $|x| = 3$.
-</InfoBlock>
-
 If we add another color to `Color`, say `YELLOW`, then the set of all possible values for `Color` would be:
 
 $$
@@ -88,15 +102,61 @@ In other words, if we take the sum of the number of variants in an enum, we get 
 
 In fact `boolean`s are sum types too! Recall $|\text{boolean}| = 2$, and there are two variants for `boolean`, `true` and `false`. therefore `boolean` is a sum type.
 
+### Properties of Sum Types
+
+Sum types exhibit certain properties that make them useful for developers. Let's go over them.
+
+#### Exhaustiveness
+
+Sum types are exhaustive, this both the developer and compiler able to make sure all variants are handled.
+
+For example, if we implement `toString` for `Color` like so:
+
+```java
+  @Override
+  public String toString() {
+    return switch (this) {
+      case RED -> "Red";
+      case GREEN -> "Green";
+      case BLUE -> "Blue";
+    };
+  }
+```
+
+We can be sure that all variants of `Color` are handled. If we add a new variant to `Color`, say `YELLOW`,
+the compiler will complain that `YELLOW` is not handled in the switch statement:
+
+```java
+  @Override
+  public String toString() {
+    return switch (this) { // Compiler error: Switch case YELLOW not handled
+      case RED -> "Red";
+      case GREEN -> "Green";
+      case BLUE -> "Blue";
+    };
+  }
+```
+
+This makes our code much safer and forces us to handle all variants.
+
+<InfoBlock kind="info" title="Is that Java switch syntax new?">
+	Yes, it's a new feature in Java 14. It's called [Switch
+	Expressions](https://openjdk.java.net/jeps/361).
+</InfoBlock>
+
+#### Uniqueness
+
+Each constituent of a sum type is unique. For example, `Colors.RED` is not `Colors.GREEN`, and `Colors.GREEN` is not `Colors.BLUE`. Additionally, `Colors` cannot take
+on multiple variants at the same time. It cannot be `Colors.RED` and `Colors.GREEN` at the same time. Because of this we say that sum types are **disjoint**.
+
 ## Product Types
 
-Let's introduce a more complex type, a class with two fields:
+So far we've only looked a types that take on one value at a time. Let's look at a type that can take on multiple values at the same time.
 
-```java title="Container.java"
-class Container {
-  boolean foo;
-  boolean bar;
-}
+Here's a more complex type, a tuple record with two fields:
+
+```java
+record Container(bool foo, bool baz) {}
 ```
 
 Unlike the sum types we've seen so far, `Container` can be multiple types at the same time. It can be `foo=true, bar=true`, `foo=true, bar=false`, `foo=false, bar=true`, or `foo=false, bar=false`.
@@ -104,7 +164,7 @@ Unlike the sum types we've seen so far, `Container` can be multiple types at the
 What's the set of all possible types for `Container`? Well, we can represent it as:
 
 $$
-\text{Container} = \{\{\text{true, true}\}, \{\text{true, false}\}, \{\text{false, true}\}, \{\text{false, false}\}\}
+\text{Container} = \{(\text{true, true}), (\text{true, false}), (\text{false, true}), (\text{false, false})\}
 $$
 
 Notice something interesting? The set of all possible values for `Container` is the cartesian product of the set of all possible values for `boolean` with itself.
@@ -115,19 +175,45 @@ $$
 \begin{aligned}
 \text{Container} &= \text{boolean} \times \text{boolean} \\
                  &= \{\text{true}, \text{false}\} \times \{\text{true}, \text{false}\} \\
-                 & = \{\{\text{true, true}\}, \{\text{true, false}\}, \{\text{false, true}\}, \{\text{false, false}\}\}
+                 &= \{(\text{true, true}), (\text{true, false}), (\text{false, true}), (\text{false, false})\}
 \end{aligned}
 $$
 
-By this, we can assume that if another field `boolean baz` was added to `Container`, the set of all possible values for `Container` would be $\text{boolean} \times \text{boolean} \times \text{boolean}$.
+By this, we can assume that if another field `boolean baz` was added to `Container` (`Containter(bool, bool, bool)`), the set of all possible values for `Container` would be $\text{boolean} \times \text{boolean} \times \text{boolean}$.
 
 `Container` is known as a **product type** for this specific reason, the set of types it represents is the _product_ of the types it's composed of.
 
 However, if we want to be more specific we can say that `Container` is a **product of sum types**. This is because `boolean` is a sum type, and `Container` is a product of `boolean`s.
 
+### Properties of Product Types
+
+#### Composability
+
+Product types are composable. This means that we can compose product types to create even more complex types.
+
+If we create refer back to the `Color` example, we can compose `Color` with `Container` to create a new type `ColorContainer`:
+
+```java
+record ColorContainer(Color color, Container container) {}
+```
+
+We can represent the set of all possible values for `ColorContainer` as:
+
+$$
+\begin{aligned}
+\text{ColorContainer} &= \text{Color} \times \text{Container} \\
+                      &= \{\text{RED}, \text{GREEN}, \text{BLUE}\} \times \{(\text{true, true}), (\text{true, false}), (\text{false, true}), (\text{false, false})\} \\
+                      &= \{(\text{RED, true, true}), (\text{RED, true, false}), (\text{RED, false, true}), (\text{RED, false, false}), \\
+                      &\quad (\text{GREEN, true, true}), (\text{GREEN, true, false}), (\text{GREEN, false, true}), (\text{GREEN, false, false}), \\
+                      &\quad (\text{BLUE, true, true}), (\text{BLUE, true, false}), (\text{BLUE, false, true}), (\text{BLUE, false, false})\}
+\end{aligned}
+$$
+
+Pretty complex set of possible values right? While this may be unneccearily complex, it's helps us understand even in the most complex cases, product types are still composable.
+
 # The problem with open types
 
-An **open** type can be thought of as a type that can be extended or implemented by any data structure. For example, in Java, class can implement the `Iterator<T>` interface.
+An **open**[^1] type can be thought of as a type that can be extended or implemented by any data structure. For example, in Java, class can implement the `Iterator<T>` interface.
 
 Consider a Java interface defined like so:
 
@@ -420,3 +506,5 @@ For reference:
 - When you have a type that is meant to be implemented, or is used to show a contract is satisfied. Use polymorphic types to model this. For example, if you want to model shapes, you can introduce an
   interface with a `getArea()` method. This allows you introduce new shapes under the `Shape` type umbrella.
 - When you have a limited set of variants that may or may not be covariant with each other. Use sum types to model this. See our `HousePet` example above.
+
+[^1]: This is not a formal term but I'm using it as a blanket term for classes, interfaces, etc.

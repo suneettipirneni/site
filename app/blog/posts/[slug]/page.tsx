@@ -70,7 +70,7 @@ export default function Post({ params }: { params: { slug: string } }) {
 				<MDXComponent components={mdxComponents} />
 			</div>
 			<Outline
-				className="sticky top-10 hidden min-w-[200px] self-start lg:block"
+				className="sticky top-10 hidden self-start overflow-hidden overflow-ellipsis xl:block xl:min-w-[300px]"
 				headings={headings}
 			/>
 		</article>

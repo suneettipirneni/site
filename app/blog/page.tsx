@@ -26,9 +26,9 @@ export default function AboutPage() {
 	const featuredPosts = sortedPosts.filter((post) => post.featured);
 
 	return (
-		<div className="flex w-full flex-col space-y-7 border-gray-400/50 px-5 py-7 md:pb-10">
+		<div className="flex w-full flex-col space-y-4 px-5 py-7 md:pb-10">
 			<Title>Featured</Title>
-			<div className="h-[1px] w-auto border-b-2 border-gray-400/50" />
+			<div className="h-[1px] w-auto border-b border-gray-300 dark:border-gray-500" />
 			<PostSection className="grid grid-cols-1 md:grid-cols-2">
 				{featuredPosts.map((entry) => (
 					<BlogEntry key={entry.title} post={entry} />
@@ -36,7 +36,7 @@ export default function AboutPage() {
 			</PostSection>
 
 			<Title>Other Posts</Title>
-			<div className="left-0 h-[1px] w-auto border-b-2 border-gray-400/50" />
+			<div className="left-0 h-[1px] w-auto border-b border-gray-300 dark:border-gray-500" />
 			<PostSection className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 				{sortedPosts
 					.filter((entry) => !entry.featured)
