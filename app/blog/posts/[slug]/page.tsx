@@ -52,7 +52,7 @@ export default function Post({ params }: { params: { slug: string } }) {
 				<FaArrowLeft />
 				Back
 			</Link>
-			<h1 className="col-start-2 row-start-2 mb-10 flex w-auto flex-col text-3xl font-bold">
+			<h1 className="col-start-2 row-start-2 mb-10 flex w-auto max-w-[700px] flex-col text-3xl font-bold">
 				<Balancer>{post.title}</Balancer>
 				<time
 					dateTime={post.datetime}
