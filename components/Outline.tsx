@@ -48,9 +48,7 @@ export function Outline({ headings, className }: OutlineProps) {
 
 	return (
 		<div className={className}>
-			<h3 className="mb-2 flex flex-col text-xl font-bold">
-				Table of Contents
-			</h3>
+			<h3 className="mb-2 flex flex-col text-xl font-bold">Outline</h3>
 			{headings.map((heading) => (
 				<OutlineNode
 					key={heading.slug}

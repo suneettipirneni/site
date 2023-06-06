@@ -16,6 +16,7 @@ import {
 import { InfoBlock } from "./InfoBlock";
 import { BlockQuote } from "./BlockQuote";
 import { Figure } from "./Figure";
+import { CopyButton } from "./CopyButton";
 
 export const mdxComponents: MDXComponents = {
 	h1: (props) => <Heading level={1} {...props} />,
@@ -39,4 +40,5 @@ export const mdxComponents: MDXComponents = {
 	InfoBlock: (props) => <InfoBlock {...props} />,
 	blockquote: (props) => <BlockQuote {...props} />,
 	Figure,
+	CopyButton: (props) => <CopyButton {...props} />,
 };

@@ -2,6 +2,7 @@ import type { Plugin } from "unified";
 import { visit } from "unist-util-visit";
 import type { Element } from "hast";
 import type { Node } from "unist-util-visit/lib";
+import { toText } from "hast-util-to-text";
 
 const languageMap: Record<string, string> = {
 	cpp: "c++",
@@ -28,6 +29,7 @@ function transformLanguage(language: string) {
 	return titleCase(language);
 }
 
+// This plugin adds a title bar and a copy button to code blocks.
 export const codeTitleBarPlugin: Plugin = () => {
 	const codeTitleBarPredicate = (node: Node) => {
 		if (node.type !== "element") {
@@ -40,7 +42,7 @@ export const codeTitleBarPlugin: Plugin = () => {
 
 		return Boolean(
 			element.tagName === "div" &&
-				"data-rehype-pretty-code-fragment" in element.properties!
+				"data-rehype-pretty-code-fragment" in (element.properties ?? {})
 		);
 	};
 
@@ -48,15 +50,42 @@ export const codeTitleBarPlugin: Plugin = () => {
 		visit(tree, codeTitleBarPredicate, (node: Node) => {
 			const element = node as Element;
 
-			const codeTitleBar = element.children.find(
+			const codeTitleBars = element.children.filter(
 				(node) =>
 					node.type === "element" &&
 					node.tagName === "div" &&
 					"data-rehype-pretty-code-title" in node.properties!
-			) as Element | undefined;
+			) as Element[];
 
-			// Title already set, ignore.
-			if (codeTitleBar) {
+			// Find the code element
+			const codeElement = element.children.find((node) => {
+				return node.type === "element" && node.tagName === "pre";
+			});
+
+			if (!codeElement) {
+				return;
+			}
+
+			// Extract the raw code text
+			const code = toText(codeElement);
+
+			// A function to add the copy button to the title bar.
+			const modifyTitleBar = (titleBar: Element) => {
+				titleBar.properties!.className =
+					"flex flex-row justify-between items-center w-full";
+				titleBar.children.push({
+					type: "element",
+					tagName: "CopyButton",
+					properties: {
+						text: code,
+					},
+					children: [],
+				});
+			};
+
+			// Title already set, append the copy button.
+			if (codeTitleBars.length > 0) {
+				codeTitleBars.forEach(modifyTitleBar);
 				return;
 			}
 
@@ -78,7 +107,8 @@ export const codeTitleBarPlugin: Plugin = () => {
 				return;
 			}
 
-			element.children.unshift({
+			// Create a new title bar for the code block.
+			const newTitleBar: Element = {
 				type: "element",
 				tagName: "div",
 				properties: {
@@ -90,7 +120,10 @@ export const codeTitleBarPlugin: Plugin = () => {
 						value: transformLanguage(language),
 					},
 				],
-			});
+			};
+
+			modifyTitleBar(newTitleBar);
+			element.children.unshift(newTitleBar);
 		});
 	};
 };
