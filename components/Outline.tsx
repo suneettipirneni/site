@@ -21,13 +21,14 @@ export const OutlineNode = memo(function OutlineNode({
 	const isActive = activeSlug === node.slug;
 
 	return (
-		<div className="flex flex-col space-y-1">
+		<div className="flex flex-col space-y-2">
 			<a
 				href={`#${node.slug}`}
-				className={`pl-2 text-sm ${
-					isActive &&
-					"rounded-sm border-l-4 border-gray-600 bg-gray-800/10  dark:border-gray-400 dark:bg-gray-500/20"
-				} line-clamp-1 text-ellipsis text-gray-600 hover:underline dark:text-gray-400`}
+				className={`text-sm ${
+					isActive
+						? "rounded-sm  border-gray-600 font-bold  dark:border-gray-400 "
+						: "text-gray-600 dark:text-gray-400"
+				} line-clamp-1 text-ellipsis  hover:underline `}
 			>
 				{node.text}
 			</a>
@@ -47,7 +48,7 @@ export function Outline({ headings, className }: OutlineProps) {
 
 	return (
 		<div className={className}>
-			<h3 className="mb-2 flex flex-col text-lg font-bold">
+			<h3 className="mb-2 flex flex-col text-xl font-bold">
 				Table of Contents
 			</h3>
 			{headings.map((heading) => (

@@ -44,8 +44,8 @@ export default function Post({ params }: { params: { slug: string } }) {
 	const MDXComponent = useMDXComponent(post.body.code);
 
 	return (
-		<article className="md:grid-rows(1fr, 100%, 1fr) relative z-10 gap-x-10 py-4 md:grid md:grid-cols-[1fr_min(700px,100%)_1fr] md:py-8">
-			<div className="col-start-2 mb-2">
+		<article className="grid-rows(1fr, 100%, 1fr) relative z-10 w-full grid-cols-[1fr_fit-content(700px)_1fr] gap-x-10 py-4 md:py-8 lg:grid">
+			<div className="col-start-2 mb-2 min-w-0">
 				<Link
 					href="/blog"
 					className="my-5 flex flex-row items-center gap-2 text-xl font-medium md:my-10"
@@ -66,11 +66,12 @@ export default function Post({ params }: { params: { slug: string } }) {
 					<p className="text-gray-600 dark:text-gray-300">{post.description}</p>
 				</div>
 			</div>
-			<div data-post className="md:col-start-2">
+			<div data-post className="col-start-2 min-w-0">
 				<MDXComponent components={mdxComponents} />
 			</div>
+			<div></div>
 			<Outline
-				className="sticky top-10 hidden self-start overflow-hidden overflow-ellipsis xl:block xl:min-w-[300px]"
+				className="sticky top-10 col-start-3 row-start-2 hidden min-w-[200px] self-start lg:block"
 				headings={headings}
 			/>
 		</article>
