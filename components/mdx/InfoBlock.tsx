@@ -7,7 +7,7 @@ import { useState } from "react";
 
 export interface InfoBlockProps {
 	title: string;
-	kind: "info" | "warning" | "danger";
+	kind?: "info" | "warning" | "danger";
 	children?: React.ReactNode;
 }
 
@@ -23,15 +23,15 @@ const mappedStyles = {
 	danger: "bg-red-400/50 border-red-400",
 };
 
-export function InfoBlock({ title, kind, children }: InfoBlockProps) {
+export function InfoBlock({ title, kind = "info", children }: InfoBlockProps) {
 	const [open, setOpen] = useState(false);
 
 	return (
 		<div
-			className={`grid grid-cols-[80%_1fr] gap-y-4 rounded-lg border p-3 post:mb-5 ${mappedStyles[kind]}`}
+			className={`grid grid-cols-[5fr_1fr] gap-y-4 rounded-lg border p-3 post:mb-5 ${mappedStyles[kind]}`}
 		>
 			<h1
-				className="col-start-1 flex cursor-pointer items-center gap-2 text-lg font-bold"
+				className="flex cursor-pointer items-center gap-2 text-lg font-bold"
 				onClick={() => setOpen(!open)}
 			>
 				<span>{mappedIcons[kind]}</span>
@@ -39,7 +39,7 @@ export function InfoBlock({ title, kind, children }: InfoBlockProps) {
 			</h1>
 
 			<div
-				className="col-span-1 cursor-pointer self-center justify-self-end"
+				className="col-start-2 row-start-1 flex w-full cursor-pointer items-end justify-end self-center justify-self-end"
 				onClick={() => setOpen(!open)}
 			>
 				{open ? <FaChevronDown /> : <FaChevronRight />}

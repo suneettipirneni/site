@@ -27,7 +27,12 @@ I recently watched a video about Simon Peyton's Jones take on Haskell. (In case 
 	/>
 </Figure>
 
-The video was recorded 11 years ago so the video quality isn't particularly great. However, Simon put C in the top left indicating it was an extremely useful, but unsafe language. He then put Haskell in the bottom right indicating it was a safe language, but not particularly useful.
+The video was recorded 11 years ago so the video quality isn't particularly great. However, Simon put C and C# in the top left indicating it was an extremely useful, but unsafe language. He then put Haskell in the bottom right indicating it was a safe language, but not particularly useful. In this
+context safety is defined by how "effectful" the language is. More effects are less safe and more pure and controlled transactions are more safe.
+
+> "A program with no effect, has no point in running. You have this black box and you press "go", it gets hot but produces no output. (...) We figured out how to combine, in a single language, (...) effectful computation and effect-free ones without making them pollute each other."
+>
+> \- Simon Peyton Jones
 
 He then continues to explain that languages are trying to move towards the top right. Haskell would do this by moving up (increasing utility) and other languages would do this by moving right (increasing safety). Simon notes that many languages are moving right via "cross pollination" of ideas from and to Haskell. Despite this commentary being documented 11 years ago, it holds up very well today. However, it now seems we have a new contender for the top right, Rust.
 
