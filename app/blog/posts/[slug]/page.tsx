@@ -44,33 +44,34 @@ export default function Post({ params }: { params: { slug: string } }) {
 	const MDXComponent = useMDXComponent(post.body.code);
 
 	return (
-		<article className="relative z-10 mx-auto grid w-full py-4 md:py-8 xl:grid-cols-[1fr_fit-content(700px)_1fr] xl:gap-x-10">
-			<div className="col-start-2 mb-2 min-w-0 max-w-[700px]">
-				<Link
-					href="/blog"
-					className="my-5 flex flex-row items-center gap-2 text-xl font-medium md:my-10"
+		<article className="relative z-10 mx-auto grid w-full items-start py-4 md:py-8 xl:grid-cols-[1fr_fit-content(700px)_1fr] xl:gap-x-10">
+			<Link
+				href="/blog"
+				className="col-start-2 row-start-1 my-5 flex flex-row items-center gap-2 text-xl font-medium"
+			>
+				<FaArrowLeft />
+				Back
+			</Link>
+			<h1 className="col-start-2 row-start-2 mb-10 flex w-auto flex-col text-3xl font-bold">
+				<Balancer>{post.title}</Balancer>
+				<time
+					dateTime={post.datetime}
+					className="text-sm font-normal text-gray-600 dark:text-gray-300"
 				>
-					<FaArrowLeft />
-					Back
-				</Link>
+					{format(parseISO(post.datetime), "LLLL d, yyyy")}
+				</time>
+			</h1>
+			<div className="col-start-2 row-start-3 mb-2 min-w-0 max-w-[700px] self-start">
 				<div className="space-y-5">
-					<h1 className="text-3xl font-bold">
-						<Balancer>{post.title}</Balancer>
-					</h1>
-					<time
-						dateTime={post.datetime}
-						className="text-sm text-gray-600 dark:text-gray-300"
-					>
-						{format(parseISO(post.datetime), "LLLL d, yyyy")}
-					</time>
 					<p className="text-gray-600 dark:text-gray-300">{post.description}</p>
 				</div>
+				<div data-post className="col-start-2 min-w-0 max-w-[700px]">
+					<MDXComponent components={mdxComponents} />
+				</div>
 			</div>
-			<div data-post className="col-start-2 min-w-0 max-w-[700px]">
-				<MDXComponent components={mdxComponents} />
-			</div>
+
 			<Outline
-				className="sticky top-10 col-start-3 row-start-2 hidden min-w-[200px] self-start xl:block"
+				className="sticky top-10 col-start-3 row-start-3 hidden min-w-[200px] self-start xl:block"
 				headings={headings}
 			/>
 		</article>
