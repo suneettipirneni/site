@@ -37,7 +37,7 @@ export function Heading({
 	return (
 		// @ts-expect-error
 		<HeadingComponent
-			className={`group flex flex-row gap-x-2 font-bold ${
+			className={`group flex scroll-mt-nav flex-row gap-x-2 font-bold ${
 				headingTextSizes[level as keyof typeof headingTextSizes]
 			} ${className ?? ""}`}
 			{...props}

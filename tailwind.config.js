@@ -1,6 +1,9 @@
 const plugin = require("tailwindcss/plugin");
 const colors = require("tailwindcss/colors");
 
+const postContentWidth = "700px";
+const navbarHeight = "60px";
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: [
@@ -19,6 +22,20 @@ module.exports = {
 				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
 				"gradient-conic":
 					"conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+			},
+
+			spacing: {
+				nav: navbarHeight,
+			},
+
+			width: {
+				postcontent: postContentWidth,
+			},
+			maxWidth: ({ theme }) => ({
+				...theme("width"),
+			}),
+			gridTemplateColumns: {
+				postgrid: `1fr fit-content(${postContentWidth}) 1fr`,
 			},
 		},
 	},

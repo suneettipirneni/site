@@ -1,3 +1,5 @@
+"use client";
+
 import { BlogEntry } from "@/components/BlogEntry";
 import { Title } from "@/components/Title";
 import { allPosts } from "contentlayer/generated";
@@ -26,7 +28,7 @@ export default function AboutPage() {
 	const featuredPosts = sortedPosts.filter((post) => post.featured);
 
 	return (
-		<div className="mx-auto flex w-full max-w-[1000px] flex-col space-y-4 px-5 py-7 md:pb-10">
+		<div className="mx-auto flex w-full max-w-[1000px] flex-col space-y-4 overflow-y-auto py-7 md:pb-10">
 			<Title>Featured</Title>
 			<div className="h-[1px] w-auto border-b border-gray-300 dark:border-gray-500" />
 			<PostSection className="grid grid-cols-1 md:grid-cols-2">

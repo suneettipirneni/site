@@ -44,15 +44,15 @@ export default function Post({ params }: { params: { slug: string } }) {
 	const MDXComponent = useMDXComponent(post.body.code);
 
 	return (
-		<article className="relative z-10 mx-auto grid w-full items-start py-4 md:py-8 xl:grid-cols-[1fr_fit-content(700px)_1fr] xl:gap-x-10">
+		<article className="relative z-10 mx-auto grid w-full items-start justify-center px-4 py-4 align-middle md:px-0 xl:grid-cols-postgrid xl:gap-x-10">
 			<Link
 				href="/blog"
-				className="col-start-2 row-start-1 my-5 flex flex-row items-center gap-2 text-xl font-medium"
+				className="col-start-2 row-start-1 mb-5 flex flex-row items-center gap-2 text-xl font-medium"
 			>
 				<FaArrowLeft />
 				Back
 			</Link>
-			<h1 className="col-start-2 row-start-2 mb-10 flex w-auto max-w-[700px] flex-col text-3xl font-bold">
+			<h1 className="col-start-2 row-start-2 mb-10 flex w-auto max-w-postcontent flex-col text-3xl font-bold">
 				<Balancer>{post.title}</Balancer>
 				<time
 					dateTime={post.datetime}
@@ -61,17 +61,17 @@ export default function Post({ params }: { params: { slug: string } }) {
 					{format(parseISO(post.datetime), "LLLL d, yyyy")}
 				</time>
 			</h1>
-			<div className="col-start-2 row-start-3 mb-2 min-w-0 max-w-[700px] self-start">
+			<div className="col-start-2 row-start-3 mb-2 min-w-0 max-w-postcontent self-start">
 				<div className="space-y-5">
 					<p className="text-gray-600 dark:text-gray-300">{post.description}</p>
 				</div>
-				<div data-post className="col-start-2 min-w-0 max-w-[700px]">
+				<div data-post className="col-start-2 min-w-0 max-w-postcontent">
 					<MDXComponent components={mdxComponents} />
 				</div>
 			</div>
 
 			<Outline
-				className="sticky top-10 col-start-3 row-start-3 hidden min-w-[200px] self-start xl:block"
+				className="sticky top-nav col-start-3 row-start-3 -ml-[1px] hidden min-w-[200px] flex-1 self-start border-l border-gray-300 pl-5 pt-10 dark:border-white/20 xl:block"
 				headings={headings}
 			/>
 		</article>

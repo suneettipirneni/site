@@ -1,4 +1,4 @@
-import { TabBar } from "@/components/TabBar";
+import { NavBar } from "@/components/NavBar";
 import "./globals.css";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { BsHouseFill } from "react-icons/bs";
@@ -34,11 +34,10 @@ export default function RootLayout({
 			</head>
 
 			<body
-				className={`${inter.className} ${jetBrainsMono.variable} bg-150 mx-auto flex h-screen w-full flex-col items-center bg-gray-50 bg-cover bg-no-repeat px-2 py-2 text-black dark:bg-zinc-950 dark:text-white md:px-5 md:pt-5`}
+				className={`${inter.className} ${jetBrainsMono.variable} bg-150 mx-auto flex h-full w-full scroll-pt-[65px] flex-col items-center overflow-y-auto bg-gray-50 bg-cover bg-no-repeat text-black dark:bg-black dark:text-white`}
 			>
-				<TabBar
+				<NavBar
 					tabs={[
-						{ name: "Home", href: "/", icon: <BsHouseFill /> },
 						{
 							name: "Blog",
 							href: "blog/",
