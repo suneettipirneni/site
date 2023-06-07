@@ -71,7 +71,7 @@ export default function Post({ params }: { params: { slug: string } }) {
 			</div>
 
 			<Outline
-				className="sticky top-nav col-start-3 row-start-3 -ml-[1px] hidden min-w-[200px] flex-1 self-start border-l border-gray-300 pl-5 pt-10 dark:border-white/20 xl:block"
+				className="sticky top-nav col-start-3 row-start-3 -ml-[1px] hidden min-w-[200px] flex-1 self-start pt-10 xl:block"
 				headings={headings}
 			/>
 		</article>
