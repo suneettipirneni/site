@@ -21,24 +21,26 @@ export const OutlineNode = memo(function OutlineNode({
 	const isActive = activeSlug === node.slug;
 
 	return (
-		<div className="flex flex-col space-y-2">
+		<div className="flex flex-col space-y-0.5">
 			<a
 				href={`#${node.slug}`}
-				className={`text-sm ${
+				className={`w-auto self-start px-2 py-1 text-sm ${
 					isActive
-						? "rounded-sm  border-gray-600 font-bold  dark:border-gray-400 "
+						? "rounded-md bg-gray-200 font-semibold dark:border-gray-400 dark:bg-gray-100/20"
 						: "text-gray-600 dark:text-gray-400"
-				} line-clamp-1 text-ellipsis  hover:underline `}
+				} line-clamp-1 text-ellipsis hover:underline `}
 			>
 				{node.text}
 			</a>
-			<div className="flex flex-col">
-				{node.children.map((child) => (
-					<div className="ml-3" key={child.slug}>
-						<OutlineNode node={child} activeSlug={activeSlug} />
-					</div>
-				))}
-			</div>
+			{node.children.length > 0 && (
+				<div className="flex flex-col space-y-0.5">
+					{node.children.map((child) => (
+						<div className="ml-3" key={child.slug}>
+							<OutlineNode node={child} activeSlug={activeSlug} />
+						</div>
+					))}
+				</div>
+			)}
 		</div>
 	);
 });
@@ -47,8 +49,10 @@ export function Outline({ headings, className }: OutlineProps) {
 	const activeSlug = useActiveSlug(headings);
 
 	return (
-		<div className={className}>
-			<h3 className="mb-2 flex flex-col text-xl font-bold">Outline</h3>
+		<div className={`space-y-0.5 ${className}`}>
+			<h3 className="mb-3 flex flex-col overflow-y-scroll text-sm font-semibold">
+				Outline
+			</h3>
 			{headings.map((heading) => (
 				<OutlineNode
 					key={heading.slug}

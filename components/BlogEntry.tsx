@@ -16,13 +16,21 @@ export function BlogEntry({ post }: BlogEntryProps) {
 				href={post.url}
 				className="relative z-10 h-[200px] overflow-hidden rounded-xl border border-black/20 dark:border-white/30"
 			>
-				<Image
-					className="absolute h-[200px] w-full rounded-xl object-cover transition-all duration-300 ease-in-out hover:scale-105"
-					src={post.ogImage}
-					width={500}
-					height={400}
-					alt={post.title}
-				/>
+				<picture>
+					{post.headingImageDark && (
+						<source
+							srcSet={post.headingImageDark}
+							media="(prefers-color-scheme: dark)"
+						/>
+					)}
+					<Image
+						className="absolute h-[200px] w-full rounded-xl object-cover transition-all duration-300 ease-in-out hover:scale-105"
+						src={post.headingImage}
+						width={500}
+						height={400}
+						alt={post.title}
+					/>
+				</picture>
 			</Link>
 
 			<div className="flex flex-row flex-wrap items-end gap-2">
