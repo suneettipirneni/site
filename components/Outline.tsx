@@ -50,9 +50,7 @@ export function Outline({ headings, className }: OutlineProps) {
 
 	return (
 		<div className={`space-y-0.5 ${className}`}>
-			<h3 className="mb-3 flex flex-col overflow-y-scroll text-sm font-semibold">
-				Outline
-			</h3>
+			<h3 className="mb-3 flex flex-col text-sm font-semibold">Outline</h3>
 			{headings.map((heading) => (
 				<OutlineNode
 					key={heading.slug}

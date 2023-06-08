@@ -32,6 +32,11 @@ export const generateMetadata = ({
 			title: post.title,
 			authors: post.author,
 			description: post.description,
+			images: [
+				{
+					url: post.headingImage,
+				},
+			],
 		},
 	};
 };
@@ -71,7 +76,7 @@ export default function Post({ params }: { params: { slug: string } }) {
 			</div>
 
 			<Outline
-				className="sticky top-nav col-start-3 row-start-3 hidden min-w-[200px] flex-1 self-start border-gray-500 pt-8 xl:block"
+				className="sticky top-nav col-start-3 row-start-3 hidden min-w-[200px] flex-1 self-start overflow-y-auto border-gray-500 pt-8 xl:block"
 				headings={headings}
 			/>
 		</article>
