@@ -27,6 +27,9 @@ export const generateMetadata = ({
 				name: post.author,
 			},
 		],
+		twitter: {
+			card: "summary_large_image",
+		},
 		openGraph: {
 			type: "article",
 			title: post.title,

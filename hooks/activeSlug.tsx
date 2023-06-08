@@ -1,5 +1,5 @@
 import type { HeadingNode } from "@/util/HeaderTree";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 // Hook adapted from https://nickymeuleman.netlify.app/blog/table-of-contents
 export function useActiveSlug(headers: HeadingNode[]) {
@@ -51,5 +51,5 @@ export function useActiveSlug(headers: HeadingNode[]) {
 		};
 	}, [headers]);
 
-	return activeSlug;
+	return useMemo(() => activeSlug, [activeSlug]);
 }
