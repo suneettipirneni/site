@@ -1,6 +1,12 @@
 import { PropsWithChildren } from "react";
 
+/**
+ * Props for the Figure component.
+ */
 export interface FigureProps extends PropsWithChildren {
+	/**
+	 * The caption for the figure.
+	 */
 	caption: string;
 }
 

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import NextImage, { ImageProps } from "next/image";
+import NextImage, { type ImageProps } from "next/image";
 
 import profilePic from "@/public/me.png";
 

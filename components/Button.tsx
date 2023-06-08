@@ -1,14 +1,14 @@
 "use client";
 
-import React, { type ComponentPropsWithoutRef, type ReactNode } from "react";
+import type { ComponentPropsWithoutRef, ReactNode, ElementType } from "react";
 
-export type ButtonProps<C extends React.ElementType = "button"> = {
+export type ButtonProps<C extends ElementType = "button"> = {
 	title: string;
 	icon: ReactNode;
 	as?: C;
 } & Omit<ComponentPropsWithoutRef<C>, "as">;
 
-export function Button<C extends React.ElementType = "button">({
+export function Button<C extends ElementType = "button">({
 	title,
 	icon,
 	whileHover,

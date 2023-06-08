@@ -3,7 +3,7 @@
 import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 import { IoInformationCircleSharp, IoWarning } from "react-icons/io5";
 import { MdDangerous } from "react-icons/md";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export interface InfoBlockProps {
 	title: string;
@@ -26,13 +26,17 @@ const mappedStyles = {
 export function InfoBlock({ title, kind = "info", children }: InfoBlockProps) {
 	const [open, setOpen] = useState(false);
 
+	const toggleOpen = useCallback(() => {
+		setOpen((prevOpen) => !prevOpen);
+	}, []);
+
 	return (
 		<div
 			className={`grid grid-cols-[5fr_1fr] gap-y-4 rounded-lg border p-3 post:mb-5 ${mappedStyles[kind]}`}
 		>
 			<h1
 				className="flex cursor-pointer items-center gap-2 text-lg font-bold"
-				onClick={() => setOpen(!open)}
+				onClick={toggleOpen}
 			>
 				<span>{mappedIcons[kind]}</span>
 				{title}
@@ -40,7 +44,7 @@ export function InfoBlock({ title, kind = "info", children }: InfoBlockProps) {
 
 			<div
 				className="col-start-2 row-start-1 flex w-full cursor-pointer items-end justify-end self-center justify-self-end"
-				onClick={() => setOpen(!open)}
+				onClick={toggleOpen}
 			>
 				{open ? <FaChevronDown /> : <FaChevronRight />}
 			</div>

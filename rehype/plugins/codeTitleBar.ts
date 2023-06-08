@@ -31,15 +31,17 @@ function transformLanguage(language: string) {
 
 // This plugin adds a title bar and a copy button to code blocks.
 export const codeTitleBarPlugin: Plugin = () => {
+	// This function is a predicate that checks if a given node is a code block that should have a title bar.
 	const codeTitleBarPredicate = (node: Node) => {
+		// If the node is not an element, it cannot be a code block with a title bar.
 		if (node.type !== "element") {
 			return false;
 		}
 
 		const element = node as Element;
 
-		// console.log(element?.properties?.["data-pretty-code-fragment"]);
-
+		// Check if the element is a div with the "data-rehype-pretty-code-fragment" property.
+		// If it is, then it is a code block that should have a title bar.
 		return Boolean(
 			element.tagName === "div" &&
 				"data-rehype-pretty-code-fragment" in (element.properties ?? {})

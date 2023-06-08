@@ -1,11 +1,11 @@
 import { NavBar } from "@/components/NavBar";
 import "./globals.css";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import { BsHouseFill } from "react-icons/bs";
-import { IoInformationCircleSharp, IoPersonSharp } from "react-icons/io5";
+import { IoInformationCircleSharp } from "react-icons/io5";
 import { HiCodeBracketSquare } from "react-icons/hi2";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
+import { PropsWithChildren } from "react";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 const jetBrainsMono = JetBrains_Mono({
@@ -19,11 +19,7 @@ export const metadata = {
 	description: "The personal website of Suneet Tipirneni",
 };
 
-export default function RootLayout({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang="en" style={{ fontFeatureSettings: "cv02, cv03, cv04, cv11" }}>
 			<head>

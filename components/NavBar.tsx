@@ -7,15 +7,38 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import profilePic from "@/public/me.png";
 
-const Link = motion(NextLink);
+/**
+ * Represents a navigation tab.
+ */
+interface Tab {
+	/**
+	 * The name of the tab.
+	 */
+	name: string;
+	/**
+	 * The href of the tab.
+	 */
+	href: string;
+	/**
+	 * The icon of the tab.
+	 */
+	icon?: ReactNode;
+}
 
-export function NavBar({
-	tabs,
-}: {
-	tabs: { name: string; href: string; icon?: ReactNode }[];
-}) {
+/**
+ * Props for the NavBar component.
+ */
+export interface NavBarProps {
+	/**
+	 * An array of navigation tabs to display in the NavBar.
+	 */
+	tabs: Tab[];
+}
+
+export function NavBar({ tabs }: NavBarProps) {
 	const path = usePathname();
 
+	// Determines if a tab is currently active based on the current path.
 	const isActive = (tab: string) =>
 		tab.replaceAll("/", "") === path.toLowerCase().replaceAll("/", "");
 
@@ -56,7 +79,7 @@ export function NavBar({
 								/>
 							)}
 
-							<h1>{`${tab.name}`}</h1>
+							<h1>{tab.name}</h1>
 						</NextLink>
 					))}
 				</div>
