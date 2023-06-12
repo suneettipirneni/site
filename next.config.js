@@ -1,10 +1,6 @@
 const { withContentlayer } = require("next-contentlayer");
 
 /** @type {import('next').NextConfig} */
-const nextConfig = withContentlayer({
-	modularizeImports: {
-		transform: "react-icons/{{member}}",
-	},
-});
+const nextConfig = withContentlayer({});
 
 module.exports = nextConfig;
