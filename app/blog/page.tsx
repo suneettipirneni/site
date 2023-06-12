@@ -1,5 +1,3 @@
-"use client";
-
 import { BlogEntry } from "@/components/BlogEntry";
 import { Title } from "@/components/Title";
 import { allPosts } from "contentlayer/generated";
@@ -13,7 +11,7 @@ function PostSection({
 }) {
 	return (
 		<div
-			className={`gap-x-5 gap-y-7 divide-y divide-gray-400 dark:divide-gray-400/50 md:gap-y-10 md:divide-none ${className}`}
+			className={`gap-x-5 gap-y-7 divide-y divide-gray-200 dark:divide-gray-400/50 md:gap-y-10 md:divide-none ${className}`}
 		>
 			{children}
 		</div>
@@ -30,7 +28,7 @@ export default function AboutPage() {
 	return (
 		<div className="mx-auto flex w-full max-w-[1000px] flex-col space-y-4 overflow-y-auto py-7 md:pb-10">
 			<Title>Featured</Title>
-			<div className="h-[1px] w-auto border-b border-gray-300 dark:border-gray-500" />
+			<div className="h-[1px] w-auto border-b border-gray-200 dark:border-gray-200/30" />
 			<PostSection className="grid grid-cols-1 md:grid-cols-2">
 				{featuredPosts.map((entry) => (
 					<BlogEntry key={entry.title} post={entry} />
@@ -38,7 +36,7 @@ export default function AboutPage() {
 			</PostSection>
 
 			<Title>Other Posts</Title>
-			<div className="left-0 h-[1px] w-auto border-b border-gray-300 dark:border-gray-500" />
+			<div className="left-0 h-[1px] w-auto border-b border-gray-200 dark:border-gray-200/30" />
 			<PostSection className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 				{sortedPosts
 					.filter((entry) => !entry.featured)

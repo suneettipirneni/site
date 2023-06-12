@@ -1,7 +1,7 @@
 "use client";
 
 import NextLink from "next/link";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -43,7 +43,7 @@ export function NavBar({ tabs }: NavBarProps) {
 		tab.replaceAll("/", "") === path.toLowerCase().replaceAll("/", "");
 
 	return (
-		<div className="sticky top-0 z-50 flex h-nav w-full flex-row items-center justify-center border-b border-gray-300 bg-gray-50/50 p-1 px-4 py-2 backdrop-blur-xl dark:border-white/20 dark:bg-black/50">
+		<div className="sticky top-0 z-50 flex h-nav w-full flex-row items-center justify-center border-b border-gray-200 bg-white/80 p-1 px-4 py-2 bg-blend-saturation backdrop-blur-xl dark:border-gray-200/30 dark:bg-black/50">
 			<div className="flex w-full max-w-[1000px] flex-row justify-between">
 				<NextLink href="/" className="flex flex-row items-center">
 					<Image

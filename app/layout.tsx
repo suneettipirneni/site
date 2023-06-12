@@ -1,11 +1,8 @@
 import { NavBar } from "@/components/NavBar";
-import "./globals.css";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import { IoInformationCircleSharp } from "react-icons/io5";
-import { HiCodeBracketSquare } from "react-icons/hi2";
+// import { Analytics } from "@vercel/analytics/react";
+import type { PropsWithChildren } from "react";
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/react";
-import { PropsWithChildren } from "react";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 const jetBrainsMono = JetBrains_Mono({
@@ -30,24 +27,22 @@ export default function RootLayout({ children }: PropsWithChildren) {
 			</head>
 
 			<body
-				className={`${inter.className} ${jetBrainsMono.variable} bg-150 mx-auto flex h-full w-full scroll-pt-[65px] flex-col items-center overflow-y-auto bg-gray-50 bg-cover bg-no-repeat text-black dark:bg-black dark:text-white`}
+				className={`${inter.className} ${jetBrainsMono.variable} bg-150 mx-auto flex w-full scroll-pt-[65px] flex-col items-center overflow-y-auto bg-white bg-cover bg-no-repeat text-black dark:bg-black dark:text-white`}
 			>
 				<NavBar
 					tabs={[
 						{
 							name: "Blog",
 							href: "blog/",
-							icon: <IoInformationCircleSharp />,
 						},
 						{
 							name: "Projects",
 							href: "projects/",
-							icon: <HiCodeBracketSquare />,
 						},
 					]}
 				/>
-				<div className="h-full w-full p-2 md:p-5">{children}</div>
-				<Analytics />
+				<div className="h-full w-full grow p-2 pt-nav md:p-5">{children}</div>
+				{/* <Analytics /> */}
 			</body>
 		</html>
 	);

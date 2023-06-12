@@ -26,8 +26,8 @@ export const OutlineNode = memo(function OutlineNode({
 				href={`#${node.slug}`}
 				className={`w-auto self-start px-2 py-1 text-sm ${
 					isActive
-						? "rounded-md bg-gray-200 font-semibold dark:border-gray-400 dark:bg-gray-100/20"
-						: "text-gray-600 dark:text-gray-400"
+						? "rounded-md bg-gray-200/80 font-semibold dark:border-gray-400 dark:bg-gray-100/20"
+						: "text-gray-600 dark:text-gray-400/80"
 				} line-clamp-1 text-ellipsis hover:underline `}
 			>
 				{node.text}

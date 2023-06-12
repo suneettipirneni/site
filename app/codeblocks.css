@@ -41,7 +41,7 @@ div[data-rehype-pretty-code-fragment] {
 div[data-rehype-pretty-code-fragment] pre {
 	@apply overflow-hidden;
 	@apply px-3 py-2;
-	@apply bg-neutral-100 dark:bg-black/20;
+	@apply bg-neutral-100/20 dark:bg-black/20;
 	@apply overflow-x-auto;
 }
 

@@ -44,7 +44,7 @@ export function Profile() {
 						initial={{ opacity: 0, y: -50 }}
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: -50 }}
-						className="flex h-[100px] flex-col items-center rounded-lg bg-white p-7 shadow-lg dark:bg-gray-600/50 dark:bg-slate-500"
+						className="flex h-[100px] flex-col items-center rounded-lg bg-white p-7 shadow-lg dark:bg-gray-200/20"
 					>
 						<h2 className="w-full text-xl font-medium">
 							{"It's"} <span className="font-bold">{time}</span> {"for me!"}

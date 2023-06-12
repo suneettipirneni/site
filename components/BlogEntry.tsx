@@ -14,7 +14,7 @@ export function BlogEntry({ post }: BlogEntryProps) {
 		<div className="flex w-full flex-col space-y-3 pt-5 @container first:pt-0 md:pt-0">
 			<Link
 				href={post.url}
-				className="relative z-10 h-[200px] overflow-hidden rounded-xl border border-black/20 dark:border-white/30"
+				className="relative z-10 h-[200px] overflow-hidden rounded-xl border border-gray-200 dark:border-gray-200/30"
 			>
 				<picture>
 					{post.headingImageDark && (
