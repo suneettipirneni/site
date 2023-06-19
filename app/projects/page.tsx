@@ -1,6 +1,6 @@
 import { Title } from "@/components/Title";
 
-export function ProjectCard() {
+function ProjectCard() {
 	return (
 		<div className="flex flex-col space-y-2 rounded-lg border border-gray-200 p-5">
 			<Title className="line-clamp-3 max-w-[600px] text-left">
@@ -11,7 +11,7 @@ export function ProjectCard() {
 	);
 }
 
-export default function AboutPage() {
+export default function ProjectsPage() {
 	return (
 		<div className="mx-auto grid max-w-[1000px] grid-cols-2 gap-5">
 			<ProjectCard />
