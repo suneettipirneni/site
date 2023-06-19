@@ -1,10 +1,23 @@
-import { HeroText } from "@/components/HeroText";
+import { Title } from "@/components/Title";
+
+export function ProjectCard() {
+	return (
+		<div className="flex flex-col space-y-2 rounded-lg border border-gray-200 p-5">
+			<Title className="line-clamp-3 max-w-[600px] text-left">
+				{"Hello! I'm Suneet and this is a website"}
+			</Title>
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam</p>
+		</div>
+	);
+}
 
 export default function AboutPage() {
 	return (
-		<div>
-			<HeroText>Under construction</HeroText>
-			<img src="https://i.gifer.com/Q5wh.gif" alt="Under construction gif" />
+		<div className="mx-auto grid max-w-[1000px] grid-cols-2 gap-5">
+			<ProjectCard />
+			<ProjectCard />
+			<ProjectCard />
+			<ProjectCard />
 		</div>
 	);
 }

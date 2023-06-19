@@ -41,7 +41,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 						},
 					]}
 				/>
-				<div className="h-full w-full grow p-2 pt-nav md:p-5">{children}</div>
+				<div className="h-full w-full grow p-2 md:p-5">{children}</div>
 				{/* <Analytics /> */}
 			</body>
 		</html>

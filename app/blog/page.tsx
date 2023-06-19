@@ -26,7 +26,7 @@ export default function AboutPage() {
 	const featuredPosts = sortedPosts.filter((post) => post.featured);
 
 	return (
-		<div className="mx-auto flex w-full max-w-[1000px] flex-col space-y-4 overflow-y-auto py-7 md:pb-10">
+		<div className="mx-auto flex w-full max-w-[1000px] flex-col space-y-4 overflow-y-auto py-3 md:py-7 md:pb-10">
 			<Title>Featured</Title>
 			<div className="h-[1px] w-auto border-b border-gray-200 dark:border-gray-200/30" />
 			<PostSection className="grid grid-cols-1 md:grid-cols-2">
