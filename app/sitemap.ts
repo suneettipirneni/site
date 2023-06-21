@@ -3,15 +3,15 @@ import type { MetadataRoute } from 'next'
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://acme.com',
+      url: 'https://www.suneettipirneni.stream',
       lastModified: new Date(),
     },
     {
-      url: 'https://acme.com/projects',
+      url: 'https://www.suneettipirneni.stream/projects',
       lastModified: new Date(),
     },
     {
-      url: 'https://acme.com/blog',
+      url: 'https://www.suneettipirneni.stream/blog',
       lastModified: new Date(),
     },
   ]
