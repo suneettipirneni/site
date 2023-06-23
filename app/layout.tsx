@@ -1,6 +1,6 @@
 import { NavBar } from "@/components/NavBar";
 import { Inter, JetBrains_Mono } from "next/font/google";
-// import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from "@vercel/analytics/react";
 import type { PropsWithChildren } from "react";
 import "./globals.css";
 
@@ -42,7 +42,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 					]}
 				/>
 				<div className="h-full w-full grow p-2 md:p-5">{children}</div>
-				{/* <Analytics /> */}
+				<Analytics />
 			</body>
 		</html>
 	);
