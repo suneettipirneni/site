@@ -13,7 +13,7 @@ import { codeTitleBarPlugin } from "./rehype/plugins/codeTitleBar";
 
 export const Post = defineDocumentType(() => ({
 	name: "Post",
-	filePathPattern: `**/*.mdx`,
+	filePathPattern: `./posts/**/*.mdx`,
 	contentType: "mdx",
 	fields: {
 		featured: { type: "boolean", required: true },
@@ -55,9 +55,47 @@ export const Post = defineDocumentType(() => ({
 	},
 }));
 
+export const Project = defineDocumentType(() => ({
+	name: "Project",
+	filePathPattern: `projects/**/*.mdx`,
+	contentType: "mdx",
+	fields: {
+		slug: { type: "string", required: true },
+		title: { type: "string", required: true },
+		datetime: { type: "date", required: true },
+		headingImage: { type: "string", required: true },
+		description: { type: "string", required: true },
+	},
+	computedFields: {
+		url: {
+			type: "string",
+			resolve: (post) => `/blog/projects/${post._raw.flattenedPath}`,
+		},
+		headings: {
+			type: "json",
+			resolve: async (doc) => {
+				const regXHeader = /\n(?<flag>#{1,6})\s+(?<content>.+)/g;
+				const slugger = new GithubSlugger();
+				const headings = Array.from(doc.body.raw.matchAll(regXHeader)).map(
+					({ groups }) => {
+						const flag = groups?.flag;
+						const content = groups?.content;
+						return {
+							level: flag?.length,
+							text: content,
+							slug: content ? slugger.slug(content) : undefined,
+						};
+					}
+				);
+				return headings;
+			},
+		},
+	},
+}));
+
 export default makeSource({
-	contentDirPath: "posts",
-	documentTypes: [Post],
+	contentDirPath: "content",
+	documentTypes: [Post, Project],
 	mdx: {
 		rehypePlugins: [
 			[rehypePrettyCode, rehypePrettyCodeOptions],
