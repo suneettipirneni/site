@@ -1,17 +1,22 @@
 import { Title } from "@/components/Title";
-import Image from 'next/image';
+import Image from "next/image";
+import { type Project, allProjects } from "contentlayer/generated";
 
-import iteratorImage from '@/public/headers/lazy-sequences-dark.png'
-
-function ProjectCard() {
+function ProjectCard({ project }: { project: Project }) {
 	return (
-		<div className="flex flex-col relative space-y-2 rounded-2xl p-5 h-[250px] bg-black justify-end overflow-clip">
-			<Image src={iteratorImage} alt='' className='absolute inset-0 h-[80%] w-full object-cover [mask-image:linear-gradient(rgba(0,0,0,1),rgba(0,0,0,1),rgba(0,0,0,1),rgba(0,0,0,0.8),rgba(0,0,0,0.7),rgba(0,0,0,0.6),rgba(0,0,0,0.5),rgba(0,0,0,0.1));]' />
-			<div className='z-10 flex-col space-y-2'>
-				<Title className="line-clamp-3 max-w-[600px] font-mono text-left text-white">
-					MDM-2-DIFFGAN
+		<div className="relative flex h-[250px] flex-col items-center justify-end space-y-2 overflow-clip rounded-2xl bg-black p-5">
+			<Image
+				src={project.headingImage}
+				alt=""
+				width={400}
+				height={400}
+				className="absolute inset-0 mx-auto h-[80%] w-[70%] object-cover [mask-image:linear-gradient(rgba(0,0,0,1),rgba(0,0,0,1),rgba(0,0,0,1),rgba(0,0,0,0.8),rgba(0,0,0,0.7),rgba(0,0,0,0.6),rgba(0,0,0,0.5),rgba(0,0,0,0.1));]"
+			/>
+			<div className="z-10 flex-col space-y-2">
+				<Title className="line-clamp-3 max-w-[600px] text-left font-mono text-white">
+					{project.title}
 				</Title>
-				<p className='text-white/80'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam</p>
+				<p className="text-white/80">{project.description}</p>
 			</div>
 		</div>
 	);
@@ -19,9 +24,10 @@ function ProjectCard() {
 
 export default function ProjectsPage() {
 	return (
-		<div className="mx-auto grid max-w-[1000px] md:grid-cols-2 grid-cols-1 gap-4">
-			<ProjectCard />
-		
+		<div className="mx-auto grid max-w-[1000px] grid-cols-1 gap-4 md:grid-cols-2">
+			{allProjects.map((project) => (
+				<ProjectCard key={project.slug} project={project} />
+			))}
 		</div>
 	);
 }
