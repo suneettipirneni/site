@@ -9,20 +9,22 @@ import { Outline } from "@/components/Outline";
 import { mdxComponents } from "@/components/mdx/components";
 import type { Metadata } from "next";
 
+const findPost = (slug: string) => {
+	const post = allPosts.find((post) => post.slug === slug);
+	if (!post) throw new Error(`Post not found for slug: ${slug}`);
+	return post;
+};
+
 export const generateStaticParams = async () =>
-	allPosts.map((post) => ({ slug: post._raw.flattenedPath }));
+	allPosts.map(({ slug }) => ({ slug }));
 
 export const generateMetadata = ({
 	params,
 }: {
 	params: { slug: string };
 }): Metadata => {
-	const post = allPosts.find(
-		(post) => encodeURIComponent(post._raw.flattenedPath) === params.slug
-	);
-	if (!post) throw new Error(`Post not found for slug: ${params.slug}`);
+	const post = findPost(params.slug);
 	return {
-		metadataBase: new URL("https://www.suneettipirneni.stream"),
 		title: post.title,
 		description: post.description,
 		authors: [
@@ -48,11 +50,7 @@ export const generateMetadata = ({
 };
 
 export default function Post({ params }: { params: { slug: string } }) {
-	const post = allPosts.find(
-		(post) => encodeURIComponent(post._raw.flattenedPath) === params.slug
-	);
-	if (!post) throw new Error(`Post not found for slug: "${params.slug}"`);
-
+	const post = findPost(params.slug);
 	const headings = serializeHeadings(post.headings);
 	const MDXComponent = useMDXComponent(post.body.code);
 

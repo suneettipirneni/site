@@ -3,6 +3,8 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import type { PropsWithChildren } from "react";
 import "./globals.css";
+import { Metadata } from "next";
+import { BASE_URL } from "@/util/constants";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 const jetBrainsMono = JetBrains_Mono({
@@ -11,7 +13,8 @@ const jetBrainsMono = JetBrains_Mono({
 	variable: "--font-mono",
 });
 
-export const metadata = {
+export const metadata: Metadata = {
+	metadataBase: new URL(BASE_URL),
 	title: "Suneet Tipirneni",
 	description: "The personal website of Suneet Tipirneni",
 };

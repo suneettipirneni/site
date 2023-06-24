@@ -13,13 +13,12 @@ import { codeTitleBarPlugin } from "./rehype/plugins/codeTitleBar";
 
 export const Post = defineDocumentType(() => ({
 	name: "Post",
-	filePathPattern: `./posts/**/*.mdx`,
+	filePathPattern: `posts/*.mdx`,
 	contentType: "mdx",
 	fields: {
 		featured: { type: "boolean", required: true },
 		draft: { type: "boolean", required: true },
 		author: { type: "string", required: true },
-		slug: { type: "string", required: true },
 		title: { type: "string", required: true },
 		datetime: { type: "date", required: true },
 		tags: { type: "list", of: { type: "string" }, required: true },
@@ -31,7 +30,7 @@ export const Post = defineDocumentType(() => ({
 	computedFields: {
 		url: {
 			type: "string",
-			resolve: (post) => `/blog/posts/${post._raw.flattenedPath}`,
+			resolve: (post) => `/blog/${post._raw.flattenedPath}`,
 		},
 		headings: {
 			type: "json",
@@ -52,15 +51,18 @@ export const Post = defineDocumentType(() => ({
 				return headings;
 			},
 		},
+		slug: {
+			type: "string",
+			resolve: (doc) => doc._raw.sourceFileName.replace(/\.mdx$/, ""),
+		},
 	},
 }));
 
 export const Project = defineDocumentType(() => ({
 	name: "Project",
-	filePathPattern: `projects/**/*.mdx`,
+	filePathPattern: `projects/*.mdx`,
 	contentType: "mdx",
 	fields: {
-		slug: { type: "string", required: true },
 		title: { type: "string", required: true },
 		datetime: { type: "date", required: true },
 		headingImage: { type: "string", required: true },
@@ -69,7 +71,7 @@ export const Project = defineDocumentType(() => ({
 	computedFields: {
 		url: {
 			type: "string",
-			resolve: (post) => `/blog/projects/${post._raw.flattenedPath}`,
+			resolve: (post) => `/blog/${post._raw.flattenedPath}`,
 		},
 		headings: {
 			type: "json",
@@ -89,6 +91,10 @@ export const Project = defineDocumentType(() => ({
 				);
 				return headings;
 			},
+		},
+		slug: {
+			type: "string",
+			resolve: (doc) => doc._raw.sourceFileName.replace(/\.mdx$/, ""),
 		},
 	},
 }));
