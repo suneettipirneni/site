@@ -2,7 +2,7 @@
 
 import NextLink from "next/link";
 import type { ReactNode } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSelectedLayoutSegment } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import profilePic from "@/public/me.png";
@@ -36,15 +36,14 @@ export interface NavBarProps {
 }
 
 export function NavBar({ tabs }: NavBarProps) {
-	const path = usePathname();
+	const segment = useSelectedLayoutSegment() ?? "home";
 
 	// Determines if a tab is currently active based on the current path.
-	const isActive = (tab: string) =>
-		tab.replaceAll("/", "") === path.toLowerCase().replaceAll("/", "");
+	const isActive = (tab: string) => tab.replaceAll("/", "") === segment;
 
 	return (
 		<div className="sticky top-0 z-50 flex h-nav w-full flex-row items-center justify-center border-b border-gray-200 bg-white/80 p-1 px-4 py-2 bg-blend-saturation backdrop-blur-xl dark:border-gray-200/30 dark:bg-black/50">
-			<div className="flex w-full max-w-[1000px] flex-row justify-between">
+			<div className="flex w-full max-w-[850px] flex-row justify-between">
 				<NextLink href="/" className="flex flex-row items-center">
 					<Image
 						src={profilePic}

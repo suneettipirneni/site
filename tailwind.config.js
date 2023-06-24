@@ -1,7 +1,7 @@
 const plugin = require("tailwindcss/plugin");
 const colors = require("tailwindcss/colors");
 
-const postContentWidth = "700px";
+const postContentWidth = "850px";
 const navbarHeight = "60px";
 
 /** @type {import('tailwindcss').Config} */
@@ -17,6 +17,7 @@ module.exports = {
 		fontFamily: {
 			mono: "var(--font-mono)",
 		},
+
 		extend: {
 			backgroundImage: {
 				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
