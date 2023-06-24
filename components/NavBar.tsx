@@ -43,7 +43,7 @@ export function NavBar({ tabs }: NavBarProps) {
 
 	return (
 		<div className="sticky top-0 z-50 flex h-nav w-full flex-row items-center justify-center border-b border-gray-200 bg-white/80 p-1 px-4 py-2 bg-blend-saturation backdrop-blur-xl dark:border-gray-200/30 dark:bg-black/50">
-			<div className="flex w-full max-w-[850px] flex-row justify-between">
+			<div className="flex w-full max-w-postcontent flex-row justify-between">
 				<NextLink href="/" className="flex flex-row items-center">
 					<Image
 						src={profilePic}
