@@ -17,9 +17,12 @@ export const generateMetadata = ({
 }: {
 	params: { slug: string };
 }): Metadata => {
-	const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
+	const post = allPosts.find(
+		(post) => encodeURIComponent(post._raw.flattenedPath) === params.slug
+	);
 	if (!post) throw new Error(`Post not found for slug: ${params.slug}`);
 	return {
+		metadataBase: new URL("https://www.suneettipirneni.stream"),
 		title: post.title,
 		description: post.description,
 		authors: [
@@ -45,7 +48,9 @@ export const generateMetadata = ({
 };
 
 export default function Post({ params }: { params: { slug: string } }) {
-	const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
+	const post = allPosts.find(
+		(post) => encodeURIComponent(post._raw.flattenedPath) === params.slug
+	);
 	if (!post) throw new Error(`Post not found for slug: "${params.slug}"`);
 
 	const headings = serializeHeadings(post.headings);
