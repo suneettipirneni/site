@@ -54,11 +54,11 @@ export function NavBar({ tabs }: NavBarProps) {
 					/>
 				</NextLink>
 
-				<div className="flex flex-row rounded-lg bg-black/5 p-1 dark:bg-white/5">
+				<div className="flex flex-row rounded-full bg-black/5 p-1 dark:bg-white/5">
 					{tabs.map((tab, index) => (
 						<NextLink
 							key={tab.name}
-							className={`text-md lg:text-md relative z-10 flex flex-row items-end px-4 py-1 font-medium transition ${
+							className={`relative z-10 flex flex-row items-end px-4 py-1 text-sm font-medium transition ${
 								isActive(tab.href)
 									? "text-black dark:text-white"
 									: "text-black dark:text-white"
@@ -74,7 +74,7 @@ export function NavBar({ tabs }: NavBarProps) {
 										duration: 0.5,
 									}}
 									layoutId="selectedTab"
-									className="absolute inset-0 -z-10 rounded-lg bg-white shadow-sm dark:bg-white/20"
+									className="absolute inset-0 -z-10 rounded-full bg-white shadow-sm dark:bg-white/20"
 								/>
 							)}
 

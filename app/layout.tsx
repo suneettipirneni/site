@@ -5,6 +5,7 @@ import type { PropsWithChildren } from "react";
 import "./globals.css";
 import { Metadata } from "next";
 import { BASE_URL } from "@/util/constants";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 const jetBrainsMono = JetBrains_Mono({
@@ -30,7 +31,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 			</head>
 
 			<body
-				className={`${inter.className} ${jetBrainsMono.variable} bg-150 mx-auto flex w-full scroll-pt-[65px] flex-col items-center overflow-y-auto bg-white bg-cover bg-no-repeat text-black dark:bg-black dark:text-white`}
+				className={`${inter.className} ${jetBrainsMono.variable} mx-auto flex min-h-screen w-full scroll-pt-[65px] flex-col items-center overflow-y-auto bg-white bg-cover bg-no-repeat text-black dark:bg-black dark:text-white`}
 			>
 				<NavBar
 					tabs={[
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 				/>
 				<div className="h-full w-full grow p-2 md:p-5">{children}</div>
 				<Analytics />
+				<Footer />
 			</body>
 		</html>
 	);
