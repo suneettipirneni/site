@@ -1,10 +1,14 @@
 import { Title } from "@/components/Title";
 import Image from "next/image";
 import { type Project, allProjects } from "contentlayer/generated";
+import Link from "next/link";
 
 function ProjectCard({ project }: { project: Project }) {
 	return (
-		<div className="relative flex h-[250px] flex-col items-center justify-end space-y-2 overflow-clip rounded-2xl bg-black p-5">
+		<Link
+			href={project.url}
+			className="relative flex h-[250px] flex-col items-center justify-end space-y-2 overflow-clip rounded-2xl bg-black p-5"
+		>
 			<Image
 				src={project.headingImage}
 				alt=""
@@ -18,13 +22,13 @@ function ProjectCard({ project }: { project: Project }) {
 				</Title>
 				<p className="text-white/80">{project.description}</p>
 			</div>
-		</div>
+		</Link>
 	);
 }
 
 export default function ProjectsPage() {
 	return (
-		<div className="mx-auto grid max-w-[1000px] grid-cols-1 gap-4 md:grid-cols-2">
+		<div className="mx-auto grid w-full max-w-postcontent grid-cols-1 gap-4 md:grid-cols-2">
 			{allProjects.map((project) => (
 				<ProjectCard key={project.slug} project={project} />
 			))}
