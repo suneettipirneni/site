@@ -2,7 +2,7 @@
 
 import NextLink from "next/link";
 import type { ReactNode } from "react";
-import { usePathname, useSelectedLayoutSegment } from "next/navigation";
+import { useSelectedLayoutSegment } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import profilePic from "@/public/me.png";
@@ -26,11 +26,11 @@ interface Tab {
 }
 
 /**
- * Props for the NavBar component.
+ * Props for the `NavBar` component.
  */
 export interface NavBarProps {
 	/**
-	 * An array of navigation tabs to display in the NavBar.
+	 * An array of navigation tabs to display in the `NavBar` component.
 	 */
 	tabs: Tab[];
 }
