@@ -1,5 +1,4 @@
 import { allPosts } from "contentlayer/generated";
-import { format, parseISO } from "date-fns";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import { FaArrowLeft } from "react-icons/fa";
 import Link from "next/link";
@@ -8,6 +7,7 @@ import { serializeHeadings } from "@/util/HeaderTree";
 import { Outline } from "@/components/Outline";
 import { mdxComponents } from "@/components/mdx/components";
 import type { Metadata } from "next";
+import { DateTime } from "@/components/post/DateTime";
 
 const findPost = (slug: string) => {
 	const post = allPosts.find((post) => post.slug === slug);
@@ -65,12 +65,7 @@ export default function Post({ params }: { params: { slug: string } }) {
 			</Link>
 			<h1 className="col-start-2 row-start-2 mb-10 flex w-auto max-w-postcontent flex-col text-3xl font-bold">
 				<Balancer>{post.title}</Balancer>
-				<time
-					dateTime={post.datetime}
-					className="text-sm font-normal text-gray-600 dark:text-gray-300"
-				>
-					{format(parseISO(post.datetime), "LLLL d, yyyy")}
-				</time>
+				<DateTime datetime={post.datetime} timeToRead={post.timeToRead} />
 			</h1>
 			<div className="col-start-2 row-start-3 mb-2 min-w-0 max-w-postcontent self-start">
 				<div className="space-y-5">

@@ -42,8 +42,8 @@ export function NavBar({ tabs }: NavBarProps) {
 	const isActive = (tab: string) => tab.replaceAll("/", "") === segment;
 
 	return (
-		<div className="sticky top-0 z-50 flex h-nav w-full flex-row items-center justify-center border-b border-gray-200 bg-white/80 p-1 px-4 py-2 bg-blend-saturation backdrop-blur-xl dark:border-gray-200/30 dark:bg-black/50">
-			<div className="flex w-full max-w-postcontent flex-row justify-between">
+		<div className="sticky top-0 z-50 flex h-[60px] w-full flex-row items-center justify-center border-b  border-gray-200 dark:border-gray-200/25 lg:h-nav lg:border-none">
+			<div className="flex h-full w-[calc(850px_+_100px)] max-w-full flex-row justify-between bg-white/80 p-2 bg-blend-saturation backdrop-blur-xl dark:bg-black/50 lg:h-auto lg:rounded-full lg:border lg:border-gray-200 lg:shadow-sm lg:dark:border-gray-200/25">
 				<NextLink href="/" className="flex flex-row items-center">
 					<Image
 						src={profilePic}
@@ -58,7 +58,7 @@ export function NavBar({ tabs }: NavBarProps) {
 					{tabs.map((tab, index) => (
 						<NextLink
 							key={tab.name}
-							className={`relative z-10 flex flex-row items-end px-4 py-1 text-sm font-medium transition ${
+							className={`relative z-10 flex flex-row items-center px-4 py-1 text-sm font-semibold transition ${
 								isActive(tab.href)
 									? "text-black dark:text-white"
 									: "text-black dark:text-white"

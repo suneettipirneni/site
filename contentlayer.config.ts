@@ -6,10 +6,12 @@ import rehypeSlug from "rehype-slug";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import remarkReferenceLinks from "remark-reference-links";
 import remarkGfm from "remark-gfm";
 import { inlineCodePlugin } from "./rehype/plugins/inlineCode";
 import { rehypeAutolinkHeadingsOptions } from "./rehype/options/rehypeAutoLinkHeadingsOptions";
 import { codeTitleBarPlugin } from "./rehype/plugins/codeTitleBar";
+import { calculateReadingTime } from "./util/calculateReadingTime";
 
 export const Post = defineDocumentType(() => ({
 	name: "Post",
@@ -54,6 +56,10 @@ export const Post = defineDocumentType(() => ({
 		slug: {
 			type: "string",
 			resolve: (doc) => doc._raw.sourceFileName.replace(/\.mdx$/, ""),
+		},
+		timeToRead: {
+			type: "number",
+			resolve: async (doc) => calculateReadingTime(doc.body.raw),
 		},
 	},
 }));
@@ -108,10 +114,9 @@ export default makeSource({
 			rehypeSlug,
 			inlineCodePlugin,
 			codeTitleBarPlugin,
-			remarkMath,
 			rehypeKatex,
 			[rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions],
-			remarkGfm,
 		],
+		remarkPlugins: [remarkGfm, remarkMath, remarkReferenceLinks],
 	},
 });

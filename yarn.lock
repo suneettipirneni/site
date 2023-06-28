@@ -6520,6 +6520,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"remark-reference-links@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "remark-reference-links@npm:6.0.1"
+  dependencies:
+    "@types/mdast": ^3.0.0
+    unified: ^10.0.0
+    unist-util-visit: ^4.0.0
+  checksum: 9b538e277f6749a25e68f2e6c0862bb0c44204723e92b719c49aacea7d46182ad046f964fa24b6f4b4e545242429c915d073ddc7089081c676a45d85e493beab
+  languageName: node
+  linkType: hard
+
 "remark-rehype@npm:^10.0.0, remark-rehype@npm:^10.1.0":
   version: 10.1.0
   resolution: "remark-rehype@npm:10.1.0"
@@ -6861,6 +6872,7 @@ __metadata:
     rehype-slug: ^5.1.0
     remark-gfm: ^3.0.1
     remark-math: ^5.1.1
+    remark-reference-links: ^6.0.1
     sharp: ^0.32.1
     shiki: ^0.14.3
     tailwindcss: 3.3.2

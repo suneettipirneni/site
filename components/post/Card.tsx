@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { TagChip } from "./TagChip";
-import { format, parseISO } from "date-fns";
+import { Tags } from "./Tag";
 import { Post } from "contentlayer/generated";
 import { Balancer } from "react-wrap-balancer";
 import Image from "next/image";
+import { DateTime } from "./DateTime";
 
 export interface BlogEntryProps {
 	post: Post;
@@ -32,26 +32,18 @@ export function BlogEntry({ post }: BlogEntryProps) {
 					/>
 				</picture>
 			</Link>
-
-			<div className="flex flex-row flex-wrap items-end gap-2">
-				{post.tags.map((tag) => (
-					<TagChip key={tag} name={tag} />
-				))}
-			</div>
-			<div className="flex w-full flex-col gap-2">
-				<Link href={post.url} className="flex flex-col">
-					<h1 className="text-xl font-bold hover:underline">
+			<Tags tags={post.tags} />
+			<div className="flex w-full flex-col gap-y-3">
+				<div className="flex flex-col">
+					<Link href={post.url} className="text-xl font-bold hover:underline">
 						<Balancer>{post.title}</Balancer>
-					</h1>
-				</Link>
-
-				<p className="@md:text-md line-clamp-4 overflow-ellipsis text-sm text-gray-700 dark:text-gray-300">
+					</Link>
+					<DateTime datetime={post.datetime} timeToRead={post.timeToRead} />
+				</div>
+				<p className="@md:text-md line-clamp-4 overflow-ellipsis text-sm text-gray-600 dark:text-gray-300">
 					{post.description}
 				</p>
 			</div>
-			<time className="text-sm text-gray-600 dark:text-gray-300/80">
-				{format(parseISO(post.datetime), "LLLL d, yyyy")}
-			</time>
 		</div>
 	);
 }

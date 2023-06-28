@@ -5,6 +5,8 @@ export function Subtitle({
 	className,
 }: PropsWithChildren<{ className?: string }>) {
 	return (
-		<h1 className={`${className} text-left text-lg sm:text-2xl`}>{children}</h1>
+		<h1 className={`${className} text-left text-lg font-medium sm:text-xl`}>
+			{children}
+		</h1>
 	);
 }
