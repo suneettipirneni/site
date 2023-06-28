@@ -6,8 +6,8 @@ export function List({
 }: HtmlHTMLAttributes<HTMLUListElement> & { ordered?: boolean }) {
 	return (
 		<ul
-			className={`space-y-2 pl-5 marker:text-black/50 dark:marker:text-white/50 ${
-				ordered ? "list-decimal" : "list-"
+			className={`space-y-2 pl-3 marker:text-black/70 dark:marker:text-white/50 ${
+				ordered ? "list-decimal" : "list-disc"
 			} list-inside post:mb-4`}
 			{...props}
 		/>
