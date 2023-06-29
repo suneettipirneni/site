@@ -43,7 +43,7 @@ export function NavBar({ tabs }: NavBarProps) {
 
 	return (
 		<div className="sticky top-0 z-50 flex h-[60px] w-full flex-row items-center justify-center border-b  border-gray-200 dark:border-gray-200/25 lg:h-nav lg:border-none">
-			<div className="flex h-full w-[calc(850px_+_100px)] max-w-full flex-row justify-between bg-white/80 p-2 bg-blend-saturation backdrop-blur-xl dark:bg-black/50 lg:h-auto lg:rounded-full lg:border lg:border-gray-200 lg:shadow-sm lg:dark:border-gray-200/25">
+			<div className="flex h-full w-[calc(850px_+_50px)] max-w-full flex-row justify-between bg-white/80 p-2 bg-blend-saturation backdrop-blur-xl dark:bg-black/50 lg:h-auto lg:rounded-full lg:border lg:border-gray-200 lg:shadow-sm lg:dark:border-gray-200/25">
 				<NextLink href="/" className="flex flex-row items-center">
 					<Image
 						src={profilePic}

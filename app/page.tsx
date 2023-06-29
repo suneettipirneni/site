@@ -6,7 +6,7 @@ import { ProfileFooter } from "@/components/ProfileFooter";
 
 export default function Home() {
 	return (
-		<div className="my-auto mt-10 flex h-full flex-col items-center justify-center space-y-10 md:mt-20 lg:mt-40">
+		<div className="mt-10 flex grow flex-col items-center justify-center space-y-10 overflow-hidden">
 			<Profile />
 			<HeroText className="line-clamp-3 max-w-[600px] text-center">
 				<Balancer>{"Hello! I'm Suneet and this is a website"}</Balancer>

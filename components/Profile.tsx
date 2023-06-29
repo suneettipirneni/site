@@ -44,10 +44,10 @@ export function Profile() {
 						initial={{ opacity: 0, y: -50 }}
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: -50 }}
-						className="flex h-[100px] flex-col items-center rounded-lg bg-white p-7 shadow-lg dark:bg-gray-200/20"
+						className="flex h-[100px] flex-col items-center rounded-lg border border-gray-300 bg-white p-7 shadow-lg dark:border-white/25 dark:bg-white/10 "
 					>
 						<h2 className="w-full text-xl font-medium">
-							{"It's"} <span className="font-bold">{time}</span> {"for me!"}
+							{"It's"} <span className="font-semibold">{time}</span> {"for me!"}
 						</h2>
 						<DiscordStatus className="w-full" />
 					</motion.div>
