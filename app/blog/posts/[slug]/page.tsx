@@ -55,7 +55,7 @@ export default function Post({ params }: { params: { slug: string } }) {
 	const MDXComponent = useMDXComponent(post.body.code);
 
 	return (
-		<article className="relative z-10 mx-auto grid w-full items-start justify-center px-4 py-4 align-middle md:px-0 xl:grid-cols-postgrid xl:gap-x-10">
+		<article className="relative z-10 mx-auto grid w-full items-start justify-center px-2 py-4 align-middle md:px-0 xl:grid-cols-postgrid xl:gap-x-10">
 			<Link
 				href="/blog"
 				className="col-start-2 row-start-1 mb-5 flex flex-row items-center gap-2 text-xl font-medium"

@@ -10,9 +10,7 @@ function PostSection({
 	className?: string;
 }) {
 	return (
-		<div className={`gap-x-5 gap-y-12 md:gap-y-10 ${className}`}>
-			{children}
-		</div>
+		<div className={`gap-x-5 gap-y-7 md:gap-y-10 ${className}`}>{children}</div>
 	);
 }
 
