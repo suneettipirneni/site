@@ -14,11 +14,11 @@ const headingLevelMappings = {
 
 const headingTextSizes = {
 	1: "text-2xl post:mt-8 post:pt-7 post:mb-5 post:font-semibold post:border-t post:border-gray-400/30 post:dark:border-gray-600/50",
-	2: "text-xl post:mb-6 font-semibold post:mb-3",
-	3: "text-lg post:mb-5 font-semibold post:mb-1",
-	4: "text-md post:mb-4 font-semibold post:mb-1",
-	5: "text-md post:mb-4 font-semibold post:mb-1",
-	6: "post:mb-4 font-semibold post:mb-1",
+	2: "text-xl post:mb-6 font-semibold post:mb-3 post:pt-5",
+	3: "text-lg post:mb-5 font-semibold post:mb-1 post:pt-3",
+	4: "text-md post:mb-4 font-semibold post:mb-1 post:pt-2",
+	5: "text-md post:mb-4 font-semibold post:mb-1 post:pt-2",
+	6: "post:mb-4 font-semibold post:mb-1 post:pt-2",
 };
 
 export function Heading({

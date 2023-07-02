@@ -56,6 +56,8 @@ This representation is useful because it gives us a structured way to model type
 "is `true` assignable to `boolean`? We simply see if $\text{true} \in \text{boolean}$ holds. On the contrary, if we ask ourselves,
 "is `1` assignable to `boolean`? We can see that $\text{1} \notin \text{boolean}$ holds. Neat!
 
+In the next few sections I'll discuss some properties of these sets and how they are presented in **Java**[^2].
+
 ## Sum Types
 
 Things with algebraic data types get interesting when we start to apply operations to them. Let's start with a simple example.
@@ -77,7 +79,6 @@ $$
 $$
 
 As `Color` can only be `RED`, `GREEN`, or `BLUE`. Note how it can't be two of these at the same time.
-
 Let's count the number of possible values for `Color`. We can do this by counting the number of elements in the set:
 
 $$
@@ -97,9 +98,7 @@ $$
 $$
 
 By now, you should see a very clear pattern, the number of possible types for `Color` is the number of enum variants it has.
-
 In other words, if we take the sum of the number of variants in an enum, we get the number of possible types for that enum. Because of this, enums are known as **sum types**.
-
 In fact `boolean`s are sum types too! Recall $|\text{boolean}| = 2$, and there are two variants for `boolean`, `true` and `false`. therefore `boolean` is a sum type.
 
 ### Properties of Sum Types
@@ -108,9 +107,7 @@ Sum types exhibit certain properties that make them useful for developers. Let's
 
 #### Exhaustiveness
 
-Sum types are exhaustive, this both the developer and compiler able to make sure all variants are handled.
-
-For example, if we implement `toString` for `Color` like so:
+Sum types are exhaustive, this both the developer and compiler able to make sure all variants are handled. For example, if we implement `toString` for `Color` like so using the new **switch expression syntax**[^3]:
 
 ```java
   @Override
@@ -139,11 +136,6 @@ the compiler will complain that `YELLOW` is not handled in the switch statement:
 
 This makes our code much safer and forces us to handle all variants.
 
-<InfoBlock kind="info" title="Is that Java switch syntax new?">
-	Yes, it's a new feature in Java 14. It's called [Switch
-	Expressions](https://openjdk.java.net/jeps/361).
-</InfoBlock>
-
 #### Uniqueness
 
 Each constituent of a sum type is unique. For example, `Colors.RED` is not `Colors.GREEN`, and `Colors.GREEN` is not `Colors.BLUE`. Additionally, `Colors` cannot take
@@ -152,7 +144,6 @@ on multiple variants at the same time. It cannot be `Colors.RED` and `Colors.GRE
 ## Product Types
 
 So far we've only looked a types that take on one value at a time. Let's look at a type that can take on multiple values at the same time.
-
 Here's a more complex type, a tuple record with two fields:
 
 ```java
@@ -160,7 +151,6 @@ record Container(bool foo, bool baz) {}
 ```
 
 Unlike the sum types we've seen so far, `Container` can be multiple types at the same time. It can be `foo=true, bar=true`, `foo=true, bar=false`, `foo=false, bar=true`, or `foo=false, bar=false`.
-
 What's the set of all possible types for `Container`? Well, we can represent it as:
 
 $$
@@ -168,7 +158,6 @@ $$
 $$
 
 Notice something interesting? The set of all possible values for `Container` is the cartesian product of the set of all possible values for `boolean` with itself.
-
 We could also represent `Container` as a product of two `boolean`s:
 
 $$
@@ -182,7 +171,6 @@ $$
 By this, we can assume that if another field `boolean baz` was added to `Container` (`Containter(bool, bool, bool)`), the set of all possible values for `Container` would be $\text{boolean} \times \text{boolean} \times \text{boolean}$.
 
 `Container` is known as a **product type** for this specific reason, the set of types it represents is the _product_ of the types it's composed of.
-
 However, if we want to be more specific we can say that `Container` is a **product of sum types**. This is because `boolean` is a sum type, and `Container` is a product of `boolean`s.
 
 ### Properties of Product Types
@@ -214,7 +202,6 @@ Pretty complex set of possible values right? While this may be unneccearily comp
 # The problem with open types
 
 An **open**[^1] type can be thought of as a type that can be extended or implemented by any data structure. For example, in Java, class can implement the `Iterator<T>` interface.
-
 Consider a Java interface defined like so:
 
 ```java title="Animal.java"
@@ -327,7 +314,6 @@ takeCareOfHousePets(new List<>(new Dog("Fido", 3), new Cat("Garfield", 5), new S
 ```
 
 My code wasn't designed for people to add their own variants. However, due to the nature of access-control and interfaces, they can.
-
 Many jaded java developers would simply accept throwing an exception as a valid solution to this problem. However, exception throwing is a last resort. It's a
 hack to get around the fact that you can't exhaustively match on a product type. A more elegant solution could be validate this kind of error at compile-time.
 
@@ -336,7 +322,6 @@ This is where sum types come to the rescue.
 # Sum types to the rescue
 
 In earlier versions of java the concept of a sum type was essentially using an enum with an associated value:
-
 We would remodel our code above to this:
 
 ```java title="HousePet.java"
@@ -508,3 +493,8 @@ For reference:
 - When you have a limited set of variants that may or may not be covariant with each other. Use sum types to model this. See our `HousePet` example above.
 
 [^1]: This is not a formal term but I'm using it as a blanket term for classes, interfaces, etc.
+[^2]:
+    Some may scoff at my usage of Java to represent algebraic data types due to it's OOP nature. However, in recent updates Java supports algebraic data types through records and sealed classes. In addition, Java is arguably more readable than the alternatives such as Haskell or Rust, which
+    makes it a good choice for learning purposes.
+
+[^3]: https://openjdk.java.net/jeps/361
