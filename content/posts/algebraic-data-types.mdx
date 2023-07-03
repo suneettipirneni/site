@@ -5,7 +5,7 @@ title: "Algebraic Data Types - Predictable Code is Robust Code"
 featured: true
 draft: false
 tags:
-  - patterns
+	- patterns
 headingImage: "/headers/algebraic-data-types.png"
 headingImageDark: "/headers/algebraic-data-types-dark.png"
 description: I love algebraic types, in fact I love them so much I wrote a whole blog post about them. In this post I go over why algebraic data types are special and how they can be used to make your code safer and more robust.
@@ -21,7 +21,7 @@ the present to learn about them.
 Type theory is simply a formal way of defining types. You can think of it to be similar to runtime analysis, but for types.
 
 <InfoBlock kind="info" title="Notation">
-  The next few sections will use a bit of set notation. Here's a quick refresher on the basics:
+	The next few sections will use a bit of set notation. Here's a quick refresher on the basics:
 
 - $\in$ means "is an element of". For example, $1 \in \{1, 2, 3\}$ holds.
 - $\subseteq$ means "is a subset of". For example, $\{1, 2\} \subseteq \{1, 2, 3\}$ holds.
@@ -66,9 +66,9 @@ Given an enum:
 
 ```java
 enum Color {
-  RED,
-  GREEN,
-  BLUE
+	RED,
+	GREEN,
+	BLUE
 }
 ```
 
@@ -84,7 +84,7 @@ Let's count the number of possible values for `Color`. We can do this by countin
 $$
 \begin{aligned}
 |\text{Color}| &= |\{\text{RED}, \text{GREEN}, \text{BLUE}\}| \\
-             &= 3
+						 &= 3
 \end{aligned}
 $$
 
@@ -93,7 +93,7 @@ If we add another color to `Color`, say `YELLOW`, then the set of all possible v
 $$
 \begin{aligned}
 |\text{Color}| &= |\{\text{RED}, \text{GREEN}, \text{BLUE}, \text{YELLOW}\}| \\
-               &= 4
+							 &= 4
 \end{aligned}
 $$
 
@@ -110,28 +110,28 @@ Sum types exhibit certain properties that make them useful for developers. Let's
 Sum types are exhaustive, this both the developer and compiler able to make sure all variants are handled. For example, if we implement `toString` for `Color` like so using the new **switch expression syntax**[^3]:
 
 ```java
-  @Override
-  public String toString() {
-    return switch (this) {
-      case RED -> "Red";
-      case GREEN -> "Green";
-      case BLUE -> "Blue";
-    };
-  }
+	@Override
+	public String toString() {
+		return switch (this) {
+			case RED -> "Red";
+			case GREEN -> "Green";
+			case BLUE -> "Blue";
+		};
+	}
 ```
 
 We can be sure that all variants of `Color` are handled. If we add a new variant to `Color`, say `YELLOW`,
 the compiler will complain that `YELLOW` is not handled in the switch statement:
 
 ```java
-  @Override
-  public String toString() {
-    return switch (this) { // Compiler error: Switch case YELLOW not handled
-      case RED -> "Red";
-      case GREEN -> "Green";
-      case BLUE -> "Blue";
-    };
-  }
+	@Override
+	public String toString() {
+		return switch (this) { // Compiler error: Switch case YELLOW not handled
+			case RED -> "Red";
+			case GREEN -> "Green";
+			case BLUE -> "Blue";
+		};
+	}
 ```
 
 This makes our code much safer and forces us to handle all variants.
@@ -163,8 +163,8 @@ We could also represent `Container` as a product of two `boolean`s:
 $$
 \begin{aligned}
 \text{Container} &= \text{boolean} \times \text{boolean} \\
-                 &= \{\text{true}, \text{false}\} \times \{\text{true}, \text{false}\} \\
-                 &= \{(\text{true, true}), (\text{true, false}), (\text{false, true}), (\text{false, false})\}
+								 &= \{\text{true}, \text{false}\} \times \{\text{true}, \text{false}\} \\
+								 &= \{(\text{true, true}), (\text{true, false}), (\text{false, true}), (\text{false, false})\}
 \end{aligned}
 $$
 
@@ -190,10 +190,10 @@ We can represent the set of all possible values for `ColorContainer` as:
 $$
 \begin{aligned}
 \text{ColorContainer} &= \text{Color} \times \text{Container} \\
-                      &= \{\text{RED}, \text{GREEN}, \text{BLUE}\} \times \{(\text{true, true}), (\text{true, false}), (\text{false, true}), (\text{false, false})\} \\
-                      &= \{(\text{RED, true, true}), (\text{RED, true, false}), (\text{RED, false, true}), (\text{RED, false, false}), \\
-                      &\quad (\text{GREEN, true, true}), (\text{GREEN, true, false}), (\text{GREEN, false, true}), (\text{GREEN, false, false}), \\
-                      &\quad (\text{BLUE, true, true}), (\text{BLUE, true, false}), (\text{BLUE, false, true}), (\text{BLUE, false, false})\}
+											&= \{\text{RED}, \text{GREEN}, \text{BLUE}\} \times \{(\text{true, true}), (\text{true, false}), (\text{false, true}), (\text{false, false})\} \\
+											&= \{(\text{RED, true, true}), (\text{RED, true, false}), (\text{RED, false, true}), (\text{RED, false, false}), \\
+											&\quad (\text{GREEN, true, true}), (\text{GREEN, true, false}), (\text{GREEN, false, true}), (\text{GREEN, false, false}), \\
+											&\quad (\text{BLUE, true, true}), (\text{BLUE, true, false}), (\text{BLUE, false, true}), (\text{BLUE, false, false})\}
 \end{aligned}
 $$
 
@@ -206,9 +206,9 @@ Consider a Java interface defined like so:
 
 ```java title="Animal.java"
 interface Animal {
-  String name();
-  int age();
-  String sound();
+	String name();
+	int age();
+	String sound();
 }
 ```
 
@@ -216,29 +216,29 @@ We'll then add some variants:
 
 ```java title="Dog.java"
 record Dog(String name, int age, String sound) implements Animal {
-  public Dog(String name, int age) {
-    this(name, age, "Woof");
-  }
+	public Dog(String name, int age) {
+		this(name, age, "Woof");
+	}
 
-  public void walk() {
-    System.out.println("Walking " + this.name());
-  }
+	public void walk() {
+		System.out.println("Walking " + this.name());
+	}
 }
 
 record Cat(String name, int age, String sound) implements Animal {
-  public Cat(String name, int age) {
-    this(name, age, "Meow");
-  }
+	public Cat(String name, int age) {
+		this(name, age, "Meow");
+	}
 
-  public void cleanLitterBox() {
-    System.out.println("Cleaning litter box for " + this.name());
-  }
+	public void cleanLitterBox() {
+		System.out.println("Cleaning litter box for " + this.name());
+	}
 }
 
 record Cow(String name, int age, String sound) implements Animal {
-  public Rhino(String name, int age) {
-    this(name, age, "Moo");
-  }
+	public Rhino(String name, int age) {
+		this(name, age, "Moo");
+	}
 }
 ```
 
@@ -246,9 +246,9 @@ I now have a new requirement I want to model `Animal`s that can be house pets. S
 
 ```java title="HousePet.java"
 interface HousePet extends Animal {
-  default void takeCareOf() {
-    System.out.println("Taking care of " + this.name());
-  }
+	default void takeCareOf() {
+		System.out.println("Taking care of " + this.name());
+	}
 }
 ```
 
@@ -265,9 +265,9 @@ This is great! I can now use a constraint to handle cases specifically for `Hous
 
 ```java
 void takeCareOfHousePets(List<HousePet> animals) {
-  for (Animal animal : animals) {
-    animal.takeCareOf();
-  }
+	for (Animal animal : animals) {
+		animal.takeCareOf();
+	}
 }
 ```
 
@@ -275,15 +275,15 @@ I also need to handle specific tasks for each kind of `HousePet`, so I do this:
 
 ```java
 void takeCareOfHousePets(List<HousePet> animals) {
-  for (Animal animal : animals) {
-    if (animal instanceof Dog) {
-      ((Dog) animal).walk();
-    } else if (animal instanceof Cat) {
-      ((Cat) animal).cleanLitterBox();
-    }
+	for (Animal animal : animals) {
+		if (animal instanceof Dog) {
+			((Dog) animal).walk();
+		} else if (animal instanceof Cat) {
+			((Cat) animal).cleanLitterBox();
+		}
 
-    throw new Exception("Not sure how to handle " + animal);
-  }
+		throw new Exception("Not sure how to handle " + animal);
+	}
 }
 ```
 
@@ -296,13 +296,13 @@ Well, a user of my library decides to implement `HousePet` for their own `Animal
 
 ```java title="Snake.java"
 record Snake(String name, int age, String sound) implements HousePet {
-  public Snake(String name, int age) {
-    this(name, age, "Hiss");
-  }
+	public Snake(String name, int age) {
+		this(name, age, "Hiss");
+	}
 
-  public void shedSkin() {
-    System.out.println("Shedding skin for " + this.name());
-  }
+	public void shedSkin() {
+		System.out.println("Shedding skin for " + this.name());
+	}
 }
 ```
 
@@ -326,12 +326,12 @@ We would remodel our code above to this:
 
 ```java title="HousePet.java"
 public enum HousePet {
-  DOG(new Dog()),
-  CAT(new Cat()),
+	DOG(new Dog()),
+	CAT(new Cat()),
 
-  constructor (Animal animal) {
-    this.animal = animal;
-  }
+	constructor (Animal animal) {
+		this.animal = animal;
+	}
 }
 ```
 
@@ -339,12 +339,12 @@ Let's look at how we can handle this sum type:
 
 ```java
 void takeCareOfHousePets(List<HousePet> animals) {
-  for (HousePet animalVariant : animals) {
-    switch (animal) {
-      case DOG -> animalVariant.animal.walk();
-      case CAT -> animalVariant.animal.cleanLitterBox();
-    }
-  }
+	for (HousePet animalVariant : animals) {
+		switch (animal) {
+			case DOG -> animalVariant.animal.walk();
+			case CAT -> animalVariant.animal.cleanLitterBox();
+		}
+	}
 }
 ```
 
@@ -358,9 +358,9 @@ of sealed types. This allows us to define our sum type like so:
 
 ```java title="HousePet.java"
 public sealed interface HousePet extends Animal permits Dog, Cat {
-  default void takeCareOf() {
-    System.out.println("Taking care of " + this.name());
-  }
+	default void takeCareOf() {
+		System.out.println("Taking care of " + this.name());
+	}
 }
 ```
 
@@ -375,7 +375,7 @@ Let's say our user decides to implement `HousePet` for their own `Animal` varian
 
 ```java title="Snake.java"
 public final record Snake(String name, int age, String sound) implements HousePet {
-  ...
+	...
 }
 
 // Error: Cannot implement `HousePet`, `Snake` is not a permitted type
@@ -387,12 +387,12 @@ We can guarantee that we've handled all the cases for sealed classes like `House
 
 ```java
 void takeCareOfHousePets(List<HousePet> animals) {
-  for (HousePet animal : animals) {
-    switch (animal) {
-      case Dog dog -> dog.walk();
-      case Cat cat -> cat.cleanLitterBox();
-    }
-  }
+	for (HousePet animal : animals) {
+		switch (animal) {
+			case Dog dog -> dog.walk();
+			case Cat cat -> cat.cleanLitterBox();
+		}
+	}
 }
 ```
 
@@ -406,8 +406,8 @@ Rust takes a similar approach to java with the concept of enums and associated v
 
 ```rust
 enum HousePet {
-  Dog(Dog),
-  Cat(Cat),
+	Dog(Dog),
+	Cat(Cat),
 }
 ```
 
@@ -494,7 +494,7 @@ For reference:
 
 [^1]: This is not a formal term but I'm using it as a blanket term for classes, interfaces, etc.
 [^2]:
-    Some may scoff at my usage of Java to represent algebraic data types due to it's OOP nature. However, in recent updates Java supports algebraic data types through records and sealed classes. In addition, Java is arguably more readable than the alternatives such as Haskell or Rust, which
-    makes it a good choice for learning purposes.
+        Some may scoff at my usage of Java to represent algebraic data types due to it's OOP nature. However, in recent updates Java supports algebraic data types through records and sealed classes. In addition, Java is arguably more readable than the alternatives such as Haskell or Rust, which
+        makes it a good choice for learning purposes.
 
 [^3]: https://openjdk.java.net/jeps/361
