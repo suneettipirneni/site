@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import profilePic from "@/public/me.png";
 import { DiscordStatus } from "./DiscordStatus";
