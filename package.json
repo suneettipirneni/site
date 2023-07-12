@@ -21,7 +21,7 @@
 		"eslint-config-next": "13.4.8",
 		"github-slugger": "^2.0.0",
 		"hastscript": "^7.2.0",
-		"next": "13.4.8",
+		"next": "13.4.10-canary.4",
 		"next-contentlayer": "^0.3.3",
 		"postcss": "8.4.23",
 		"react": "18.2.0",
