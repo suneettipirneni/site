@@ -26,7 +26,7 @@ export const OutlineNode = memo(function OutlineNode({
 				href={`#${node.slug}`}
 				className={`w-auto self-start px-2 py-1 text-sm ${
 					isActive
-						? "rounded-md bg-gray-200/80 font-semibold dark:border-gray-400 dark:bg-gray-100/20"
+						? "rounded-md bg-gray-200/50 font-semibold dark:border-gray-400 dark:bg-white/[0.15]"
 						: "text-gray-600 dark:text-gray-400/80"
 				} line-clamp-1 text-ellipsis hover:underline `}
 			>
@@ -50,7 +50,7 @@ export function Outline({ headings, className }: OutlineProps) {
 
 	return (
 		<div className={`space-y-0.5 ${className}`}>
-			<h1 className="mb-3 flex flex-col text-sm font-semibold">Outline</h1>
+			<h1 className="mb-3 ml-2 flex flex-col text-sm font-semibold">Outline</h1>
 			{headings.map((heading) => (
 				<OutlineNode
 					key={heading.slug}

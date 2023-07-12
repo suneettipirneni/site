@@ -1,18 +1,8 @@
-"use client";
-
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import NextImage, { type ImageProps } from "next/image";
-
+import Image from "next/image";
 import profilePic from "@/public/me.png";
-
 import { DiscordStatus } from "./DiscordStatus";
 
-const Image = motion<Omit<ImageProps, "layout">>(NextImage);
-
 export function Profile() {
-	const [isHovering, setIsHovering] = useState(false);
-
 	let options = {
 		timeZone: "America/New_York",
 		hour: "numeric",
@@ -22,37 +12,19 @@ export function Profile() {
 	let time = new Intl.DateTimeFormat("en-US", options).format(new Date());
 
 	return (
-		<motion.div
-			className="flex flex-row gap-5"
-			layout
-			layoutId="profile"
-			onHoverStart={() => setIsHovering(true)}
-			onHoverEnd={() => setIsHovering(false)}
-		>
-			<AnimatePresence>
-				<Image
-					layout
-					src={profilePic}
-					alt="Profile Picture"
-					className="h-[100px] w-[100px] rounded-full bg-[url('https://avatars.githubusercontent.com/u/77477100?v=4')] bg-cover"
-				/>
+		<div className="flex flex-row gap-5">
+			<Image
+				src={profilePic}
+				alt="Profile Picture"
+				className="h-[100px] w-[100px] rounded-full bg-[url('https://avatars.githubusercontent.com/u/77477100?v=4')] bg-cover"
+			/>
 
-				{isHovering && (
-					<motion.div
-						layout
-						key="profile-hover"
-						initial={{ opacity: 0, y: -50 }}
-						animate={{ opacity: 1, y: 0 }}
-						exit={{ opacity: 0, y: -50 }}
-						className="flex h-[100px] flex-col items-center rounded-lg border border-gray-300 bg-white p-7 shadow-lg dark:border-white/25 dark:bg-white/10 "
-					>
-						<h2 className="w-full text-xl font-medium">
-							{"It's"} <span className="font-semibold">{time}</span> {"for me!"}
-						</h2>
-						<DiscordStatus className="w-full" />
-					</motion.div>
-				)}
-			</AnimatePresence>
-		</motion.div>
+			<div className="flex flex-col items-center justify-center rounded-xl bg-black/10 px-5 py-2 dark:bg-black dark:bg-gray-200/10 ">
+				<DiscordStatus className="w-full" />
+				<h2 className="w-full text-xl font-medium">
+					{"It's"} <span className="font-semibold">{time}</span> {"for me!"}
+				</h2>
+			</div>
+		</div>
 	);
 }

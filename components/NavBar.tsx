@@ -3,7 +3,6 @@
 import NextLink from "next/link";
 import type { ReactNode } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import profilePic from "@/public/me.png";
 
@@ -58,7 +57,7 @@ export function NavBar({ tabs }: NavBarProps) {
 					{tabs.map((tab, index) => (
 						<NextLink
 							key={tab.name}
-							className={`relative z-10 flex flex-row items-center px-4 py-1 text-sm font-semibold transition ${
+							className={`relative z-10 flex flex-row items-center px-4 py-1 text-sm font-medium transition ${
 								isActive(tab.href)
 									? "text-black dark:text-white"
 									: "text-black dark:text-white"
@@ -66,14 +65,8 @@ export function NavBar({ tabs }: NavBarProps) {
 							href={`/${tab.href}`}
 						>
 							{isActive(tab.href) && (
-								<motion.span
+								<span
 									key={`outer-${tab.name}`}
-									layout
-									transition={{
-										type: "spring",
-										duration: 0.5,
-									}}
-									layoutId="selectedTab"
 									className="absolute inset-0 -z-10 rounded-full bg-white shadow-sm dark:bg-white/20"
 								/>
 							)}

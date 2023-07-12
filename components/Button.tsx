@@ -1,5 +1,3 @@
-"use client";
-
 import type { ComponentPropsWithoutRef, ReactNode, ElementType } from "react";
 
 export type ButtonProps<C extends ElementType = "button"> = {
@@ -13,6 +11,7 @@ export function Button<C extends ElementType = "button">({
 	icon,
 	whileHover,
 	as,
+	className,
 	...props
 }: ButtonProps<C>) {
 	const Component = as ?? "button";
@@ -21,7 +20,7 @@ export function Button<C extends ElementType = "button">({
 		<Component
 			whileHover={whileHover}
 			transition={{ type: "spring", bounce: 0.3 }}
-			className="flex items-center gap-x-2 rounded-xl bg-gray-600/25 px-5 py-3 text-black dark:bg-white/10 dark:text-white"
+			className={`flex items-center gap-x-2 rounded-xl bg-gray-600/25 px-5 py-3 text-black dark:bg-white/10 dark:text-white ${className}`}
 			{...props}
 		>
 			{icon}

@@ -25,6 +25,10 @@ module.exports = {
 					"conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
 			},
 
+			colors: {
+				blurple: "#5865F2",
+			},
+
 			spacing: {
 				nav: navbarHeight,
 			},
