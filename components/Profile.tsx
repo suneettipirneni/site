@@ -3,6 +3,7 @@
 import Image from "next/image";
 import profilePic from "@/public/me.png";
 import { DiscordStatus } from "./DiscordStatus";
+import { useEffect, useState } from "react";
 
 export function Profile() {
 	let options = {
@@ -11,7 +12,16 @@ export function Profile() {
 		minute: "numeric",
 	} as const;
 
-	let time = new Intl.DateTimeFormat("en-US", options).format(new Date());
+	const [time, setTime] = useState(
+		new Intl.DateTimeFormat("en-US", options).format(new Date())
+	);
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setTime(new Intl.DateTimeFormat("en-US", options).format(new Date()));
+		}, 10_000);
+		return () => clearInterval(interval);
+	});
 
 	return (
 		<div className="flex flex-row gap-5">
