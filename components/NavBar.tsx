@@ -48,7 +48,7 @@ export function NavBar({ tabs }: NavBarProps) {
 						src={profilePic}
 						width={35}
 						height={35}
-						className="rounded-full ring-1 ring-gray-200"
+						className="rounded-full ring-1 ring-gray-200 dark:ring-gray-400/20"
 						alt="About"
 					/>
 				</NextLink>
