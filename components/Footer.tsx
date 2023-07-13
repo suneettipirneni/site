@@ -2,7 +2,7 @@ import { BsDiscord, BsGithub } from "react-icons/bs";
 
 export default function Footer() {
 	return (
-		<footer className="flex h-[70px] w-full items-center justify-center border-t px-5 dark:border-gray-200/30 xl:px-0">
+		<footer className="flex h-[70px] w-full items-center justify-center border-t border-gray-200 px-5 dark:border-gray-200/5 xl:px-0">
 			<div className="flex w-full max-w-postcontent items-center justify-between text-sm text-gray-500">
 				<div className="flex flex-row">
 					<h1>

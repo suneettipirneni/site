@@ -21,11 +21,11 @@ export function Profile() {
 				className="h-[100px] w-[100px] rounded-full bg-[url('https://avatars.githubusercontent.com/u/77477100?v=4')] bg-cover"
 			/>
 
-			<div className="flex flex-col items-center justify-center rounded-xl bg-black/10 px-5 py-2 dark:bg-black dark:bg-gray-200/10 ">
+			<div className="hidden flex-col items-center justify-center rounded-xl bg-gray-200/50 px-5 py-2 dark:bg-black dark:bg-gray-200/10 md:flex ">
 				<DiscordStatus className="w-full" />
-				<h2 className="w-full text-xl font-medium">
+				<span className="w-full text-xl font-medium">
 					{"It's"} <span className="font-semibold">{time}</span> {"for me!"}
-				</h2>
+				</span>
 			</div>
 		</div>
 	);

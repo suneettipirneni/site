@@ -41,19 +41,19 @@ export function NavBar({ tabs }: NavBarProps) {
 	const isActive = (tab: string) => tab.replaceAll("/", "") === segment;
 
 	return (
-		<div className="sticky top-0 z-50 flex h-[60px] w-full flex-row items-center justify-center border-b  border-gray-200 dark:border-gray-200/25 lg:h-nav lg:border-none">
-			<div className="flex h-full w-[calc(850px_+_50px)] max-w-full flex-row justify-between bg-white/80 p-2 bg-blend-saturation backdrop-blur-xl dark:bg-black/50 lg:h-auto lg:rounded-full lg:border lg:border-gray-200 lg:shadow-sm lg:dark:border-gray-200/25">
+		<div className="sticky top-0 z-50 flex h-[50px] w-full flex-row items-center justify-center border-b  border-gray-200 dark:border-gray-200/5 lg:h-nav lg:border-none">
+			<div className="flex h-full w-[calc(850px_+_50px)] max-w-full flex-row items-center justify-between bg-white/80 p-3 bg-blend-saturation ring-1 ring-gray-200/75 backdrop-blur-xl dark:bg-black/50 dark:ring-gray-400/20 lg:h-[60px] lg:rounded-full lg:shadow-lg lg:shadow-gray-200/30 lg:dark:border-gray-200/25 lg:dark:shadow-none">
 				<NextLink href="/" className="flex flex-row items-center">
 					<Image
 						src={profilePic}
 						width={35}
 						height={35}
-						className="rounded-full border border-gray-400/50"
+						className="rounded-full ring-1 ring-gray-200"
 						alt="About"
 					/>
 				</NextLink>
 
-				<div className="flex flex-row rounded-full bg-black/5 p-1 dark:bg-white/5">
+				<div className="flex max-h-[40px] flex-row rounded-full bg-gray-200/50 p-1 dark:bg-white/5">
 					{tabs.map((tab, index) => (
 						<NextLink
 							key={tab.name}

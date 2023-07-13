@@ -20,7 +20,7 @@ export function Button<C extends ElementType = "button">({
 		<Component
 			whileHover={whileHover}
 			transition={{ type: "spring", bounce: 0.3 }}
-			className={`flex items-center gap-x-2 rounded-xl bg-gray-600/25 px-5 py-3 text-black dark:bg-white/10 dark:text-white ${className}`}
+			className={`flex items-center gap-x-2 rounded-xl bg-gray-200/50 px-5 py-3 text-black dark:bg-white/10 dark:text-white ${className}`}
 			{...props}
 		>
 			{icon}

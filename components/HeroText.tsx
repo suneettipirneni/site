@@ -5,7 +5,7 @@ export function HeroText({
 	className,
 }: PropsWithChildren<{ className?: string }>) {
 	return (
-		<h1 className={`${className} text-left text-2xl font-bold sm:text-5xl`}>
+		<h1 className={`${className} text-left text-3xl font-bold sm:text-5xl`}>
 			{children}
 		</h1>
 	);
