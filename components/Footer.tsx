@@ -1,4 +1,4 @@
-import { BsDiscord, BsGithub } from "react-icons/bs";
+import { BsDiscord, BsGithub, BsLinkedin } from "react-icons/bs";
 
 export default function Footer() {
 	return (
@@ -35,6 +35,15 @@ export default function Footer() {
 						title="GitHub Profile"
 					>
 						<BsGithub />
+					</a>
+					<a
+						className="cursor-pointer"
+						href="https://www.linkedin.com/in/suneettipirneni/"
+						target="_blank"
+						rel="noopener noreferrer"
+						title="LinkedIn Profile"
+					>
+						<BsLinkedin />
 					</a>
 				</div>
 			</div>
