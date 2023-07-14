@@ -5,20 +5,20 @@ import profilePic from "@/public/me.png";
 import { DiscordStatus } from "./DiscordStatus";
 import { useEffect, useState } from "react";
 
-export function Profile() {
-	let options = {
-		timeZone: "America/New_York",
-		hour: "numeric",
-		minute: "numeric",
-	} as const;
+const timeOptions = {
+	timeZone: "America/New_York",
+	hour: "numeric",
+	minute: "numeric",
+} as const;
 
+export function Profile() {
 	const [time, setTime] = useState(
-		new Intl.DateTimeFormat("en-US", options).format(new Date())
+		new Intl.DateTimeFormat("en-US", timeOptions).format(new Date())
 	);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setTime(new Intl.DateTimeFormat("en-US", options).format(new Date()));
+			setTime(new Intl.DateTimeFormat("en-US", timeOptions).format(new Date()));
 		}, 10_000);
 		return () => clearInterval(interval);
 	});
