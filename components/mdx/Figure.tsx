@@ -14,7 +14,7 @@ export function Figure({ caption, children }: FigureProps) {
 	return (
 		<div className="flex flex-col items-center justify-center gap-y-3 post:mb-4">
 			{children}
-			<figcaption className="w-full grow text-center text-sm">
+			<figcaption className="w-full grow text-center text-sm text-gray-600 dark:text-white/60">
 				{caption}
 			</figcaption>
 		</div>
