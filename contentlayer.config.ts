@@ -18,6 +18,7 @@ export const Post = defineDocumentType(() => ({
 	filePathPattern: `posts/*.mdx`,
 	contentType: "mdx",
 	fields: {
+		headerStyle: { type: "enum", required: false, options: ["cover", "contain"], default: "cover" },
 		featured: { type: "boolean", required: true },
 		draft: { type: "boolean", required: true },
 		author: { type: "string", required: true },

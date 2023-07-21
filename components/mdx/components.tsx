@@ -14,9 +14,9 @@ import {
 	TableRow,
 } from "./Table";
 import { InfoBlock } from "./InfoBlock";
-import { BlockQuote } from "./BlockQuote";
 import { Figure } from "./Figure";
 import { CopyButton } from "./CopyButton";
+import { Quote } from './Quote';
 
 export const mdxComponents: MDXComponents = {
 	h1: (props) => <Heading level={1} {...props} />,
@@ -38,7 +38,8 @@ export const mdxComponents: MDXComponents = {
 	td: (props) => <TableCell {...props} />,
 	tbody: (props) => <TableBody {...props} />,
 	InfoBlock: (props) => <InfoBlock {...props} />,
-	blockquote: (props) => <BlockQuote {...props} />,
+	blockquote: (props) => <Quote {...props} />,
 	Figure,
 	CopyButton: (props) => <CopyButton {...props} />,
+	Quote,
 };

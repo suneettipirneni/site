@@ -16,7 +16,9 @@ function PostSection({
 }
 
 export default function BlogPostsPage() {
-	const sortedPosts = allPosts.sort((a, b) => {
+	const sortedPosts = allPosts
+		.filter((post) => process.env.NODE_ENV !== "production" || !post.draft)
+		.sort((a, b) => {
 		return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
 	});
 

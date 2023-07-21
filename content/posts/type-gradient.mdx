@@ -1,0 +1,142 @@
+---
+author: Suneet Tipirneni
+datetime: 2023-02-02T15:52:55.052Z
+title: Static Typing is a Gradient, not a Switch
+featured: false
+draft: true
+tags:
+  - concepts
+headerStyle: "contain"
+headingImage: "/headers/type-gradient.png"
+headingImageDark: "/headers/type-gradient-dark.png"
+description: I've been using statically typed languages for a bit, and one thing is abundantly clear. How we use static types is anything but a binary decision.
+---
+
+# Early Exposure to Static Types
+
+My first programming language I learned (Java) was my first exposure to static types. At the time, I didn't really think much of them, I knew they were needed
+to make things work but it never crossed my mind what their importance was. Their use was made more clear when I ventured into the domain of untyped languages
+like Python. Coming from Java the terseness of Python felt like a breath of fresh air. I could write a lot less code and get the same result. It was great! However,
+this honeymoon period was short lived. I had run into my first runtime error (that wasn't a `NullPointerException`). I read some data from the stdin and passed it into
+a function expecting an `int`.
+
+```python
+current_year = 2014
+age = input("Enter your age: ")
+
+def calculate_year_born(age):
+    return current_year - age
+
+print(f"You were born in {calculate_year_born(age)}!")
+```
+
+I was then greeted with this error:
+
+```txt title="error.txt"
+TypeError: unsupported operand type(s) for -: 'int' and 'str'
+```
+
+The error here was clear, I was trying to subtract a string from an integer. I had forgotten to convert the input to an integer.
+This was a simple fix:
+
+```python
+age = int(input("Enter your age: "))
+```
+
+# The Pendulum Swings
+
+But as my code complexity and requirements grew, I ran into more of these errors. Soon it felt like I was coding blind,
+there was no autocomplete for methods, no type hints, and no compiler to catch my mistakes.
+
+<Quote>
+  "The issue with loosely typed languages is more subtle, (...) Each error is a cut to your productivity, and while each cut is small,
+the combined effect is a much larger productivity sinkhole."
+</Quote>
+
+I was spending more time debugging than writing code. The reasoning for Java making me put those funny names before every variable and function was becoming more clear. 
+Suddenly, the verbosity of Java felt like a small price to pay for the type safety it provided. The issue with loosely typed languages is more subtle, it's not that they
+don't work, it's that they don't work well at scale. It's quite literally death by a thousand cuts. Each error is a cut to your productivity, and while each cut is small,
+the combined effect is a much larger productivity sinkhole. 
+
+# A New Dimension of Static Types
+
+At this point I had gained an appreciation for static types. However, because of my limited experience to other statically typed languages, I had assumed
+that your language was either statically typed or it wasn't. There was no in-between, no gray areas, just a switch. It wasn't until much later it became clear
+that not all statically typed languages are created equal.
+
+When I first programmed in Swift, I learned about this new thing called "optionals". They we basically a way to tell a type system that a value may or may not be `nil`.
+These were great, they exposed to something that was more statically typed than other statically-typed languages? Was this statically-typed++? I was intrigued.
+
+```swift
+struct Person {
+    let name: String
+    let age: Int?
+}
+
+let person = Person(name: "Suneet", age: nil)
+
+print(person.age)
+```
+A nice compile time error popped up to let me know that I could be manipulating a value that may not exist.
+
+```txt title="compile-error.txt"
+error: value of optional type 'Int?' must be unwrapped to a value of type 'Int'
+print(yearsAlive(age: person.age))
+                             ^
+```
+
+Java would give me none of those errors I would have to wait until runtime to receive the dreaded `NullPointerException`. 
+
+This gave me a glimpse into the gradient of static typing and I was hooked. I wanted to make everything as statically typed as possible, there's no such thing as too much type safety right? So why
+not go the very edge of the type spectrum?
+
+# Static Types Overstay Their Welcome
+
+## Too much Restriction
+
+My initial assumptions of more static types being better was quickly challenged. This aversion didn't come from myself but from feedback other developers. While working on a library, we wanted a 
+a way to validate an arbitrary string was a valid [Snowflake](https://en.wikipedia.org/wiki/Snowflake_ID). As such, we introduced the following TypeScript type:
+
+```typescript
+export type Snowflake = `${bigint}`;
+```
+
+We thought this was nice because of the validation it gave:
+
+```typescript
+// Compile Error: Type '"Invalid Snowflake"' is not assignable to type '`${bigint}`'.
+const badId: Snowflake = 'Invalid Snowflake'
+
+// OK
+const goodId: Snowflake = '12345'
+```
+When viewed in isolation this check seems harmless. However, in a more realistic codebase we are receiving stringified Snowflakes either from an external function or from another datasource such as a `.env`
+or even a database. This brought a lot of inconveniences to developer since a cast was always needed to tell compiler a given string was a Snowflake.
+
+For example, if we wanted to use a Snowflake from an environment variable we would have to do the following:
+
+```typescript
+const snowflakeFromEnv = process.env.SNOWFLAKE_ID as Snowflake
+```
+
+Or if we wanted to use a Snowflake from a database we would have to do the following:
+
+```typescript
+const snowflakeFromDb = (await db.query('SELECT id FROM users WHERE name = "Suneet"')) as Snowflake
+```
+
+There's no compile time type in databases for a Snowflake, it's just treated as an arbitrary string. As a result this type change was reverted,
+and we simply typed it as a plain ol' `string`.
+
+## Documentation
+
+Most (if not all) of the consumers of a library are using an IDE. Autocomplete is a godsend for developer productivity. And it allows developers to explore the API for a specific
+symbol without having to leave their editor. Even better, if you use statically typed languages your users get this for free.  
+
+```typescript
+```
+
+## But my Safety!
+
+This was one of the many examples of how static types can be too restrictive. But the fact a type system can be too restrictive was something completely new to me. I had never considering being "too correct" a 
+bad thing in the programming world.  

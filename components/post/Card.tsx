@@ -24,7 +24,7 @@ export function BlogEntry({ post }: BlogEntryProps) {
 						/>
 					)}
 					<Image
-						className="absolute h-[200px] w-full rounded-xl object-cover transition-all duration-300 ease-in-out hover:scale-105"
+						className={`absolute h-[200px] w-full rounded-xl ${post.headerStyle === "cover" ? "object-cover" : "object-contain" } object-contain transition-all duration-300 ease-in-out hover:scale-105`}
 						src={post.headingImage}
 						width={500}
 						height={400}
