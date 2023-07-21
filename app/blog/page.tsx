@@ -8,7 +8,7 @@ import { FiLoader } from "react-icons/fi";
 export const metadata: Metadata = {
 	title: "Thunk - A Blog",
 	description:
-		"A set of written entries with varying amounts of quality, and ranging topics. I write about things I find useful, interesting, or just want to share (usually in the domain of software). If you find anything that seems off or incorrect, I'm open to PRs",
+		"A set of written entries with varying amounts of quality, and ranging topics. I write about things I find useful, interesting, or just want to share (usually in the domain of software). If you find anything that seems off or incorrect, I'm open to PRs.",
 };
 
 function PostSection({
@@ -45,7 +45,8 @@ export default function BlogPostsPage() {
 					A set of written entries with varying amounts of quality, and ranging
 					topics. I write about things I find useful, interesting, or just want
 					to share (usually in the domain of software). If you find anything
-					that seems off or incorrect, I&apos;m open to PRs
+					that seems off or incorrect, feel free to open a PR/issue on github or
+					DM me.
 				</p>
 			</div>
 
