@@ -8,6 +8,7 @@ import { Outline } from "@/components/Outline";
 import { mdxComponents } from "@/components/mdx/components";
 import type { Metadata } from "next";
 import { DateTime } from "@/components/post/DateTime";
+import { Tags } from "@/components/post/Tag";
 
 const findPost = (slug: string) => {
 	const post = allPosts.find((post) => post.slug === slug);
@@ -58,18 +59,23 @@ export default function Post({ params }: { params: { slug: string } }) {
 		<article className="relative z-10 mx-auto grid w-full items-start justify-center px-2 py-4 align-middle md:px-0 xl:grid-cols-postgrid xl:gap-x-10">
 			<Link
 				href="/blog"
-				className="col-start-2 row-start-1 mb-5 flex flex-row items-center gap-2 text-xl font-medium"
+				className="col-start-2 row-start-1 mb-5 flex flex-row items-center gap-2 text-xl font-medium text-gray-600 dark:text-gray-300/80"
 			>
 				<FaArrowLeft />
 				Back
 			</Link>
-			<h1 className="col-start-2 row-start-2 mb-10 flex w-auto max-w-postcontent flex-col text-3xl font-bold">
-				<Balancer>{post.title}</Balancer>
+			<h1 className="col-start-2 row-start-2 mb-10 flex w-auto max-w-postcontent flex-col gap-y-3 font-bold">
+				<Tags tags={post.tags} />
+				<Balancer className="text-3xl leading-tight md:text-5xl">
+					{post.title}
+				</Balancer>
 				<DateTime datetime={post.datetime} timeToRead={post.timeToRead} />
 			</h1>
 			<div className="col-start-2 row-start-3 mb-2 min-w-0 max-w-postcontent self-start">
 				<div className="space-y-5">
-					<p className="text-gray-600 dark:text-gray-300">{post.description}</p>
+					<p className="text-gray-600 dark:text-gray-300 md:text-lg">
+						{post.description}
+					</p>
 				</div>
 				<div data-post className="col-start-2 min-w-0 max-w-postcontent">
 					<MDXComponent components={mdxComponents} />

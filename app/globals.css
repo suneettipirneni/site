@@ -20,3 +20,16 @@
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
+
+.slow-spin {
+	@media (prefers-reduced-motion: no-preference) {
+		@keyframes spin {
+			to {
+				transform: rotate(360deg);
+			}
+		}
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		animation: spin 10s linear infinite;
+	}
+}

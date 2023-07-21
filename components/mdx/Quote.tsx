@@ -1,14 +1,14 @@
 export interface QuoteProps {
-  children?: React.ReactNode;
-  source?: string;
+	children?: React.ReactNode;
+	source?: string;
 }
 
 export function Quote({ children, source }: QuoteProps) {
-  return (
-    <div className="flex items-center align-middle  text-lg md:text-xl font-medium leading-snug post:my-10 md:px-10 px-5">
-      <div className='flex flex-col space-y-4 pl-4 border-l-4 border-black/50 dark:border-white/50 py-3 max-w-[45ch]'>
-      {children}
-      </div>
-    </div>
-  );
+	return (
+		<div className="flex items-center px-5  align-middle text-lg font-medium leading-snug post:my-10 md:px-10 md:text-xl">
+			<div className="flex max-w-[45ch] flex-col space-y-4 border-l-4 border-black py-3 pl-4 dark:border-white">
+				{children}
+			</div>
+		</div>
+	);
 }
