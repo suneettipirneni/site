@@ -1,7 +1,7 @@
 "use client";
 
 import NextLink from "next/link";
-import { useEffect, type ReactNode, useState } from "react";
+import { useEffect, type ReactNode, useState, useMemo } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
 import Image from "next/image";
 import profilePic from "@/public/me.png";
@@ -52,21 +52,24 @@ export function NavBar({ tabs }: NavBarProps) {
 	}, []);
 
 	// Determines if a tab is currently active based on the current path.
-	const isActive = (tab: string) => tab.replaceAll("/", "") === segment;
+	const isActive = useMemo(
+		() => (tab: string) => tab.replaceAll("/", "") === segment,
+		[segment]
+	);
 
 	const withBackgroundStyle =
 		"bg-white/80 dark:bg-black/50 dark:ring-gray-400/20 ring-gray-200/75 ring-1 backdrop-blur-xl lg:shadow-lg lg:shadow-gray-200/30";
 
 	return (
 		<div
-			className={`sticky top-0 z-50 flex h-[50px] w-full flex-row items-center justify-center ${
-				shouldShowBackground && "border-b"
-			} border-gray-200 p-0 dark:border-gray-200/5 lg:h-nav lg:border-none lg:p-1`}
+			className={`sticky top-0 z-50 flex w-full flex-row items-center justify-center border-gray-200
+				
+			 p-0 lg:h-[70px]  lg:border-none lg:p-1`}
 		>
 			<div
 				className={`flex h-full w-[calc(850px_+_50px)] max-w-full flex-row items-center justify-between ${
 					shouldShowBackground ? withBackgroundStyle : "bg-transparent"
-				} p-3 bg-blend-saturation transition-colors lg:h-[60px] lg:rounded-full  lg:dark:border-gray-200/25 lg:dark:shadow-none`}
+				} p-5 bg-blend-saturation transition-colors md:p-3 lg:h-[60px] lg:rounded-full  lg:dark:border-gray-200/25 lg:dark:shadow-none`}
 			>
 				<NextLink href="/" className="flex flex-row items-center">
 					<Image
