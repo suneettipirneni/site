@@ -3,10 +3,18 @@ import { Profile } from "@/components/Profile";
 import { Subtitle } from "@/components/Subtitle";
 import Balancer from "react-wrap-balancer";
 import { ProfileFooter } from "@/components/ProfileFooter";
+import { BackgroundImage } from "@/components/BackgroundImage";
+import profileBg from "../public/profile-bg.png";
+import Image from "next/image";
 
 export default function Home() {
 	return (
-		<div className="mt-10 flex grow flex-col items-center justify-center space-y-10 overflow-hidden">
+		<div className="mt-10 flex grow flex-col items-center justify-center space-y-10 overflow-hidden bg-fixed">
+			<Image
+				src={profileBg}
+				alt=""
+				className="absolute inset-0 -z-10 h-full w-full bg-fixed object-cover"
+			/>
 			<Profile />
 			<HeroText className="line-clamp-3 max-w-[600px] text-center font-semibold">
 				<Balancer>
