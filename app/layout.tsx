@@ -31,7 +31,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 			</head>
 
 			<body
-				className={`${inter.className} ${jetBrainsMono.variable} mx-auto flex h-full min-h-screen w-full scroll-pt-[65px] flex-col items-center overflow-y-auto bg-white bg-cover bg-no-repeat text-black dark:bg-black dark:text-white`}
+				className={`${inter.className} ${jetBrainsMono.variable} mx-auto flex h-full min-h-screen w-full scroll-pt-[65px] flex-col items-center overflow-y-auto bg-slate-50 bg-cover bg-no-repeat text-black dark:bg-zinc-950 dark:text-white`}
 			>
 				<NavBar
 					tabs={[

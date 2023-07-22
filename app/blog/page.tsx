@@ -1,7 +1,9 @@
 import { BinarySpinnerIcon } from "@/components/BinarySpinner";
+import { FilterBar } from "@/components/FilterBar";
 import { HeroText } from "@/components/HeroText";
 import { BlogEntry } from "@/components/post/Card";
 import { Title } from "@/components/Title";
+import { ALL_TAGS } from "@/util/constants";
 import { allPosts } from "contentlayer/generated";
 import { Metadata } from "next";
 
@@ -43,11 +45,11 @@ export default function BlogPostsPage() {
 				<p className="text-gray-500 dark:text-white/50 md:text-lg">
 					A set of written entries with varying amounts of quality, and ranging
 					topics. I write about things I find useful, interesting, or just want
-					to share (usually in the domain of software). If you find anything
-					that seems off or incorrect, feel free to open a PR/issue on github or
-					DM me.
+					to share (usually in the domain of software).
 				</p>
 			</div>
+
+			{/* <FilterBar className="w-full" tags={ALL_TAGS} /> */}
 
 			<Title className="font-bold">Featured</Title>
 			<div className="h-[1px] w-auto border-b border-gray-200 dark:border-gray-200/20 md:hidden" />
