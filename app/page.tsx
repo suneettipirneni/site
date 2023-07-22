@@ -24,11 +24,8 @@ export default function Home() {
 			</picture>
 
 			<Profile />
-			<HeroText className="line-clamp-3 max-w-[600px] text-center font-semibold">
-				<Balancer>
-					{"Hello! I'm"} <span className="gradient-text font-bold">Suneet</span>{" "}
-					{"and this is a website"}
-				</Balancer>
+			<HeroText className="line-clamp-3 max-w-[600px] text-center font-bold">
+				<Balancer>{"Hello! I'm Suneet and this is a website"}</Balancer>
 			</HeroText>
 			<Subtitle className="max-w-[450px] text-center text-gray-500 dark:text-gray-200/70">
 				<Balancer>
