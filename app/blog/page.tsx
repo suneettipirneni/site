@@ -36,11 +36,11 @@ export default function BlogPostsPage() {
 		<div
 			className={`mx-auto flex w-full max-w-postcontent flex-col space-y-4 overflow-y-auto px-3 py-3 md:px-0 md:py-7 md:pb-10`}
 		>
-			<div className="mb-7 flex flex-col gap-y-3">
-				<HeroText className="flex items-center gap-x-2">
-					<FiLoader className="slow-spin" /> Thunk
+			<div className="mb-7 flex flex-col items-start gap-y-3 ">
+				<HeroText className="mb-5 flex shrink items-center gap-x-2">
+					<FiLoader className="slow-spin" /> Thunk Tank
 				</HeroText>
-				<div className="mb-3 h-[4px] w-[25%] min-w-[130px] bg-black dark:bg-white md:mb-4" />
+				{/* <div className="mb-3 h-[4px] w-[45%] min-w-[130px] bg-black dark:bg-white md:mb-4" /> */}
 				<p className="text-gray-500 dark:text-white/50 md:text-lg">
 					A set of written entries with varying amounts of quality, and ranging
 					topics. I write about things I find useful, interesting, or just want

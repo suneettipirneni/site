@@ -61,7 +61,7 @@ export function NavBar({ tabs }: NavBarProps) {
 		<div
 			className={`sticky top-0 z-50 flex h-[50px] w-full flex-row items-center justify-center ${
 				shouldShowBackground && "border-b"
-			} border-gray-200 p-1 dark:border-gray-200/5 lg:h-nav lg:border-none`}
+			} border-gray-200 p-0 dark:border-gray-200/5 lg:h-nav lg:border-none lg:p-1`}
 		>
 			<div
 				className={`flex h-full w-[calc(850px_+_50px)] max-w-full flex-row items-center justify-between ${
