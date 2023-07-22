@@ -1,9 +1,9 @@
+import { BinarySpinnerIcon } from "@/components/BinarySpinner";
 import { HeroText } from "@/components/HeroText";
 import { BlogEntry } from "@/components/post/Card";
 import { Title } from "@/components/Title";
 import { allPosts } from "contentlayer/generated";
 import { Metadata } from "next";
-import { FiLoader } from "react-icons/fi";
 
 export const metadata: Metadata = {
 	title: "Thunk - A Blog",
@@ -38,9 +38,8 @@ export default function BlogPostsPage() {
 		>
 			<div className="mb-7 flex flex-col items-start gap-y-3 ">
 				<HeroText className="mb-5 flex shrink items-center gap-x-2">
-					<FiLoader className="slow-spin" /> Thunk Tank
+					<BinarySpinnerIcon className="slow-spin" /> Thunk Tank
 				</HeroText>
-				{/* <div className="mb-3 h-[4px] w-[45%] min-w-[130px] bg-black dark:bg-white md:mb-4" /> */}
 				<p className="text-gray-500 dark:text-white/50 md:text-lg">
 					A set of written entries with varying amounts of quality, and ranging
 					topics. I write about things I find useful, interesting, or just want
