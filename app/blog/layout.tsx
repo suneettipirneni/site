@@ -2,6 +2,13 @@ import { PropsWithChildren } from "react";
 import Image from "next/image";
 import background from "../../public/thunk.png";
 import backgroundDark from "../../public/thunk-dark.png";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Thunk Tank - A Blog",
+	description:
+		"A set of written entries with varying amounts of quality, and ranging topics. I write about things I find useful, interesting, or just want to share (usually in the domain of software). If you find anything that seems off or incorrect, I'm open to PRs.",
+};
 
 export default function BlogLayout({ children }: PropsWithChildren) {
 	return (
