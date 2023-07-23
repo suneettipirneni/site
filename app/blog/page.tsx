@@ -47,7 +47,7 @@ export default function BlogPostsPage() {
 		<div
 			className={`mx-auto flex w-full max-w-postcontent flex-col space-y-4 overflow-y-auto px-3 py-3 md:px-0 md:py-7 md:pb-10`}
 		>
-			<div className="mb-14 flex flex-col items-start gap-y-3 ">
+			<div className="mb-3 flex flex-col items-start gap-y-3 md:mb-7 ">
 				<HeroText className="mb-5 flex shrink items-center gap-x-4">
 					<BinarySpinnerIcon className="slow-spin" /> Thunk Tank
 				</HeroText>
@@ -57,7 +57,7 @@ export default function BlogPostsPage() {
 					to share (usually in the domain of software).
 				</p>
 			</div>
-			<FilterBar className="!mb-5 w-full" tags={ALL_TAGS} />
+			<FilterBar className="!mb-1 w-full" tags={ALL_TAGS} />
 
 			{featuredPosts.length > 0 && (
 				<>
