@@ -24,11 +24,11 @@ export function Profile() {
 	});
 
 	return (
-		<div className="flex flex-row gap-5">
+		<div className="flex flex-row sm:gap-3 md:gap-5">
 			<Image
 				src={profilePic}
 				alt="Profile Picture"
-				className="h-[100px] w-[100px] rounded-full bg-[url('https://avatars.githubusercontent.com/u/77477100?v=4')] bg-cover"
+				className="h-[60px] w-[60px] rounded-full bg-[url('https://avatars.githubusercontent.com/u/77477100?v=4')] bg-cover md:h-[80px] md:w-[80px] lg:h-[100px] lg:w-[100px]"
 			/>
 
 			<div className="hidden flex-col items-center justify-center rounded-xl bg-gray-200/50 px-5 py-2 dark:bg-black dark:bg-gray-200/10 md:flex ">

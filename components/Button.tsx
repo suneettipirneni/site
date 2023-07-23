@@ -24,7 +24,6 @@ export function Button<C extends ElementType = "button">({
 			{...props}
 		>
 			{icon}
-			<h1 className="text-[18px] font-bold">{title}</h1>
 		</Component>
 	);
 }

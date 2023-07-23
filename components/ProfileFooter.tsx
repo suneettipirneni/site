@@ -4,7 +4,7 @@ import { BsDiscord, BsLinkedin } from "react-icons/bs";
 
 export function ProfileFooter() {
 	return (
-		<div className="grid grid-flow-dense grid-cols-2 gap-3">
+		<div className="flex gap-x-2">
 			<Button
 				title="GitHub"
 				icon={<AiFillGithub size={24} />}
@@ -23,12 +23,12 @@ export function ProfileFooter() {
 				target="_blank"
 				rel="noopener noreferrer"
 			/>
-			<div className="col-span-2 flex flex-row items-center justify-center align-middle">
+			<div className="flex flex-row items-center justify-center align-middle lg:col-span-2">
 				<Button
 					title="LinkedIn"
 					icon={<BsLinkedin size={24} />}
 					as="a"
-					className="col-span-2 transition-all hover:scale-110 hover:bg-[#0077B5] hover:text-white"
+					className="transition-all hover:scale-110 hover:bg-[#0077B5] hover:text-white"
 					href="https://www.linkedin.com/in/suneettipirneni/"
 					target="_blank"
 					rel="noopener noreferrer"

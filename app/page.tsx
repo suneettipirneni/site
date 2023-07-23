@@ -10,7 +10,7 @@ import Image from "next/image";
 
 export default function Home() {
 	return (
-		<div className="mt-10 flex grow flex-col items-center justify-center space-y-10 overflow-hidden bg-fixed">
+		<div className="mt-10 flex grow flex-col items-center justify-center space-y-3 overflow-hidden bg-fixed md:space-y-5 lg:space-y-10">
 			<picture>
 				<source
 					srcSet={profileBgDark.src}
