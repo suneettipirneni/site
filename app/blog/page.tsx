@@ -1,12 +1,15 @@
-"use client";
-
 import { BinarySpinnerIcon } from "@/components/BinarySpinner";
 import { FilterBar } from "@/components/FilterBar";
 import { HeroText } from "@/components/HeroText";
 import { BlogEntry } from "@/components/post/Card";
-import { useFilteredTags } from "@/hooks/useSelectedTags";
 import { ALL_TAGS } from "@/util/constants";
 import { allPosts } from "contentlayer/generated";
+
+export const metadata = {
+	title: "Thunk Tank - A Blog",
+	description:
+		"A set of written entries with varying amounts of quality, and ranging topics. I write about things I find useful, interesting, or just want to share (usually in the domain of software). If you find anything that seems off or incorrect, I'm open to PRs.",
+};
 
 function PostSection({
 	children,
@@ -20,17 +23,24 @@ function PostSection({
 	);
 }
 
-export default function BlogPostsPage() {
-	const [selectedTags] = useFilteredTags();
+interface BlogPostsSearchParams {
+	tags?: string | string[];
+}
 
-	const isFiltered = selectedTags.length > 0;
+export default function BlogPostsPage({
+	searchParams: { tags = [] },
+}: {
+	searchParams: BlogPostsSearchParams;
+}) {
+	const selectedTags = Array.isArray(tags) ? tags : [tags];
+
+	const isFiltered = tags.length > 0;
 
 	const sortedPosts = allPosts
 		.filter(
 			(post) =>
 				(process.env.NODE_ENV !== "production" || !post.draft) &&
-				(!selectedTags.length ||
-					post.tags.some((tag) => selectedTags.includes(tag)))
+				(!selectedTags.length || post.tags.some((tag) => tags.includes(tag)))
 		)
 		.sort((a, b) => {
 			return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
@@ -57,7 +67,11 @@ export default function BlogPostsPage() {
 					to share (usually in the domain of software).
 				</p>
 			</div>
-			<FilterBar className="!mb-1 w-full" tags={ALL_TAGS} />
+			<FilterBar
+				className="!mb-1 w-full"
+				tags={ALL_TAGS}
+				selectedTags={selectedTags}
+			/>
 
 			{featuredPosts.length > 0 && (
 				<>
