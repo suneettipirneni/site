@@ -3,7 +3,6 @@ import { Profile } from "@/components/Profile";
 import { Subtitle } from "@/components/Subtitle";
 import Balancer from "react-wrap-balancer";
 import { ProfileFooter } from "@/components/ProfileFooter";
-import { BackgroundImage } from "@/components/BackgroundImage";
 import profileBg from "../public/profile-bg.png";
 import profileBgDark from "../public/profile-bg-dark.png";
 import Image from "next/image";
