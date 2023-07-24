@@ -1,8 +1,8 @@
-import { Suspense } from 'react'
+import { Suspense } from "react";
 import { BinarySpinnerIcon } from "@/components/BinarySpinner";
-import { FilterBar } from "@/components/FilterBar";
+import { FilterBar } from "@/components/blog/FilterBar";
 import { HeroText } from "@/components/HeroText";
-import { BlogEntry } from "@/components/post/Card";
+import { BlogEntry } from "@/components/blog/Card";
 import { ALL_TAGS } from "@/util/constants";
 import { allPosts } from "contentlayer/generated";
 
@@ -75,7 +75,6 @@ export default function BlogPostsPage({
 					selectedTags={selectedTags}
 				/>
 			</Suspense>
-			
 
 			{featuredPosts.length > 0 && (
 				<>

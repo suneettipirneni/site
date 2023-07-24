@@ -1,9 +1,7 @@
-"use client";
-
 import { RxCross1 } from "react-icons/rx";
-import { type ReactNode, useCallback, useState } from "react";
-import { usePathname } from "next/navigation";
+import { type ReactNode, useCallback } from "react";
 import Link from "next/link";
+import { FadedScroll } from "../FadedScroll";
 
 export interface FilterBarProps {
 	className?: string;
@@ -44,9 +42,6 @@ export function FilterBar({
 	className = "",
 	selectedTags = [],
 }: FilterBarProps) {
-	const pathname = usePathname();
-	const [shouldFadeLeft, setShouldFadeLeft] = useState(false);
-
 	/**
 	 * Creates a URL with updated tags based on the selected tag.
 	 * @param tag - The tag to be updated.
@@ -61,25 +56,16 @@ export function FilterBar({
 			const params = new URLSearchParams(
 				updatedTags.map((tag) => ["tags", tag])
 			);
-			return `${pathname}?${params.toString()}`;
+			return `/blog?${params.toString()}`;
 		},
-		[pathname, selectedTags]
+		[selectedTags]
 	);
-
-	const onScroll = useCallback((e: React.UIEvent<HTMLDivElement, UIEvent>) => {
-		const target = e.target as HTMLDivElement;
-		const scrollLeft = target.scrollLeft;
-
-		setShouldFadeLeft(scrollLeft > 0);
-	}, []);
 
 	return (
 		<div className={`flex items-center justify-between gap-x-4 ${className}`}>
-			<div
-				className={`${
-					shouldFadeLeft ? "fade-x" : "fade-right"
-				} flex grow gap-x-2 gap-y-2 overflow-x-auto pr-5`}
-				onScroll={onScroll}
+			<FadedScroll
+				className="flex grow gap-x-2 gap-y-2 overflow-x-auto pr-5"
+				direction="horizontal"
 			>
 				{tags.map((tag) => (
 					<TagButton
@@ -89,10 +75,10 @@ export function FilterBar({
 						href={createTagHref(tag)}
 					/>
 				))}
-			</div>
+			</FadedScroll>
 			{selectedTags.length > 0 && (
 				<TagButton
-					href={pathname}
+					href="/blog"
 					tag={
 						<span className="flex items-center gap-x-2">
 							<RxCross1 /> Clear

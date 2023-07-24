@@ -7,8 +7,8 @@ import { serializeHeadings } from "@/util/HeaderTree";
 import { Outline } from "@/components/Outline";
 import { mdxComponents } from "@/components/mdx/components";
 import type { Metadata } from "next";
-import { DateTime } from "@/components/post/DateTime";
-import { Tags } from "@/components/post/Tag";
+import { DateTime } from "@/components/blog/DateTime";
+import { Tags } from "@/components/blog/Tag";
 
 const findPost = (slug: string) => {
 	const post = allPosts.find((post) => post.slug === slug);
