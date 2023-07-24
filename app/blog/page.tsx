@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { BinarySpinnerIcon } from "@/components/BinarySpinner";
 import { FilterBar } from "@/components/FilterBar";
 import { HeroText } from "@/components/HeroText";
@@ -67,11 +68,14 @@ export default function BlogPostsPage({
 					to share (usually in the domain of software).
 				</p>
 			</div>
-			<FilterBar
-				className="!mb-1 w-full"
-				tags={ALL_TAGS}
-				selectedTags={selectedTags}
-			/>
+			<Suspense fallback={<div>Loading...</div>}>
+				<FilterBar
+					className="!mb-1 w-full"
+					tags={ALL_TAGS}
+					selectedTags={selectedTags}
+				/>
+			</Suspense>
+			
 
 			{featuredPosts.length > 0 && (
 				<>
