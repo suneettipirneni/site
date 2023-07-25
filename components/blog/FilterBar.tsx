@@ -30,6 +30,7 @@ function TagButton({ tag, selected = false, href }: TagButtonProps) {
 	return (
 		<Link
 			href={href}
+			scroll={false}
 			className={`flex max-h-[30px] items-center text-ellipsis whitespace-nowrap rounded-full transition-colors ${selectedClassNames} px-3 py-1 text-sm font-semibold`}
 		>
 			{tag}

@@ -68,13 +68,12 @@ export default function BlogPostsPage({
 					to share (usually in the domain of software).
 				</p>
 			</div>
-			<Suspense fallback={<div>Loading...</div>}>
-				<FilterBar
-					className="!mb-1 w-full"
-					tags={ALL_TAGS}
-					selectedTags={selectedTags}
-				/>
-			</Suspense>
+
+			<FilterBar
+				className="!mb-1 w-full"
+				tags={ALL_TAGS}
+				selectedTags={selectedTags}
+			/>
 
 			{featuredPosts.length > 0 && (
 				<>
