@@ -18,7 +18,6 @@ export const Post = defineDocumentType(() => ({
 	filePathPattern: `posts/*.mdx`,
 	contentType: "mdx",
 	fields: {
-		headerStyle: { type: "enum", required: false, options: ["cover", "contain"], default: "cover" },
 		featured: { type: "boolean", required: true },
 		draft: { type: "boolean", required: true },
 		author: { type: "string", required: true },
@@ -26,7 +25,6 @@ export const Post = defineDocumentType(() => ({
 		datetime: { type: "date", required: true },
 		tags: { type: "list", of: { type: "string" }, required: true },
 		headingImage: { type: "string", required: true },
-		headingImageDark: { type: "string", required: false },
 		blurDataURL: { type: "string", required: false },
 		description: { type: "string", required: true },
 	},

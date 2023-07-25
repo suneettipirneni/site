@@ -11,28 +11,19 @@ export interface BlogEntryProps {
 
 export function BlogEntry({ post }: BlogEntryProps) {
 	return (
-		<div className="flex w-full flex-col space-y-3 pt-5 @container first:pt-0 md:pt-0">
+		<div className="flex flex-col space-y-3 pt-5 @container first:pt-0 md:pt-0">
 			<Link
 				href={post.url}
-				className="relative z-10 h-[200px] overflow-hidden rounded-3xl border border-gray-100 bg-white dark:border-gray-200/5 dark:bg-black"
+				className="z-10 aspect-[auto_1200_/_600] w-full self-center overflow-hidden rounded-3xl border border-gray-100 bg-white dark:border-gray-200/5 dark:bg-black"
 			>
-				<picture>
-					{post.headingImageDark && (
-						<source
-							srcSet={post.headingImageDark}
-							media="(prefers-color-scheme: dark)"
-						/>
-					)}
-					<Image
-						className={`absolute h-[200px] w-full rounded-xl ${
-							post.headerStyle === "cover" ? "object-cover" : "object-contain"
-						} object-contain transition-all duration-300 ease-in-out hover:scale-105`}
-						src={post.headingImage}
-						width={500}
-						height={400}
-						alt={post.title}
-					/>
-				</picture>
+				<Image
+					className={`h-full w-full
+						 rounded-xl object-cover transition-all duration-300 ease-in-out hover:scale-105`}
+					src={post.headingImage}
+					width={500}
+					height={250}
+					alt={post.title}
+				/>
 			</Link>
 
 			<div className="flex w-full flex-col gap-y-3">

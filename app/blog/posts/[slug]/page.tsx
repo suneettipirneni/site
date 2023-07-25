@@ -9,6 +9,7 @@ import { mdxComponents } from "@/components/mdx/components";
 import type { Metadata } from "next";
 import { DateTime } from "@/components/blog/DateTime";
 import { Tags } from "@/components/blog/Tag";
+import Image from "next/image";
 
 const findPost = (slug: string) => {
 	const post = allPosts.find((post) => post.slug === slug);
@@ -64,19 +65,27 @@ export default function Post({ params }: { params: { slug: string } }) {
 				<FaArrowLeft />
 				Back
 			</Link>
-			<h1 className="col-start-2 row-start-2 mb-10 flex w-auto max-w-postcontent flex-col gap-y-3 font-bold">
+			<h1 className="col-start-2 row-start-2 mb-5 flex w-auto max-w-postcontent flex-col gap-y-3 font-bold">
 				<Tags tags={post.tags} />
 				<Balancer className="text-3xl leading-tight md:text-5xl">
 					{post.title}
 				</Balancer>
 				<DateTime datetime={post.datetime} timeToRead={post.timeToRead} />
-			</h1>
-			<div className="col-start-2 row-start-3 mb-2 min-w-0 max-w-postcontent self-start">
 				<div className="space-y-5">
-					<p className="text-gray-600 dark:text-gray-300 md:text-lg">
+					<p className="font-normal text-gray-600 dark:text-gray-300 md:text-lg">
 						{post.description}
 					</p>
 				</div>
+
+				<Image
+					src={post.headingImage}
+					alt={post.title}
+					width={1200}
+					height={600}
+					className="mt-5 aspect-[auto_1200_/_600] w-full rounded-3xl object-cover"
+				/>
+			</h1>
+			<div className="col-start-2 row-start-3 mb-2 min-w-0 max-w-postcontent self-start">
 				<div data-post className="col-start-2 min-w-0 max-w-postcontent">
 					<MDXComponent components={mdxComponents} />
 				</div>
