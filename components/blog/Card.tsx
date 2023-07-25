@@ -38,7 +38,10 @@ export function BlogEntry({ post }: BlogEntryProps) {
 			<div className="flex w-full flex-col gap-y-3">
 				<div className="flex flex-col gap-y-2">
 					<DateTime datetime={post.datetime} timeToRead={post.timeToRead} />
-					<Link href={post.url} className="text-xl font-bold hover:underline">
+					<Link
+						href={post.url}
+						className="text-xl font-semibold hover:underline"
+					>
 						<Balancer>{post.title}</Balancer>
 					</Link>
 				</div>

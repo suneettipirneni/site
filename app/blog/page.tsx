@@ -1,10 +1,10 @@
-import { Suspense } from "react";
 import { BinarySpinnerIcon } from "@/components/BinarySpinner";
 import { FilterBar } from "@/components/blog/FilterBar";
 import { HeroText } from "@/components/HeroText";
 import { BlogEntry } from "@/components/blog/Card";
 import { ALL_TAGS } from "@/util/constants";
 import { allPosts } from "contentlayer/generated";
+import { Separator } from "@/components/Separator";
 
 export const metadata = {
 	title: "Thunk Tank - A Blog",
@@ -76,24 +76,21 @@ export default function BlogPostsPage({
 			/>
 
 			{featuredPosts.length > 0 && (
-				<>
-					<div className="h-[1px] w-auto border-b border-gray-200 dark:border-gray-200/20 md:hidden" />
-					<PostSection className="grid grid-cols-1 md:grid-cols-2">
-						{featuredPosts.map((entry) => (
-							<BlogEntry key={entry.title} post={entry} />
-						))}
-					</PostSection>
-				</>
+				<PostSection className="grid grid-cols-1 divide-y dark:divide-gray-200/25 md:grid-cols-2 md:divide-none">
+					{featuredPosts.map((entry) => (
+						<BlogEntry key={entry.title} post={entry} />
+					))}
+				</PostSection>
 			)}
 
 			{regularPosts.length > 0 && (
 				<>
-					<div className="left-0 h-[1px] w-auto border-b border-gray-200 dark:border-gray-200/20 md:hidden" />
-					<PostSection className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+					<Separator height={2} className="!my-5 md:hidden" />
+					<PostSection className="grid grid-cols-1 divide-y dark:divide-gray-200/25 md:grid-cols-2 md:divide-none lg:grid-cols-3">
 						{regularPosts.map((entry) => (
 							<BlogEntry key={entry.title} post={entry} />
 						))}
-					</PostSection>{" "}
+					</PostSection>
 				</>
 			)}
 		</div>
