@@ -24,7 +24,7 @@ export const OutlineNode = memo(function OutlineNode({
 		<div className="flex flex-col space-y-0.5">
 			<a
 				href={`#${node.slug}`}
-				className={`w-auto self-start px-2 py-1 text-sm ${
+				className={`w-auto self-start px-2 py-1 text-sm transition-all ${
 					isActive
 						? "rounded-md bg-gray-200/50 font-semibold dark:border-gray-400 dark:bg-white/[0.15]"
 						: "text-gray-600 dark:text-gray-400/80"

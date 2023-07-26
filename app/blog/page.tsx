@@ -20,7 +20,7 @@ function PostSection({
 	className?: string;
 }) {
 	return (
-		<div className={`gap-x-5 gap-y-7 md:gap-y-10 ${className}`}>{children}</div>
+		<div className={`gap-x-7 gap-y-7 md:gap-y-10 ${className}`}>{children}</div>
 	);
 }
 
@@ -56,7 +56,7 @@ export default function BlogPostsPage({
 
 	return (
 		<div
-			className={`mx-auto flex w-full max-w-postcontent flex-col space-y-4 overflow-y-auto px-3 py-3 md:px-0 md:py-7 md:pb-10`}
+			className={`mx-auto flex w-full max-w-postcontent flex-col space-y-4 overflow-y-auto px-3 py-3 md:space-y-6 md:px-0 md:py-7 md:pb-10`}
 		>
 			<div className="mb-3 flex flex-col items-start gap-y-3 md:mb-7 ">
 				<HeroText className="mb-5 flex shrink items-center gap-x-2 md:gap-x-4">
@@ -86,9 +86,9 @@ export default function BlogPostsPage({
 			{regularPosts.length > 0 && (
 				<>
 					<Separator height={2} className="!my-5 md:hidden" />
-					<PostSection className="grid grid-cols-1 divide-y dark:divide-gray-200/25 md:grid-cols-2 md:divide-none lg:grid-cols-3">
+					<PostSection className="flex flex-col divide-y dark:divide-gray-200/25 md:divide-none">
 						{regularPosts.map((entry) => (
-							<BlogEntry key={entry.title} post={entry} />
+							<BlogEntry compact key={entry.title} post={entry} />
 						))}
 					</PostSection>
 				</>
