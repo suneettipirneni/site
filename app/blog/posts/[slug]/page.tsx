@@ -2,7 +2,6 @@ import { allPosts } from "contentlayer/generated";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import { FaArrowLeft } from "react-icons/fa";
 import Link from "next/link";
-import Balancer from "react-wrap-balancer";
 import { serializeHeadings } from "@/util/HeaderTree";
 import { Outline } from "@/components/Outline";
 import { mdxComponents } from "@/components/mdx/components";
@@ -67,9 +66,7 @@ export default function Post({ params }: { params: { slug: string } }) {
 			</Link>
 			<h1 className="col-start-2 row-start-2 mb-5 flex w-auto max-w-postcontent flex-col gap-y-3 font-bold">
 				<Tags tags={post.tags} />
-				<Balancer className="text-3xl leading-tight md:text-5xl">
-					{post.title}
-				</Balancer>
+				<span className="text-3xl leading-tight md:text-5xl">{post.title}</span>
 				<DateTime datetime={post.datetime} timeToRead={post.timeToRead} />
 				<div className="space-y-5">
 					<p className="font-normal text-gray-600 dark:text-gray-300 md:text-lg">
