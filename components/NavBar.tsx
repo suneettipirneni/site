@@ -4,7 +4,7 @@ import NextLink from "next/link";
 import { useEffect, type ReactNode, useState, useMemo } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
 import Image from "next/image";
-import profilePic from "@/public/me.png";
+import profilePic from "@/public/me.webp";
 
 /**
  * Represents a navigation tab.

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Tags } from "./Tag";
 import { Post } from "contentlayer/generated";
-import { Balancer } from "react-wrap-balancer";
 import Image from "next/image";
 import { DateTime } from "./DateTime";
 
@@ -33,7 +32,7 @@ export function BlogEntry({ post }: BlogEntryProps) {
 						href={post.url}
 						className="text-xl font-semibold hover:underline"
 					>
-						<Balancer>{post.title}</Balancer>
+						{post.title}
 					</Link>
 				</div>
 				<p className="@md:text-md line-clamp-4 overflow-ellipsis text-sm text-gray-600 dark:text-gray-300">

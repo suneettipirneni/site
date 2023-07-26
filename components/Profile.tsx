@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import profilePic from "@/public/me.png";
+import profilePic from "@/public/me.webp";
 import { DiscordStatus } from "./DiscordStatus";
 import { useEffect, useState } from "react";
 

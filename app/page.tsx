@@ -3,8 +3,8 @@ import { Profile } from "@/components/Profile";
 import { Subtitle } from "@/components/Subtitle";
 import Balancer from "react-wrap-balancer";
 import { ProfileFooter } from "@/components/ProfileFooter";
-import profileBg from "../public/profile-bg.png";
-import profileBgDark from "../public/profile-bg-dark.png";
+import profileBg from "../public/profile-bg.webp";
+import profileBgDark from "../public/profile-bg-dark.webp";
 import Image from "next/image";
 
 export default function Home() {

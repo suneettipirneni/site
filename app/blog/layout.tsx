@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import Image from "next/image";
-import background from "../../public/thunk.png";
-import backgroundDark from "../../public/thunk-dark.png";
+import background from "../../public/thunk.webp";
+import backgroundDark from "../../public/thunk-dark.webp";
 
 export default function BlogLayout({ children }: PropsWithChildren) {
 	return (
