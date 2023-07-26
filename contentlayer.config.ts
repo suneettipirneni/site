@@ -35,7 +35,7 @@ export const Post = defineDocumentType(() => ({
 		},
 		headings: {
 			type: "json",
-			resolve: async (doc) => {
+			resolve: (doc) => {
 				const regXHeader = /\n(?<flag>#{1,6})\s+(?<content>.+)/g;
 				const slugger = new GithubSlugger();
 				const headings = Array.from(doc.body.raw.matchAll(regXHeader)).map(
@@ -58,7 +58,7 @@ export const Post = defineDocumentType(() => ({
 		},
 		timeToRead: {
 			type: "number",
-			resolve: async (doc) => calculateReadingTime(doc.body.raw),
+			resolve: (doc) => calculateReadingTime(doc.body.raw),
 		},
 	},
 }));

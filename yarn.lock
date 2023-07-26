@@ -4229,7 +4229,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"katex@npm:^0.16.0":
+"katex@npm:^0.16.0, katex@npm:^0.16.8":
   version: 0.16.8
   resolution: "katex@npm:0.16.8"
   dependencies:
@@ -6810,6 +6810,7 @@ __metadata:
     eslint-config-next: 13.4.12
     github-slugger: ^2.0.0
     hastscript: ^7.2.0
+    katex: ^0.16.8
     next: 13.4.12
     next-contentlayer: ^0.3.4
     postcss: 8.4.27

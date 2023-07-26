@@ -82,7 +82,7 @@ export default function Post({ params }: { params: { slug: string } }) {
 					alt={post.title}
 					width={1200}
 					height={600}
-					className="mt-5 aspect-[auto_1200_/_600] w-full rounded-3xl object-cover"
+					className="mt-5 aspect-[1200_/_600] w-full rounded-3xl object-cover"
 				/>
 			</h1>
 			<div className="col-start-2 row-start-3 mb-2 min-w-0 max-w-postcontent self-start">

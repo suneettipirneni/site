@@ -6,6 +6,7 @@ import "./globals.css";
 import { Metadata } from "next";
 import { BASE_URL } from "@/util/constants";
 import Footer from "@/components/Footer";
+import "katex/dist/katex.min.css";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 const jetBrainsMono = JetBrains_Mono({
@@ -23,13 +24,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang="en" style={{ fontFeatureSettings: "cv02, cv03, cv04, cv11" }}>
-			<head>
-				<link
-					rel="stylesheet"
-					href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"
-				/>
-			</head>
-
 			<body
 				className={`${inter.className} ${jetBrainsMono.variable} mx-auto flex h-full min-h-screen w-full scroll-pt-[65px] flex-col items-center overflow-y-auto bg-slate-50 bg-cover bg-no-repeat text-black dark:bg-zinc-950 dark:text-white`}
 			>
