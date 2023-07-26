@@ -35,7 +35,9 @@ export function BlogEntry({ post, compact = false }: BlogEntryProps) {
 			</Link>
 
 			<div
-				className={`flex w-full flex-col ${compact ? "gap-y-1" : "gap-y-3"}`}
+				className={`flex w-full grow flex-col ${
+					compact ? "gap-y-1" : "gap-y-3"
+				}`}
 			>
 				<div className={`flex flex-col ${!compact && "gap-y-2"}`}>
 					<DateTime
@@ -53,7 +55,7 @@ export function BlogEntry({ post, compact = false }: BlogEntryProps) {
 					</Link>
 				</div>
 				<p
-					className={`@md:text-md ${
+					className={`@md:text-md grow ${
 						compact ? "mb-1 line-clamp-2" : "line-clamp-4"
 					} overflow-ellipsis text-sm text-gray-600 dark:text-gray-300`}
 				>
