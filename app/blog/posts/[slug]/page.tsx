@@ -1,98 +1,97 @@
-import { BinarySpinnerIcon } from "@/components/BinarySpinner";
-import { FilterBar } from "@/components/blog/FilterBar";
-import { HeroText } from "@/components/HeroText";
-import { BlogEntry } from "@/components/blog/Card";
-import { ALL_TAGS } from "@/util/constants";
 import { allPosts } from "contentlayer/generated";
-import { Separator } from "@/components/Separator";
+import { useMDXComponent } from "next-contentlayer/hooks";
+import { FaArrowLeft } from "react-icons/fa";
+import Link from "next/link";
+import { serializeHeadings } from "@/util/HeaderTree";
+import { Outline } from "@/components/Outline";
+import { mdxComponents } from "@/components/mdx/components";
+import type { Metadata } from "next";
+import { DateTime } from "@/components/blog/DateTime";
+import { Tags } from "@/components/blog/Tag";
+import Image from "next/image";
 
-export const metadata = {
-	title: "Thunk Tank - A Blog",
-	description:
-		"A set of written entries with varying amounts of quality, and ranging topics. I write about things I find useful, interesting, or just want to share (usually in the domain of software). If you find anything that seems off or incorrect, I'm open to PRs.",
+const findPost = (slug: string) => {
+	const post = allPosts.find((post) => post.slug === slug);
+	if (!post) throw new Error(`Post not found for slug: ${slug}`);
+	return post;
 };
 
-function PostSection({
-	children,
-	className = "",
+export const generateStaticParams = async () =>
+	allPosts.map(({ slug }) => ({ slug }));
+
+export const generateMetadata = ({
+	params,
 }: {
-	children: React.ReactNode;
-	className?: string;
-}) {
-	return (
-		<div className={`gap-x-5 gap-y-7 md:gap-y-10 ${className}`}>{children}</div>
-	);
-}
+	params: { slug: string };
+}): Metadata => {
+	const post = findPost(params.slug);
+	return {
+		title: post.title,
+		description: post.description,
+		authors: [
+			{
+				name: post.author,
+			},
+		],
+		twitter: {
+			card: "summary_large_image",
+		},
+		openGraph: {
+			type: "article",
+			title: post.title,
+			authors: post.author,
+			description: post.description,
+			images: [
+				{
+					url: post.headingImage,
+				},
+			],
+		},
+	};
+};
 
-interface BlogPostsSearchParams {
-	tags?: string | string[];
-}
-
-export default function BlogPostsPage({
-	searchParams: { tags = [] },
-}: {
-	searchParams: BlogPostsSearchParams;
-}) {
-	const selectedTags = Array.isArray(tags) ? tags : [tags];
-
-	const isFiltered = tags.length > 0;
-
-	const sortedPosts = allPosts
-		.filter(
-			(post) =>
-				(process.env.NODE_ENV !== "production" || !post.draft) &&
-				(!selectedTags.length || post.tags.some((tag) => tags.includes(tag)))
-		)
-		.sort((a, b) => {
-			return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
-		});
-
-	const featuredPosts = isFiltered
-		? []
-		: sortedPosts.filter((post) => post.featured);
-	const regularPosts = sortedPosts.filter(
-		(post) => !post.featured || isFiltered
-	);
+export default function Post({ params }: { params: { slug: string } }) {
+	const post = findPost(params.slug);
+	const headings = serializeHeadings(post.headings);
+	const MDXComponent = useMDXComponent(post.body.code);
 
 	return (
-		<div
-			className={`mx-auto flex w-full max-w-postcontent flex-col space-y-4 overflow-y-auto px-3 py-3 md:px-0 md:py-7 md:pb-10`}
-		>
-			<div className="mb-3 flex flex-col items-start gap-y-3 md:mb-7 ">
-				<HeroText className="mb-5 flex shrink items-center gap-x-2 md:gap-x-4">
-					<BinarySpinnerIcon className="slow-spin" /> Thunk Tank
-				</HeroText>
-				<p className="text-gray-500 dark:text-white/50 md:text-lg">
-					A set of written entries with varying amounts of quality, and ranging
-					topics. I write about things I find useful, interesting, or just want
-					to share (usually in the domain of software).
-				</p>
+		<article className="relative z-10 mx-auto grid w-full items-start justify-center px-2 py-4 align-middle md:px-0 xl:grid-cols-postgrid xl:gap-x-10">
+			<Link
+				href="/blog"
+				className="col-start-2 row-start-1 mb-5 flex flex-row items-center gap-2 text-xl font-medium text-gray-600 dark:text-gray-300/80"
+			>
+				<FaArrowLeft />
+				Back
+			</Link>
+			<h1 className="col-start-2 row-start-2 mb-5 flex w-auto max-w-postcontent flex-col gap-y-3 font-bold">
+				<Tags tags={post.tags} />
+				<span className="text-3xl leading-tight md:text-5xl">{post.title}</span>
+				<DateTime datetime={post.datetime} timeToRead={post.timeToRead} />
+				<div className="space-y-5">
+					<p className="font-normal text-gray-600 dark:text-gray-300 md:text-lg">
+						{post.description}
+					</p>
+				</div>
+
+				<Image
+					src={post.headingImage}
+					alt={post.title}
+					width={1200}
+					height={600}
+					className="mt-5 aspect-[1200_/_600] w-full rounded-3xl object-cover"
+				/>
+			</h1>
+			<div className="col-start-2 row-start-3 mb-2 min-w-0 max-w-postcontent self-start">
+				<div data-post className="col-start-2 min-w-0 max-w-postcontent">
+					<MDXComponent components={mdxComponents} />
+				</div>
 			</div>
 
-			<FilterBar
-				className="!mb-1 w-full"
-				tags={ALL_TAGS}
-				selectedTags={selectedTags}
+			<Outline
+				className="sticky top-nav col-start-3 row-start-3 hidden min-w-[200px] flex-1 self-start overflow-y-auto border-gray-500 pt-8 xl:block"
+				headings={headings}
 			/>
-
-			{featuredPosts.length > 0 && (
-				<PostSection className="grid grid-cols-1 divide-y dark:divide-gray-200/25 md:grid-cols-2 md:divide-none">
-					{featuredPosts.map((entry) => (
-						<BlogEntry key={entry.title} post={entry} />
-					))}
-				</PostSection>
-			)}
-
-			{regularPosts.length > 0 && (
-				<>
-					<Separator height={2} className="!my-5 md:hidden" />
-					<PostSection className="grid grid-cols-1 divide-y dark:divide-gray-200/25 md:grid-cols-2 md:divide-none lg:grid-cols-3">
-						{regularPosts.map((entry) => (
-							<BlogEntry key={entry.title} post={entry} />
-						))}
-					</PostSection>
-				</>
-			)}
-		</div>
+		</article>
 	);
 }
