@@ -85,7 +85,7 @@ export default function BlogPostsPage({
 
 			{regularPosts.length > 0 && (
 				<>
-					<Separator height={2} className="!my-5 md:hidden" />
+					<Separator height={2} className="!mt-5" />
 					<PostSection className="flex flex-col !gap-y-4 divide-y dark:divide-gray-200/25 md:!gap-y-3 md:divide-none">
 						{regularPosts.map((entry) => (
 							<BlogEntry compact key={entry.title} post={entry} />

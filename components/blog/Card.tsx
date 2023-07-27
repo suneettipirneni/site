@@ -13,7 +13,7 @@ export function BlogEntry({ post, compact = false }: BlogEntryProps) {
 	return (
 		<div
 			className={`flex pt-5 @container first:pt-0 ${
-				compact ? "flex-row-reverse items-center gap-x-5" : "flex-col space-y-3"
+				compact ? "flex-row items-center gap-x-5" : "flex-col space-y-3"
 			} md:pt-0 ${compact && "max-h-[130px]"}`}
 		>
 			<Link
