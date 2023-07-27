@@ -1,11 +1,12 @@
+import { NavBar } from "@/components/NavBar";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import type { PropsWithChildren } from "react";
 import "./globals.css";
 import { Metadata } from "next";
 import { BASE_URL } from "@/util/constants";
+import Footer from "@/components/Footer";
 import "katex/dist/katex.min.css";
-import { PageShell } from "@/components/PageShell";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 const jetBrainsMono = JetBrains_Mono({
@@ -24,10 +25,25 @@ export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang="en" style={{ fontFeatureSettings: "cv02, cv03, cv04, cv11" }}>
 			<body
-				className={`${inter.className} ${jetBrainsMono.variable}  bg-slate-50 text-black  dark:bg-zinc-950 dark:text-white`}
+				className={`${inter.className} ${jetBrainsMono.variable} mx-auto flex h-full min-h-screen w-full scroll-pt-[65px] flex-col items-center overflow-y-auto bg-slate-50 bg-cover bg-no-repeat text-black dark:bg-zinc-950 dark:text-white`}
 			>
-				<PageShell>{children}</PageShell>
+				<NavBar
+					tabs={[
+						{
+							name: "Blog",
+							href: "blog/",
+						},
+						{
+							name: "Projects",
+							href: "projects/",
+						},
+					]}
+				/>
+				<div className="flex min-h-full w-full grow content-stretch p-2 md:p-5">
+					{children}
+				</div>
 				<Analytics />
+				<Footer />
 			</body>
 		</html>
 	);

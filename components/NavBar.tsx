@@ -1,7 +1,7 @@
 "use client";
 
 import NextLink from "next/link";
-import { useEffect, type ReactNode, useState, useMemo, RefObject } from "react";
+import { useEffect, type ReactNode, useState, useMemo } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
 import Image from "next/image";
 import profilePic from "@/public/me.webp";
@@ -32,12 +32,24 @@ export interface NavBarProps {
 	 * An array of navigation tabs to display in the `NavBar` component.
 	 */
 	tabs: Tab[];
-
-	className?: string;
 }
 
-export function NavBar({ tabs, className = "" }: NavBarProps) {
+export function NavBar({ tabs }: NavBarProps) {
 	const segment = useSelectedLayoutSegment() ?? "home";
+	const [shouldShowBackground, setShouldShowBackground] = useState(false);
+
+	const handleScroll = (e: Event) => {
+		if (window.scrollY > 50) {
+			setShouldShowBackground(true);
+			return;
+		}
+
+		setShouldShowBackground(false);
+	};
+
+	useEffect(() => {
+		window.addEventListener("scroll", handleScroll);
+	}, []);
 
 	// Determines if a tab is currently active based on the current path.
 	const isActive = useMemo(
@@ -50,15 +62,14 @@ export function NavBar({ tabs, className = "" }: NavBarProps) {
 
 	return (
 		<div
-			className={`sticky top-0 z-50 flex w-full flex-row items-center justify-center border-gray-200 p-0 lg:h-[70px]  lg:border-none lg:p-1`}
+			className={`sticky top-0 z-50 flex w-full flex-row items-center justify-center border-gray-200
+				
+			 p-0 lg:h-[70px]  lg:border-none lg:p-1`}
 		>
-			{/* <div
+			<div
 				className={`flex h-full w-[calc(850px_+_50px)] max-w-full flex-row items-center justify-between ${
 					shouldShowBackground ? withBackgroundStyle : "bg-transparent"
 				} p-5 bg-blend-saturation transition-colors md:p-3 lg:h-[60px] lg:rounded-full  lg:dark:border-gray-200/25 lg:dark:shadow-none`}
-			> */}
-			<div
-				className={`flex h-full w-[calc(850px_+_50px)] max-w-full flex-row items-center justify-between p-5 bg-blend-saturation transition-all md:p-3 lg:h-[60px] lg:rounded-full  lg:dark:border-gray-200/25 lg:dark:shadow-none ${className}`}
 			>
 				<NextLink href="/" className="flex flex-row items-center">
 					<Image
