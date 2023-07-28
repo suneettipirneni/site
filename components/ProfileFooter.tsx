@@ -13,6 +13,7 @@ export function ProfileFooter() {
 				href="https://github.com/suneettipirneni"
 				target="_blank"
 				rel="noopener noreferrer"
+				aria-label="Navigate to my GitHub Profile."
 			/>
 			<Button
 				title="Discord"
@@ -22,6 +23,7 @@ export function ProfileFooter() {
 				href="https://discordapp.com/users/386337006764032002"
 				target="_blank"
 				rel="noopener noreferrer"
+				aria-label="Navigate to my Discord Profile."
 			/>
 			<div className="flex flex-row items-center justify-center align-middle lg:col-span-2">
 				<Button
@@ -32,6 +34,7 @@ export function ProfileFooter() {
 					href="https://www.linkedin.com/in/suneettipirneni/"
 					target="_blank"
 					rel="noopener noreferrer"
+					aria-label="Navigate to my LinkedIn Profile."
 				/>
 			</div>
 		</div>

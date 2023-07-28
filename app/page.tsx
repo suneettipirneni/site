@@ -18,7 +18,7 @@ export default function Home() {
 				<Image
 					src={profileBg}
 					alt=""
-					className="fixed inset-0 -z-10 h-full w-full bg-fixed object-cover"
+					className="fixed inset-0 -z-10 aspect-video w-full bg-fixed object-cover"
 				/>
 			</picture>
 

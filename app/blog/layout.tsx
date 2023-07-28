@@ -15,7 +15,7 @@ export default function BlogLayout({ children }: PropsWithChildren) {
 					src={background}
 					alt=""
 					placeholder="blur"
-					className="absolute inset-0 top-0 -z-10  h-[400px] w-screen overflow-clip object-fill md:h-[700px]"
+					className="absolute inset-0 top-0 -z-10 aspect-video w-screen overflow-clip object-fill"
 					priority
 				/>
 			</picture>
