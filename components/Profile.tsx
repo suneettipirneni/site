@@ -4,21 +4,24 @@ import Image from "next/image";
 import profilePic from "@/public/me.webp";
 import { DiscordStatus } from "./DiscordStatus";
 import { useEffect, useState } from "react";
+import { formatInTimeZone } from "date-fns-tz";
 
-const timeOptions = {
-	timeZone: "America/New_York",
-	hour: "numeric",
-	minute: "numeric",
-} as const;
+// TODO: Use native js apis for localized time when https://github.com/vercel/next.js/issues/52698 is fixed
+
+// const timeOptions = {
+// 	timeZone: "America/New_York",
+// 	hour: "numeric",
+// 	minute: "numeric",
+// } as const;
 
 export function Profile() {
 	const [time, setTime] = useState(
-		new Intl.DateTimeFormat("en-US", timeOptions).format(new Date())
+		formatInTimeZone(new Date(), "America/New_York", "h:mm a")
 	);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setTime(new Intl.DateTimeFormat("en-US", timeOptions).format(new Date()));
+			setTime(formatInTimeZone(new Date(), "America/New_York", "h:mm a"));
 		}, 10_000);
 		return () => clearInterval(interval);
 	});
