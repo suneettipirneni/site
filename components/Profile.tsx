@@ -37,7 +37,11 @@ export function Profile() {
 			<div className="hidden flex-col items-center justify-center rounded-xl bg-white/50 px-5 py-2 dark:bg-black dark:bg-white/10 md:flex ">
 				<DiscordStatus className="w-full" />
 				<span className="w-full text-xl font-medium">
-					{"It's"} <span className="font-semibold">{time}</span> {"for me!"}
+					{"It's"}{" "}
+					<span className="font-semibold" suppressHydrationWarning>
+						{time}
+					</span>{" "}
+					{"for me!"}
 				</span>
 			</div>
 		</div>
