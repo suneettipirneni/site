@@ -15,16 +15,14 @@ import { formatInTimeZone } from "date-fns-tz";
 // } as const;
 
 export function Profile() {
-	const [time, setTime] = useState(
-		formatInTimeZone(new Date(), "America/New_York", "h:mm a")
-	);
-
+	const [time, setTime] = useState("--:-- --");
 	useEffect(() => {
+		setTime(formatInTimeZone(new Date(), "America/New_York", "h:mm a"));
 		const interval = setInterval(() => {
 			setTime(formatInTimeZone(new Date(), "America/New_York", "h:mm a"));
 		}, 10_000);
 		return () => clearInterval(interval);
-	});
+	}, []);
 
 	return (
 		<div className="flex flex-row sm:gap-3 md:gap-5">
