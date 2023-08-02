@@ -21,7 +21,7 @@ export function BlogEntry({ post, compact = false }: BlogEntryProps) {
 				className={`z-10 ${
 					compact
 						? `hidden h-[130px] max-w-[200px] rounded-xl md:block`
-						: "w-full rounded-3xl"
+						: "w-full rounded-xl"
 				} aspect-[1600_/_850] w-full self-center overflow-hidden  border border-gray-100 bg-white dark:border-gray-200/5 dark:bg-black`}
 			>
 				<Image
