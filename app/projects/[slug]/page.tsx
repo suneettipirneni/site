@@ -6,7 +6,6 @@ import { format, parseISO } from "date-fns";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
-import Balancer from "react-wrap-balancer";
 
 const findProject = (slug: string) => {
 	const project = allProjects.find((project) => project.slug === slug);
@@ -29,7 +28,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 				Back
 			</Link>
 			<h1 className="col-start-2 row-start-2 mb-10 flex w-auto max-w-postcontent flex-col font-mono text-3xl font-bold">
-				<Balancer>{post.title}</Balancer>
+				{post.title}
 				<time
 					dateTime={post.datetime}
 					className="text-sm font-normal text-gray-600 dark:text-gray-300"

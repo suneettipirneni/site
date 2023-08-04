@@ -1,7 +1,6 @@
 import { HeroText } from "@/components/HeroText";
 import { Profile } from "@/components/Profile";
 import { Subtitle } from "@/components/Subtitle";
-import Balancer from "react-wrap-balancer";
 import { ProfileFooter } from "@/components/ProfileFooter";
 import profileBg from "../public/profile-bg.webp";
 import profileBgDark from "../public/profile-bg-dark.webp";
@@ -24,14 +23,12 @@ export default function Home() {
 
 			<Profile />
 			<HeroText className="line-clamp-3 max-w-[600px] text-center font-bold">
-				<Balancer>{"Hello! I'm Suneet and this is a website"}</Balancer>
+				{"Hello! I'm Suneet and this is a website"}
 			</HeroText>
 			<Subtitle className="max-w-[450px] text-center text-gray-500 dark:text-gray-200/70">
-				<Balancer>
-					{
-						"I'm an amateur developer from Orlando, Florida working on anything that seems nifty."
-					}
-				</Balancer>
+				{
+					"I'm an amateur developer from Orlando, Florida working on anything that seems nifty."
+				}
 			</Subtitle>
 			<ProfileFooter />
 		</div>
