@@ -3,13 +3,14 @@ import { Tags } from "./Tag";
 import { Post } from "contentlayer/generated";
 import Image from "next/image";
 import { DateTime } from "./DateTime";
+import { BLUR_DATA_URL } from "@/util/constants";
 
-export interface BlogEntryProps {
+export interface PostCardProps {
 	post: Post;
 	compact?: boolean;
 }
 
-export function BlogEntry({ post, compact = false }: BlogEntryProps) {
+export function PostCard({ post, compact = false }: PostCardProps) {
 	return (
 		<div
 			className={`flex pt-5 @container first:pt-0 ${
@@ -31,6 +32,8 @@ export function BlogEntry({ post, compact = false }: BlogEntryProps) {
 					width={500}
 					height={250}
 					alt={post.title}
+					placeholder="blur"
+					blurDataURL={BLUR_DATA_URL}
 				/>
 			</Link>
 

@@ -1,10 +1,9 @@
 import { BinarySpinnerIcon } from "@/components/BinarySpinner";
 import { FilterBar } from "@/components/blog/FilterBar";
 import { HeroText } from "@/components/HeroText";
-import { BlogEntry } from "@/components/blog/Card";
+import { PostCard } from "@/components/blog/PostCard";
 import { ALL_TAGS } from "@/util/constants";
 import { allPosts } from "contentlayer/generated";
-import { Separator } from "@/components/Separator";
 
 export const metadata = {
 	title: "Thunk Tank - A Blog",
@@ -79,7 +78,7 @@ export default function BlogPostsPage({
 				{featuredPosts.length > 0 && (
 					<PostSection className="grid grid-cols-1 divide-y dark:divide-gray-200/25 md:grid-cols-2 md:divide-none">
 						{featuredPosts.map((entry) => (
-							<BlogEntry key={entry.title} post={entry} />
+							<PostCard key={entry.title} post={entry} />
 						))}
 					</PostSection>
 				)}
@@ -87,7 +86,7 @@ export default function BlogPostsPage({
 				{regularPosts.length > 0 && (
 					<PostSection className="flex flex-col !gap-y-4 divide-y dark:divide-gray-200/25 md:!gap-y-3 md:divide-none">
 						{regularPosts.map((entry) => (
-							<BlogEntry compact key={entry.title} post={entry} />
+							<PostCard compact key={entry.title} post={entry} />
 						))}
 					</PostSection>
 				)}

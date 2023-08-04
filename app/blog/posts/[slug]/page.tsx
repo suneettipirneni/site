@@ -9,6 +9,7 @@ import type { Metadata } from "next";
 import { DateTime } from "@/components/blog/DateTime";
 import { Tags } from "@/components/blog/Tag";
 import Image from "next/image";
+import { BLUR_DATA_URL } from "@/util/constants";
 
 const findPost = (slug: string) => {
 	const post = allPosts.find((post) => post.slug === slug);
@@ -79,6 +80,8 @@ export default function Post({ params }: { params: { slug: string } }) {
 					alt={post.title}
 					width={1200}
 					height={600}
+					placeholder="blur"
+					blurDataURL={BLUR_DATA_URL}
 					className="mt-5 aspect-[1200_/_600] w-full rounded-3xl object-cover"
 				/>
 			</h1>

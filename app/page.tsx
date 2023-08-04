@@ -17,6 +17,7 @@ export default function Home() {
 				<Image
 					src={profileBg}
 					alt=""
+					placeholder="blur"
 					className="fixed inset-0 -z-10 aspect-video w-full bg-fixed object-cover"
 					priority
 				/>
