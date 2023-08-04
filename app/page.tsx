@@ -18,6 +18,7 @@ export default function Home() {
 					src={profileBg}
 					alt=""
 					className="fixed inset-0 -z-10 aspect-video w-full bg-fixed object-cover"
+					priority
 				/>
 			</picture>
 
