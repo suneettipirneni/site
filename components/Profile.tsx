@@ -29,7 +29,7 @@ export function Profile() {
 			<Image
 				src={profilePic}
 				alt="Profile Picture"
-				className="h-[60px] w-[60px] rounded-full bg-[url('https://avatars.githubusercontent.com/u/77477100?v=4')] bg-cover md:h-[80px] md:w-[80px] lg:h-[100px] lg:w-[100px]"
+				className="h-[60px] w-[60px] rounded-full bg-cover md:h-[80px] md:w-[80px] lg:h-[100px] lg:w-[100px]"
 			/>
 
 			<div className="hidden flex-col items-center justify-center rounded-xl bg-white/50 px-5 py-2 dark:bg-black dark:bg-white/10 md:flex ">
