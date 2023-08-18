@@ -1,4 +1,3 @@
-import { RxCross1 } from "react-icons/rx";
 import { type ReactNode, useCallback } from "react";
 import Link from "next/link";
 import { FadedScroll } from "../FadedScroll";
@@ -16,13 +15,26 @@ export interface FilterBarProps {
 	selectedTags?: string[];
 }
 
+/**
+ * A button that represents a selectable tag.
+ */
 export interface TagButtonProps {
-	tag: ReactNode;
+	/**
+	 * The tag name to be displayed.
+	 */
+	tagName: ReactNode;
+	/**
+	 * Whether or not the tag is selected.
+	 * @defaultValue false
+	 */
 	selected?: boolean;
+	/**
+	 * The URL to be used for the tag.
+	 */
 	href: string;
 }
 
-function TagButton({ tag, selected = false, href }: TagButtonProps) {
+function TagButton({ tagName: tag, selected = false, href }: TagButtonProps) {
 	const selectedClassNames = selected
 		? "bg-black text-white dark:bg-white dark:text-black"
 		: "bg-black/5 dark:bg-white/10";
@@ -68,25 +80,20 @@ export function FilterBar({
 				className="flex grow gap-x-2 gap-y-2 overflow-x-auto pr-5"
 				direction="horizontal"
 			>
+				<TagButton
+					tagName="All Posts"
+					selected={selectedTags.length === 0}
+					href="/blog"
+				/>
 				{tags.map((tag) => (
 					<TagButton
 						key={tag}
-						tag={tag}
+						tagName={tag}
 						selected={selectedTags.includes(tag)}
 						href={createTagHref(tag)}
 					/>
 				))}
 			</FadedScroll>
-			{selectedTags.length > 0 && (
-				<TagButton
-					href="/blog"
-					tag={
-						<span className="flex items-center gap-x-2">
-							<RxCross1 /> Clear
-						</span>
-					}
-				/>
-			)}
 		</div>
 	);
 }
