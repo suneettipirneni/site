@@ -1,5 +1,4 @@
 import { HTMLAttributes } from "react";
-import { FiArrowUpRight } from "react-icons/fi";
 
 export function Anchor({
 	children,

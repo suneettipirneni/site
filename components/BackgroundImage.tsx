@@ -1,4 +1,4 @@
-import Image, { type ImageProps } from "next/image";
+import { type ImageProps } from "next/image";
 import { PropsWithChildren } from "react";
 
 export function BackgroundImage({
