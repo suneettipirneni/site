@@ -51,7 +51,6 @@ export function Profile() {
 			</div>
 
 			<div className="w-full flex-col gap-y-1">
-				<h1 className="text-3xl font-bold">Suneet Tipirneni </h1>
 				<div className="flex flex-row items-center gap-x-1 rounded-xl text-sm text-gray-500">
 					<DiscordStatus className="font-medium" />
 					&mdash;
@@ -60,6 +59,7 @@ export function Profile() {
 						<span suppressHydrationWarning>{time}</span>
 					</span>
 				</div>
+				<h1 className="text-3xl font-bold">Suneet Tipirneni </h1>
 			</div>
 
 			<span className="text-gray-600 dark:text-gray-400">
