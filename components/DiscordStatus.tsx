@@ -34,7 +34,7 @@ export function DiscordStatus({ className }: DiscordStatusProps) {
 	return (
 		<div className={`flex flex-row items-center gap-2 ${className}`}>
 			<div className={`h-3 w-3 rounded-full ${color}`} />
-			<p className="text-left text-black/75 dark:text-white/50">
+			<p className="text-left">
 				{status ? statusMappings[status] : "Loading..."}
 			</p>
 		</div>

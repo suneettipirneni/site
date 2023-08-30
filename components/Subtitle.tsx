@@ -4,9 +4,5 @@ export function Subtitle({
 	children,
 	className,
 }: PropsWithChildren<{ className?: string }>) {
-	return (
-		<h1 className={`${className} text-left text-lg font-medium sm:text-xl`}>
-			{children}
-		</h1>
-	);
+	return <h1 className={`${className} text-left`}>{children}</h1>;
 }

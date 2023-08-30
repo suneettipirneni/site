@@ -20,6 +20,7 @@
 		"date-fns-tz": "^2.0.0",
 		"eslint": "8.47.0",
 		"eslint-config-next": "13.4.19",
+		"eslint-plugin-unused-imports": "^3.0.0",
 		"github-slugger": "^2.0.0",
 		"hastscript": "^7.2.0",
 		"katex": "^0.16.8",
@@ -42,7 +43,7 @@
 		"sharp": "^0.32.5",
 		"shiki": "^0.14.3",
 		"tailwindcss": "3.3.3",
-		"typescript": "5.1.6",
+		"typescript": "^5.2.2",
 		"unist-util-visit": "^4.1.2"
 	},
 	"packageManager": "yarn@3.5.1",

@@ -6,7 +6,7 @@ export default function Footer() {
 			<div className="flex w-full max-w-postcontent items-center justify-between text-sm text-gray-500 dark:text-gray-400">
 				<div className="flex flex-row">
 					<h1>
-						Suneet Tipirneni <span className="text-lg font-bold">· </span>
+						Suneet Tipirneni &mdash;{" "}
 						<a
 							className="cursor-pointer font-mono font-bold hover:underline"
 							href="https://github.com/suneettipirneni/site"
