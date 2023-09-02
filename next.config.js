@@ -7,6 +7,16 @@ const nextConfig = withContentlayer({
 			transform: "react-icons/{{member}}",
 		},
 	},
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "avatars.githubusercontent.com",
+				port: "",
+				pathname: "/u/**",
+			},
+		],
+	},
 });
 
 module.exports = nextConfig;

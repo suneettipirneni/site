@@ -41,7 +41,7 @@ export function Profile() {
 	}, []);
 
 	return (
-		<div className="flex w-full max-w-[600px] flex-col gap-y-3 px-3">
+		<div className="mb-10 flex w-full max-w-[600px] flex-col gap-y-3 rounded-lg">
 			<div className="flex items-center gap-x-1">
 				<Image
 					src={profilePic}
@@ -59,7 +59,7 @@ export function Profile() {
 						<span suppressHydrationWarning>{time}</span>
 					</span>
 				</div>
-				<h1 className="text-3xl font-bold">Suneet Tipirneni </h1>
+				<h1 className="text-3xl font-bold">Suneet Tipirneni</h1>
 			</div>
 
 			<span className="text-gray-600 dark:text-gray-400">
