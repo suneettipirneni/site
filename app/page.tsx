@@ -26,7 +26,7 @@ import {
 	SiTypescript,
 } from "react-icons/si";
 
-export function TechSection({
+function TechSection({
 	children,
 	title,
 }: {
