@@ -17,6 +17,10 @@ const body = {
             forkCount
             description
             url
+						primaryLanguage {
+							name
+							color
+						}
             owner {
               avatarUrl
             }
@@ -38,6 +42,10 @@ interface ResponseData {
 					forkCount: number;
 					description: string;
 					url: string;
+					primaryLanguage: {
+						name: string;
+						color: string;
+					};
 					owner: {
 						avatarUrl: string;
 					};
@@ -79,11 +87,11 @@ export function Repo({ repo }: { repo: Repo }) {
 				/>
 				{repo.name}
 			</a>
-			<p className="line-clamp-2 hidden text-xs text-gray-500 dark:text-white/50 md:block">
+			<p className="line-clamp-2 text-xs text-gray-500 dark:text-white/50 md:block">
 				{repo.description}
 			</p>
 
-			<div className="flex grow flex-row items-end gap-x-2">
+			<div className="flex w-full grow flex-row items-center gap-x-2">
 				<p className="flex items-center gap-x-1 text-sm text-gray-500 dark:text-white/50">
 					<FaStar />
 					{formatNumber(repo.stargazerCount)}
@@ -93,6 +101,14 @@ export function Repo({ repo }: { repo: Repo }) {
 					<BiGitRepoForked />
 					{formatNumber(repo.forkCount)}
 				</p>
+
+				<div className="ml-auto flex items-center gap-x-1 font-mono text-xs text-gray-500 dark:text-white/50">
+					<div
+						className="h-[10px] w-[10px] rounded-full"
+						style={{ backgroundColor: repo.primaryLanguage.color }}
+					></div>
+					{repo.primaryLanguage.name}
+				</div>
 			</div>
 		</div>
 	);

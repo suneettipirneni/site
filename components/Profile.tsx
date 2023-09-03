@@ -61,12 +61,6 @@ export function Profile() {
 				</div>
 				<h1 className="text-3xl font-bold">Suneet Tipirneni</h1>
 			</div>
-
-			<span className="text-gray-600 dark:text-gray-400">
-				{
-					"I'm a student and avid open source developer currently pursuing a master's degree in computer vision. I'm passionate about building tools that are accessible and useful to others."
-				}
-			</span>
 		</div>
 	);
 }

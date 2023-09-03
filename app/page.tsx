@@ -65,6 +65,18 @@ export default function Home() {
 			<Profile />
 			<div className="flex w-full max-w-[600px] flex-col gap-y-3">
 				<h1 className="m-0 flex w-full max-w-[600px] items-center gap-x-3 font-semibold">
+					About Me
+					<div className="h-[2px] grow rounded-full bg-black/20 dark:bg-white/20" />
+				</h1>
+				<span className="w-full max-w-[600px] text-gray-600 dark:text-gray-400">
+					{
+						"I'm a student and avid open source developer currently pursuing a master's degree in computer vision. I'm passionate about building tools that are accessible and useful to others."
+					}
+				</span>
+			</div>
+
+			<div className="flex w-full max-w-[600px] flex-col gap-y-3">
+				<h1 className="m-0 flex w-full max-w-[600px] items-center gap-x-3 font-semibold">
 					Open Source Projects
 					<div className="h-[2px] grow rounded-full bg-black/20 dark:bg-white/20" />
 				</h1>
