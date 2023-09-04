@@ -3,17 +3,14 @@
 import Image from "next/image";
 import profilePic from "@/public/me.webp";
 import { useEffect, useState } from "react";
-import { formatInTimeZone } from "date-fns-tz";
 import { DiscordStatus } from "./DiscordStatus";
 import { HiOutlineClock } from "react-icons/hi";
 
-// TODO: Use native js apis for localized time when https://github.com/vercel/next.js/issues/52698 is fixed
-
-// const timeOptions = {
-// 	timeZone: "America/New_York",
-// 	hour: "numeric",
-// 	minute: "numeric",
-// } as const;
+const timeOptions = {
+	timeZone: "America/New_York",
+	hour: "numeric",
+	minute: "numeric",
+} as const;
 
 export function Section({
 	children,
@@ -33,9 +30,9 @@ export function Section({
 export function Profile() {
 	const [time, setTime] = useState("--:-- --");
 	useEffect(() => {
-		setTime(formatInTimeZone(new Date(), "America/New_York", "h:mm a"));
+		setTime(new Intl.DateTimeFormat("en-US", timeOptions).format(new Date()));
 		const interval = setInterval(() => {
-			setTime(formatInTimeZone(new Date(), "America/New_York", "h:mm a"));
+			setTime(new Intl.DateTimeFormat("en-US", timeOptions).format(new Date()));
 		}, 10_000);
 		return () => clearInterval(interval);
 	}, []);
