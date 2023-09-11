@@ -5,7 +5,6 @@ import type { PropsWithChildren } from "react";
 import "./globals.css";
 import { Metadata } from "next";
 import { BASE_URL } from "@/util/constants";
-import Footer from "@/components/Footer";
 import "katex/dist/katex.min.css";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
@@ -39,11 +38,10 @@ export default function RootLayout({ children }: PropsWithChildren) {
 						},
 					]}
 				/>
-				<div className="flex min-h-full w-full grow content-stretch p-2 md:p-5">
+				<div className="flex min-h-full w-full grow content-stretch">
 					{children}
 				</div>
 				<Analytics />
-				<Footer />
 			</body>
 		</html>
 	);

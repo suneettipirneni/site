@@ -47,7 +47,7 @@ function TechSection({
 
 export default function Home() {
 	return (
-		<div className="flex grow flex-col items-center justify-center space-y-10 overflow-hidden bg-fixed bg-center p-5 md:space-y-10 md:p-0">
+		<div className="flex grow flex-col items-center justify-center space-y-10 overflow-hidden bg-fixed bg-center px-5 pb-10 md:space-y-10 md:px-0">
 			<picture>
 				<source
 					srcSet={profileBgDark.src}
