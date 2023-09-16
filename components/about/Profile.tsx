@@ -3,7 +3,7 @@
 import Image from "next/image";
 import profilePic from "@/public/me.webp";
 import { useEffect, useState } from "react";
-import { DiscordStatus } from "./DiscordStatus";
+import { DiscordStatus } from "../DiscordStatus";
 import { HiOutlineClock } from "react-icons/hi";
 
 const timeOptions = {
@@ -48,7 +48,7 @@ export function Profile() {
 			</div>
 
 			<div className="w-full flex-col gap-y-1">
-				<div className="flex flex-row items-center gap-x-1 rounded-xl text-sm text-gray-500">
+				<div className="flex flex-row items-center gap-x-1 rounded-xl text-sm text-gray-500 dark:text-gray-400">
 					<DiscordStatus className="font-medium" />
 					&mdash;
 					<HiOutlineClock size={18} title="My Local Time" />

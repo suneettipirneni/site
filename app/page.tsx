@@ -1,4 +1,4 @@
-import { Profile } from "@/components/Profile";
+import { Profile } from "@/components/about/Profile";
 import profileBg from "../public/profile-bg.webp";
 import profileBgDark from "../public/profile-bg-dark.webp";
 import Image from "next/image";
@@ -54,7 +54,7 @@ export default function Home() {
 			</picture>
 
 			<Profile />
-			<div className="!mt-2 flex flex-row gap-x-1 self-start">
+			<div className="!mt-2 flex flex-row gap-x-2 self-start">
 				<ContactButton
 					url="https://www.linkedin.com/in/suneettipirneni/"
 					icon={<FaLinkedin size={20} />}
