@@ -57,7 +57,7 @@ export default function Post({ params }: { params: { slug: string } }) {
 	const MDXComponent = useMDXComponent(post.body.code);
 
 	return (
-		<article className="relative z-10 mx-auto grid w-full items-start justify-center px-2 py-4 align-middle md:px-0 xl:grid-cols-postgrid xl:gap-x-10">
+		<article className="relative z-10 mx-auto grid w-full items-start justify-center px-2 py-4 align-middle md:px-0 lg:grid-cols-postgrid lg:gap-x-10">
 			<Link
 				href="/blog"
 				className="col-start-2 row-start-1 mb-5 flex flex-row items-center gap-2 text-xl font-medium text-gray-600 dark:text-gray-300/80"
@@ -67,10 +67,10 @@ export default function Post({ params }: { params: { slug: string } }) {
 			</Link>
 			<h1 className="col-start-2 row-start-2 mb-5 flex w-auto max-w-postcontent flex-col gap-y-3 font-bold">
 				<Tags tags={post.tags} />
-				<span className="text-3xl leading-tight md:text-5xl">{post.title}</span>
+				<span className="text-3xl leading-tight md:text-3xl">{post.title}</span>
 				<DateTime datetime={post.datetime} timeToRead={post.timeToRead} />
 				<div className="space-y-5">
-					<p className="font-normal text-gray-600 dark:text-gray-300 md:text-lg">
+					<p className="font-normal text-gray-600 dark:text-gray-300">
 						{post.description}
 					</p>
 				</div>
@@ -92,7 +92,7 @@ export default function Post({ params }: { params: { slug: string } }) {
 			</div>
 
 			<Outline
-				className="sticky top-nav col-start-3 row-start-3 hidden min-w-[200px] flex-1 self-start overflow-y-auto border-gray-500 pt-8 xl:block"
+				className="sticky top-nav col-start-3 row-start-3 hidden min-w-[200px] flex-1 self-start overflow-y-auto border-gray-500 pt-8 lg:block"
 				headings={headings}
 			/>
 		</article>
