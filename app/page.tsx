@@ -2,8 +2,16 @@ import { Profile } from "@/components/Profile";
 import profileBg from "../public/profile-bg.webp";
 import profileBgDark from "../public/profile-bg-dark.webp";
 import Image from "next/image";
-import { Repos } from "@/components/Repos";
-import { FaJava, FaReact, FaSwift } from "react-icons/fa";
+import { Repos } from "@/components/about/Repos";
+import {
+	FaDiscord,
+	FaGithub,
+	FaJava,
+	FaLinkedin,
+	FaReact,
+	FaSwift,
+} from "react-icons/fa";
+import { Section } from "@/components/about/Section";
 import {
 	SiAmazons3,
 	SiAstro,
@@ -25,29 +33,12 @@ import {
 	SiTailwindcss,
 	SiTypescript,
 } from "react-icons/si";
-
-function TechSection({
-	children,
-	title,
-}: {
-	title: string;
-	children: React.ReactNode;
-}) {
-	return (
-		<div className="flex flex-col gap-y-2">
-			<h2 className="text-sm font-medium text-gray-600 dark:text-white">
-				{title}
-			</h2>
-			<div className="flex flex-row flex-wrap gap-2 text-gray-700 dark:text-white/50">
-				{children}
-			</div>
-		</div>
-	);
-}
+import { IconGroup } from "@/components/about/IconGroup";
+import { ContactButton } from "@/components/about/ContactButton";
 
 export default function Home() {
 	return (
-		<div className="flex grow flex-col items-center justify-center space-y-10 overflow-hidden bg-fixed bg-center px-5 pb-10 md:space-y-10 md:px-0">
+		<div className="mx-auto flex max-w-[600px] grow flex-col items-center justify-center space-y-10 overflow-hidden bg-fixed bg-center px-5 pb-10 md:space-y-10 md:px-0">
 			<picture>
 				<source
 					srcSet={profileBgDark.src}
@@ -63,42 +54,49 @@ export default function Home() {
 			</picture>
 
 			<Profile />
-			<div className="flex w-full max-w-[600px] flex-col gap-y-3">
-				<h1 className="m-0 flex w-full max-w-[600px] items-center gap-x-3 font-semibold">
-					About Me
-					<div className="h-[2px] grow rounded-full bg-black/20 dark:bg-white/20" />
-				</h1>
+			<div className="!mt-2 flex flex-row gap-x-1 self-start">
+				<ContactButton
+					url="https://www.linkedin.com/in/suneettipirneni/"
+					icon={<FaLinkedin size={20} />}
+					title="Connect with me on LinkedIn"
+				/>
+				<ContactButton
+					url="https://github.com/suneettipirneni"
+					icon={<FaGithub size={20} />}
+					title="Check out my GitHub profile"
+				/>
+				<ContactButton
+					url="https://discordapp.com/users/386337006764032002"
+					icon={<FaDiscord size={20} />}
+					title="Chat with me on Discord"
+				/>
+			</div>
+			<Section title="About Me">
 				<span className="w-full max-w-[600px] text-gray-600 dark:text-gray-400">
 					{
 						"I'm a student and avid open source developer currently pursuing a master's degree in computer vision. I'm passionate about building tools that are accessible and useful to others."
 					}
 				</span>
-			</div>
+			</Section>
 
-			<div className="flex w-full max-w-[600px] flex-col gap-y-3">
-				<h1 className="m-0 flex w-full max-w-[600px] items-center gap-x-3 font-semibold">
-					Open Source Projects
-					<div className="h-[2px] grow rounded-full bg-black/20 dark:bg-white/20" />
-				</h1>
+			<Section title="Open Source Projects">
 				<Repos />
-			</div>
-			<div className="flex w-full max-w-[600px] flex-col gap-y-5 font-semibold">
-				<h1 className="m-0 flex w-full max-w-[600px] items-center gap-x-3 font-semibold">
-					Technology &amp; Frameworks
-					<div className="h-[2px] grow bg-black/20 dark:bg-white/20" />
-				</h1>
-
+			</Section>
+			<Section
+				title="Technologies & Frameworks"
+				className="gap-y-5 font-semibold"
+			>
 				<div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-					<TechSection title="Web">
+					<IconGroup title="Web">
 						<FaReact size={24} title="React" />
 						<SiJavascript size={24} title="JavaScript" />
 						<SiTypescript size={24} title="TypeScript" />
 						<SiNextdotjs size={24} title="Next.js" />
 						<SiAstro size={24} title="Astro" />
 						<SiTailwindcss size={24} title="TailwindCSS" />
-					</TechSection>
+					</IconGroup>
 
-					<TechSection title="General-Purpose">
+					<IconGroup title="General-Purpose">
 						<SiRust size={24} title="Rust" />
 						<SiC size={24} title="C" />
 						<SiCplusplus size={24} title="C++" />
@@ -107,23 +105,23 @@ export default function Home() {
 						<SiNodedotjs size={24} title="Node.js" />
 						<SiHaskell size={24} title="Haskell" />
 						<SiPython size={24} title="Python" />
-					</TechSection>
+					</IconGroup>
 
-					<TechSection title="Machine Learning &amp; Data Analytics">
+					<IconGroup title="Machine Learning &amp; Data Analytics">
 						<SiPytorch size={24} title="PyTorch" />
 						<SiNumpy size={24} title="NumPy" />
 						<SiScikitlearn size={24} title="scikit-learn" />
 						<SiPandas size={24} title="pandas" />
-					</TechSection>
+					</IconGroup>
 
-					<TechSection title="Deployment">
+					<IconGroup title="Deployment">
 						<SiDocker size={24} title="Docker" />
 						<SiAmazons3 size={24} title="Amazon S3" />
 						<SiCloudflare size={24} title="Cloudflare" />
 						<SiAwslambda size={24} title="AWS Lambda" />
-					</TechSection>
+					</IconGroup>
 				</div>
-			</div>
+			</Section>
 		</div>
 	);
 }
