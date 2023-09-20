@@ -5,6 +5,8 @@ import { PostCard } from "@/components/blog/PostCard";
 import { ALL_TAGS } from "@/util/constants";
 import { allPosts } from "contentlayer/generated";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
 	title: "Thunk Tank - A Blog",
 	description:
