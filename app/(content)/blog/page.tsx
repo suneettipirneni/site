@@ -5,8 +5,6 @@ import { PostCard } from "@/components/blog/PostCard";
 import { ALL_TAGS } from "@/util/constants";
 import { allPosts } from "contentlayer/generated";
 
-export const dynamic = 'force-dynamic';
-
 export const metadata = {
 	title: "Thunk Tank - A Blog",
 	description:
@@ -34,6 +32,9 @@ export default function BlogPostsPage({
 }: {
 	searchParams: BlogPostsSearchParams;
 }) {
+
+	console.log({ tags })
+
 	const selectedTags = Array.isArray(tags) ? tags : [tags];
 
 	const isFiltered = tags.length > 0;
