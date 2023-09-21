@@ -32,9 +32,6 @@ export default function BlogPostsPage({
 }: {
 	searchParams: BlogPostsSearchParams;
 }) {
-
-	console.log({ tags })
-
 	const selectedTags = Array.isArray(tags) ? tags : [tags];
 
 	const isFiltered = tags.length > 0;
