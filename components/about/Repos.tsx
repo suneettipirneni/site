@@ -74,7 +74,7 @@ export function Repo({ repo }: { repo: Repo }) {
 		<div className="flex w-full flex-col gap-x-3 gap-y-2 rounded-xl bg-gray-200/60 p-2 dark:bg-white/10 md:min-h-[100px] md:p-4">
 			<a
 				href={repo.url}
-				className="flex items-center gap-x-2 font-mono font-semibold hover:underline"
+				className="flex items-center gap-x-2 font-semibold hover:underline"
 				target="_blank"
 				rel="noopener noreferrer"
 			>
@@ -102,7 +102,7 @@ export function Repo({ repo }: { repo: Repo }) {
 					{formatNumber(repo.forkCount)}
 				</p>
 
-				<div className="ml-auto flex items-center gap-x-1 font-mono text-xs text-gray-600 dark:text-white/50">
+				<div className="ml-auto flex items-center gap-x-1 text-xs text-gray-600 dark:text-white/50">
 					<div
 						className="h-[10px] w-[10px] rounded-full"
 						style={{ backgroundColor: repo.primaryLanguage.color }}
