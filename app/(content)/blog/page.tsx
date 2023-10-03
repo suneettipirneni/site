@@ -28,20 +28,19 @@ interface BlogPostsSearchParams {
 }
 
 export default function BlogPostsPage({
-	searchParams: { tags },
+	searchParams: { tags = [] },
 }: {
 	searchParams: BlogPostsSearchParams;
 }) {
-	const selectedTags = tags ? (Array.isArray(tags) ? tags : [tags]) : [];
+	const selectedTags = Array.isArray(tags) ? tags : [tags];
 
-	const isFiltered = selectedTags.length > 0;
+	const isFiltered = tags.length > 0;
 
 	const sortedPosts = allPosts
 		.filter(
 			(post) =>
 				(process.env.NODE_ENV !== "production" || !post.draft) &&
-				(!selectedTags.length ||
-					post.tags.some((tag) => selectedTags.includes(tag)))
+				(!selectedTags.length || post.tags.some((tag) => tags.includes(tag)))
 		)
 		.sort((a, b) => {
 			return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
