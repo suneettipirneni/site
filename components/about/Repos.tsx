@@ -1,4 +1,4 @@
-import { GH_USERNAME } from "@/util/constants";
+import { GH_REPO_REVALIDATE_TIME, GH_USERNAME } from "@/util/constants";
 import { FaStar } from "react-icons/fa";
 import { BiGitRepoForked } from "react-icons/bi";
 import Image from "next/image";
@@ -121,6 +121,9 @@ export async function Repos() {
 		headers: {
 			Authorization: `Bearer ${process.env.GH_TOKEN}`,
 			"Content-Type": "application/json",
+		},
+		next: {
+			revalidate: GH_REPO_REVALIDATE_TIME,
 		},
 	})
 		.then((res) => res.json() as Promise<ResponseData>)
