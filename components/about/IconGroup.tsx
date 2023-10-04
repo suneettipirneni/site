@@ -9,7 +9,7 @@ export interface IconGroupProps extends PropsWithChildren {
 
 export function IconGroup({ children, title }: IconGroupProps) {
 	return (
-		<div className="flex flex-col gap-y-2">
+		<div className="flex flex-col flex-wrap gap-y-2">
 			<h2 className="text-sm font-medium text-gray-600 dark:text-white">
 				{title}
 			</h2>
