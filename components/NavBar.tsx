@@ -60,6 +60,8 @@ export function NavBar({ tabs }: NavBarProps) {
 	const withBackgroundStyle =
 		"bg-white/80 dark:bg-black/50 dark:ring-gray-400/20 ring-gray-200/75 ring-1 backdrop-blur-xl lg:shadow-lg lg:shadow-gray-200/30";
 
+	const shouldShowAvatar = segment !== "home" || shouldShowBackground;
+
 	return (
 		<div
 			className={`sticky top-0 z-50 flex w-full flex-row items-center justify-center border-gray-200
@@ -71,12 +73,19 @@ export function NavBar({ tabs }: NavBarProps) {
 					shouldShowBackground ? withBackgroundStyle : "bg-transparent"
 				} p-5 bg-blend-saturation transition-colors md:p-3 lg:h-[60px] lg:rounded-full  lg:dark:border-gray-200/25 lg:dark:shadow-none`}
 			>
-				<NextLink href="/" className="flex flex-row items-center">
+				<NextLink
+					href="/"
+					className={`flex flex-row items-center ${
+						!shouldShowAvatar ? "pointer-events-none cursor-none" : ""
+					}`}
+				>
 					<Image
 						src={profilePic}
 						width={35}
 						height={35}
-						className="rounded-full ring-1 ring-gray-200 dark:ring-gray-400/20"
+						className={`${
+							!shouldShowAvatar ? "opacity-0" : ""
+						} rounded-full ring-1 ring-gray-200 transition-all dark:ring-gray-400/20`}
 						alt="About"
 					/>
 				</NextLink>
