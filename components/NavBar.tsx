@@ -2,7 +2,7 @@
 
 import NextLink from "next/link";
 import { useEffect, type ReactNode, useState, useMemo } from "react";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { useSelectedLayoutSegments } from "next/navigation";
 import Image from "next/image";
 import profilePic from "@/public/me.webp";
 
@@ -35,7 +35,8 @@ export interface NavBarProps {
 }
 
 export function NavBar({ tabs }: NavBarProps) {
-	const segment = useSelectedLayoutSegment() ?? "home";
+	const segments = useSelectedLayoutSegments();
+	const segment = segments.length > 1 ? segments[1] : "home";
 	const [shouldShowBackground, setShouldShowBackground] = useState(false);
 
 	const handleScroll = (e: Event) => {
@@ -56,6 +57,8 @@ export function NavBar({ tabs }: NavBarProps) {
 		() => (tab: string) => tab.replaceAll("/", "") === segment,
 		[segment]
 	);
+
+	console.log(segment);
 
 	const withBackgroundStyle =
 		"bg-white/80 dark:bg-black/50 dark:ring-gray-400/20 ring-gray-200/75 ring-1 backdrop-blur-xl lg:shadow-lg lg:shadow-gray-200/30";
