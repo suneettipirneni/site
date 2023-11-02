@@ -91,18 +91,18 @@ export function Repo({ repo }: { repo: Repo }) {
 				{repo.description}
 			</p>
 
-			<div className="flex w-full grow flex-row items-center gap-x-2">
-				<p className="flex items-center gap-x-1 text-sm text-gray-600 dark:text-white/50">
+			<div className="flex w-full grow flex-row items-center gap-x-2 self-end">
+				<p className="flex items-center gap-x-1 self-end text-sm text-gray-600 dark:text-white/50">
 					<FaStar />
 					{formatNumber(repo.stargazerCount)}
 				</p>
 
-				<p className="flex items-center gap-x-1 text-sm text-gray-600 dark:text-white/50">
+				<p className="flex items-center gap-x-1 self-end text-sm text-gray-600 dark:text-white/50">
 					<BiGitRepoForked />
 					{formatNumber(repo.forkCount)}
 				</p>
 
-				<div className="ml-auto flex items-center gap-x-1 text-xs text-gray-600 dark:text-white/50">
+				<div className="ml-auto flex items-center gap-x-1 self-end text-xs text-gray-600 dark:text-white/50">
 					<div
 						className="h-[10px] w-[10px] rounded-full"
 						style={{ backgroundColor: repo.primaryLanguage.color }}
