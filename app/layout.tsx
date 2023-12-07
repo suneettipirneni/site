@@ -5,6 +5,7 @@ import type { PropsWithChildren } from "react";
 import "./globals.css";
 import { Metadata } from "next";
 import { BASE_URL } from "@/util/constants";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "katex/dist/katex.min.css";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 					{children}
 				</div>
 				<Analytics />
+				<SpeedInsights />
 			</body>
 		</html>
 	);
