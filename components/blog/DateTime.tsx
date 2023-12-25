@@ -1,4 +1,4 @@
-import { format, parseISO } from "date-fns";
+import { formatDatetime } from "@/util/formatDate";
 
 export interface DateTimeProps {
 	datetime: string;
@@ -15,7 +15,7 @@ export function DateTime({
 		<time
 			className={`text-sm font-medium text-gray-600 dark:text-gray-300/80 ${className}`}
 		>
-			{format(parseISO(datetime), "LLLL d, yyyy")} · {timeToRead}
+			{formatDatetime(datetime)} · {timeToRead}
 			min
 		</time>
 	);

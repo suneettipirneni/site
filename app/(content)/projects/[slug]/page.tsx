@@ -1,8 +1,8 @@
 import { Outline } from "@/components/Outline";
 import { mdxComponents } from "@/components/mdx/components";
 import { serializeHeadings } from "@/util/HeaderTree";
+import { formatDatetime } from "@/util/formatDate";
 import { allProjects } from "contentlayer/generated";
-import { format, parseISO } from "date-fns";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
@@ -33,7 +33,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 					dateTime={post.datetime}
 					className="text-sm font-normal text-gray-600 dark:text-gray-300"
 				>
-					{format(parseISO(post.datetime), "LLLL d, yyyy")}
+					{formatDatetime(post.datetime)}
 				</time>
 			</h1>
 			<div className="col-start-2 row-start-3 mb-2 min-w-0 max-w-postcontent self-start">
