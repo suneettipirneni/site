@@ -1,5 +1,6 @@
 "use client";
 
+import { DISCORD_USER_ID } from "@/util/constants";
 import { useLanyard } from "react-use-lanyard";
 
 export interface DiscordStatusProps {
@@ -22,7 +23,7 @@ const statusMappings = {
 
 export function DiscordStatus({ className }: DiscordStatusProps) {
 	const lanyard = useLanyard({
-		userId: "386337006764032002",
+		userId: DISCORD_USER_ID,
 	});
 
 	const status = lanyard.data?.data.discord_status;
@@ -32,9 +33,9 @@ export function DiscordStatus({ className }: DiscordStatusProps) {
 		: statusColors[lanyard.data?.data.discord_status ?? "offline"];
 
 	return (
-		<div className={`flex flex-row items-center gap-2 ${className}`}>
-			<div className={`h-3 w-3 rounded-full ${color}`} />
-			<p className="text-left">
+		<div className={`flex max-w-full flex-row items-center gap-2 ${className}`}>
+			<div className={`h-3 w-3 shrink-0 rounded-full ${color}`} />
+			<p className="w-full whitespace-nowrap">
 				{status ? statusMappings[status] : "Loading..."}
 			</p>
 		</div>

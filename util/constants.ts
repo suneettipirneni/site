@@ -14,3 +14,5 @@ export const BLUR_DATA_URL =
 export const GH_USERNAME = "suneettipirneni";
 
 export const GH_REPO_REVALIDATE_TIME = 3600; // 1 hour
+
+export const DISCORD_USER_ID = "386337006764032002";
