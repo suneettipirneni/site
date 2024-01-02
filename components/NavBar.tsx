@@ -58,8 +58,6 @@ export function NavBar({ tabs }: NavBarProps) {
 		[segment]
 	);
 
-	console.log(segment);
-
 	const withBackgroundStyle =
 		"bg-white/80 dark:bg-black/50 dark:ring-gray-400/20 ring-gray-200/75 ring-1 backdrop-blur-xl lg:shadow-lg lg:shadow-gray-200/30";
 

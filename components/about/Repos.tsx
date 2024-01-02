@@ -4,6 +4,7 @@ import { BiGitRepoForked } from "react-icons/bi";
 import Image from "next/image";
 
 const url = "https://api.github.com/graphql";
+const numOfTopics = 4;
 
 const body = {
 	query: `
@@ -17,6 +18,15 @@ const body = {
             forkCount
             description
             url
+						repositoryTopics(first: ${numOfTopics}) {
+              edges {
+                node {
+                  topic {
+                    name
+                  }
+                }
+              }
+            }
 						primaryLanguage {
 							name
 							color
@@ -42,6 +52,15 @@ interface ResponseData {
 					forkCount: number;
 					description: string;
 					url: string;
+					repositoryTopics: {
+						edges: {
+							node: {
+								topic: {
+									name: string;
+								};
+							};
+						}[];
+					};
 					primaryLanguage: {
 						name: string;
 						color: string;
@@ -70,6 +89,10 @@ function formatNumber(num: number) {
 type Repo = ResponseData["data"]["user"]["pinnedItems"]["nodes"][number];
 
 export function Repo({ repo }: { repo: Repo }) {
+	const topics = repo.repositoryTopics.edges.map(
+		(edge) => edge.node.topic.name
+	);
+
 	return (
 		<div className="flex w-full flex-col gap-x-3 gap-y-2 rounded-xl bg-gray-200/60 p-2 dark:bg-white/10 md:min-h-[100px] md:p-4">
 			<a
@@ -87,6 +110,18 @@ export function Repo({ repo }: { repo: Repo }) {
 				/>
 				{repo.name}
 			</a>
+			{
+				<div className="flex flex-row flex-wrap gap-1">
+					{topics.map((topic) => (
+						<div
+							key={topic}
+							className="whitespace-nowrap rounded-full bg-gray-300/60 px-2 py-1 text-xs font-semibold text-gray-600 dark:bg-white/20 dark:text-white"
+						>
+							{topic}
+						</div>
+					))}
+				</div>
+			}
 			<p className="line-clamp-2 text-xs text-gray-600 dark:text-white/50 md:block">
 				{repo.description}
 			</p>
