@@ -1,5 +1,5 @@
 import GithubSlugger from "github-slugger";
-import { defineDocumentType, makeSource } from "@contentlayer/source-files";
+import { defineDocumentType, makeSource } from "contentlayer/source-files";
 import rehypePrettyCode from "rehype-pretty-code";
 import { rehypePrettyCodeOptions } from "./rehype/options/rehypePrettyCodeOptions";
 import rehypeSlug from "rehype-slug";

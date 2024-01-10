@@ -46,12 +46,6 @@ age = int(input("Enter your age: "))
 But as my code complexity and requirements grew, I ran into more of these errors. Soon it felt like I was coding blind,
 there was no autocomplete for methods, no type hints, and no compiler to catch my mistakes.
 
-<Quote>
-	"The issue with loosely typed languages is more subtle, (...) Each error is a
-	cut to your productivity, and while each cut is small, the combined effect is
-	a much larger productivity laceration."
-</Quote>
-
 I was spending more time debugging than writing code. The reasoning for Java making me put those funny names before every variable and function was becoming more clear.
 Suddenly, the verbosity of Java felt like a small price to pay for the type safety it provided. The issue with loosely typed languages is more subtle, it's not that they
 don't work, it's that they don't work well at scale. It's quite literally death by a thousand cuts. Each error is a cut to your productivity, and while each cut is small,
@@ -87,8 +81,9 @@ print(yearsAlive(age: person.age))
 
 Java would give me none of those errors I would have to wait until runtime to receive the dreaded `NullPointerException`.
 
-This gave me a glimpse into the gradient of static typing and I was hooked. I wanted to make everything as statically typed as possible, there's no such thing as too much type safety right? So why
-not go the very edge of the type spectrum?
+The bipartite dichotomy of static vs dynamic typing suddenly felt less useful, and instead a gradient seemed to be the better mental model. One thing developers want is choice,
+however, they also don't while also not being inundated with too many choices. Static typing ends up becoming another language construct where the decision to utilize or not becomes
+a tradeoff. The tradeoff being the amount of safety you get vs the amount of flexibility you get.
 
 # Static Types Overstay Their Welcome
 

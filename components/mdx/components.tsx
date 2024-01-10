@@ -16,7 +16,7 @@ import {
 import { InfoBlock } from "./InfoBlock";
 import { Figure } from "./Figure";
 import { CopyButton } from "./CopyButton";
-import { Quote } from './Quote';
+import { Quote } from "./Quote";
 
 export const mdxComponents: MDXComponents = {
 	h1: (props) => <Heading level={1} {...props} />,
