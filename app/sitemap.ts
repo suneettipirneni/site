@@ -5,7 +5,7 @@ import { BASE_URL } from "@/util/constants";
 export default function sitemap(): MetadataRoute.Sitemap {
 	const blogs = allPosts.map((post) => ({
 		url: `${BASE_URL}/blog/posts/${post.slug}`,
-		lastModified: post.datetime,
+		lastModified: post.datetime.split("T")[0],
 	}));
 
 	const routes = ["", "/projects", "/blog"].map((route) => ({
