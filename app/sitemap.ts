@@ -13,5 +13,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		lastModified: new Date().toISOString().split("T")[0],
 	}));
 
-	return [...blogs, ...routes];
+	return [...routes, ...blogs];
 }
