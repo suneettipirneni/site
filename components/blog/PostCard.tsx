@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Tags } from "./Tag";
-import { Post } from "contentlayer/generated";
 import Image from "next/image";
 import { DateTime } from "./DateTime";
-import { BLUR_DATA_URL } from "@/util/constants";
+import { BLUR_DATA_URL } from "@/lib/constants";
+import { Post } from "@/lib/post";
 
 export interface PostCardProps {
 	post: Post;

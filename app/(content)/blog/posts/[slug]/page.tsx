@@ -1,5 +1,3 @@
-import { allPosts } from "contentlayer/generated";
-import { useMDXComponent } from "next-contentlayer/hooks";
 import { FaArrowLeft } from "react-icons/fa";
 import Link from "next/link";
 import { serializeHeadings } from "@/util/HeaderTree";
@@ -9,23 +7,35 @@ import type { Metadata } from "next";
 import { DateTime } from "@/components/blog/DateTime";
 import { Tags } from "@/components/blog/Tag";
 import Image from "next/image";
-import { BLUR_DATA_URL } from "@/util/constants";
-
-const findPost = (slug: string) => {
-	const post = allPosts.find((post) => post.slug === slug);
-	if (!post) throw new Error(`Post not found for slug: ${slug}`);
-	return post;
-};
+import { BLUR_DATA_URL } from "@/lib/constants";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import { getPost, getPosts } from "@/lib/post";
+import { rehypeAutolinkHeadingsOptions } from "@/rehype/options/rehypeAutoLinkHeadingsOptions";
+import { rehypePrettyCodeOptions } from "@/rehype/options/rehypePrettyCodeOptions";
+import { codeTitleBarPlugin } from "@/rehype/plugins/codeTitleBar";
+import { inlineCodePlugin } from "@/rehype/plugins/inlineCode";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeKatex from "rehype-katex";
+import rehypePrettyCode from "rehype-pretty-code";
+import rehypeSlug from "rehype-slug";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import remarkReferenceLinks from "remark-reference-links";
 
 export const generateStaticParams = async () =>
-	allPosts.map(({ slug }) => ({ slug }));
+	getPosts().then((posts) => posts.map(({ slug }) => ({ slug })));
 
-export const generateMetadata = ({
+export const generateMetadata = async ({
 	params,
 }: {
 	params: { slug: string };
-}): Metadata => {
-	const post = findPost(params.slug);
+}): Promise<Metadata> => {
+	const post = await getPost(params.slug);
+
+	if (!post) {
+		throw new Error(`No post found for slug ${params.slug}`);
+	}
+
 	return {
 		title: post.title,
 		description: post.description,
@@ -51,10 +61,14 @@ export const generateMetadata = ({
 	};
 };
 
-export default function Post({ params }: { params: { slug: string } }) {
-	const post = findPost(params.slug);
+export default async function Post({ params }: { params: { slug: string } }) {
+	const post = await getPost(params.slug);
+
+	if (!post) {
+		throw new Error(`No post found for slug ${params.slug}`);
+	}
+
 	const headings = serializeHeadings(post.headings);
-	const MDXComponent = useMDXComponent(post.body.code);
 
 	return (
 		<article className="relative z-10 mx-auto grid w-full items-start justify-center px-2 py-4 align-middle md:px-0 lg:grid-cols-postgrid lg:gap-x-10">
@@ -87,7 +101,24 @@ export default function Post({ params }: { params: { slug: string } }) {
 			</h1>
 			<div className="col-start-2 row-start-3 mb-2 min-w-0 max-w-postcontent self-start">
 				<div data-post className="col-start-2 min-w-0 max-w-postcontent">
-					<MDXComponent components={mdxComponents} />
+					<MDXRemote
+						source={post.body}
+						components={mdxComponents}
+						options={{
+							mdxOptions: {
+								rehypePlugins: [
+									[rehypePrettyCode, rehypePrettyCodeOptions],
+									rehypeSlug,
+									inlineCodePlugin,
+									codeTitleBarPlugin,
+									rehypeKatex,
+									[rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions],
+								],
+								remarkPlugins: [remarkGfm, remarkMath, remarkReferenceLinks],
+							},
+						}}
+					/>
+					{/* <MDXComponent components={mdxComponents} /> */}
 				</div>
 			</div>
 

@@ -21,7 +21,6 @@
 			}
 		],
 		"paths": {
-			"contentlayer/generated": ["./.contentlayer/generated"],
 			"@/*": ["./*"],
 			"react": ["./node_modules/@types/react"]
 		}
@@ -31,7 +30,7 @@
 		"**/*.ts",
 		"**/*.tsx",
 		".next/types/**/*.ts",
-		".contentlayer/generated"
+		"lib/watcher.js"
 	],
 	"exclude": ["node_modules"]
 }

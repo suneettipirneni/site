@@ -1,7 +1,7 @@
-import { formatDatetime } from "@/util/formatDate";
+import { formatDatetime } from "@/lib/formatDate";
 
 export interface DateTimeProps {
-	datetime: string;
+	datetime: Date;
 	timeToRead: number;
 	className?: string;
 }

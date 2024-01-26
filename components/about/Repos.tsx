@@ -1,4 +1,4 @@
-import { GH_REPO_REVALIDATE_TIME, GH_USERNAME } from "@/util/constants";
+import { GH_REPO_REVALIDATE_TIME, GH_USERNAME } from "@/lib/constants";
 import { FaStar } from "react-icons/fa";
 import { BiGitRepoForked } from "react-icons/bi";
 import Image from "next/image";

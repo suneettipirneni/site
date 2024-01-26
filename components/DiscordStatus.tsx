@@ -1,6 +1,6 @@
 "use client";
 
-import { DISCORD_USER_ID } from "@/util/constants";
+import { DISCORD_USER_ID } from "@/lib/constants";
 import { useLanyard } from "react-use-lanyard";
 
 export interface DiscordStatusProps {

@@ -7,5 +7,4 @@ const formatOptions: Intl.DateTimeFormatOptions = {
 
 const formatter = new Intl.DateTimeFormat("en-US", formatOptions);
 
-export const formatDatetime = (date: string) =>
-	formatter.format(new Date(date));
+export const formatDatetime = (date: Date) => formatter.format(date);

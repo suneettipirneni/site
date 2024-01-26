@@ -2,8 +2,8 @@ import { BinarySpinnerIcon } from "@/components/BinarySpinner";
 import { FilterBar } from "@/components/blog/FilterBar";
 import { HeroText } from "@/components/HeroText";
 import { PostCard } from "@/components/blog/PostCard";
-import { ALL_TAGS } from "@/util/constants";
-import { allPosts } from "contentlayer/generated";
+import { ALL_TAGS } from "@/lib/constants";
+import { getPosts } from "@/lib/post";
 
 export const metadata = {
 	title: "Thunk Tank - A Blog",
@@ -27,12 +27,13 @@ interface BlogPostsSearchParams {
 	tags?: string | string[];
 }
 
-export default function BlogPostsPage({
+export default async function BlogPostsPage({
 	searchParams: { tags = [] },
 }: {
 	searchParams: BlogPostsSearchParams;
 }) {
 	const selectedTags = Array.isArray(tags) ? tags : [tags];
+	const allPosts = await getPosts();
 
 	const isFiltered = tags.length > 0;
 

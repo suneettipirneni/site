@@ -1,5 +1,7 @@
 export const BASE_URL = "https://www.suneettipirneni.stream";
 
+export const POSTS_DIR = "./posts";
+
 export const ALL_TAGS = [
 	"language design",
 	"concepts",
