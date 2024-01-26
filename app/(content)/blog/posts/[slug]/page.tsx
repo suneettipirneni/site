@@ -22,8 +22,10 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkReferenceLinks from "remark-reference-links";
 
-export const generateStaticParams = async () =>
-	getPosts().then((posts) => posts.map(({ slug }) => ({ slug })));
+export async function generateStaticParams() {
+	const posts = await getPosts();
+	return posts.map((post) => ({ slug: post.slug }));
+}
 
 export const generateMetadata = async ({
 	params,
