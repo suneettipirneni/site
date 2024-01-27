@@ -1,8 +1,6 @@
 import { BinarySpinnerIcon } from "@/components/BinarySpinner";
-import { FilterBar } from "@/components/blog/FilterBar";
 import { HeroText } from "@/components/HeroText";
 import { PostCard } from "@/components/blog/PostCard";
-import { ALL_TAGS } from "@/lib/constants";
 import { getPosts } from "@/lib/post";
 
 export const metadata = {
@@ -27,32 +25,17 @@ interface BlogPostsSearchParams {
 	tags?: string | string[];
 }
 
-export default async function BlogPostsPage({
-	searchParams: { tags = [] },
-}: {
-	searchParams: BlogPostsSearchParams;
-}) {
-	const selectedTags = Array.isArray(tags) ? tags : [tags];
+export default async function BlogPostsPage() {
 	const allPosts = await getPosts();
 
-	const isFiltered = tags.length > 0;
-
 	const sortedPosts = allPosts
-		.filter(
-			(post) =>
-				(process.env.NODE_ENV !== "production" || !post.draft) &&
-				(!selectedTags.length || post.tags.some((tag) => tags.includes(tag)))
-		)
+		.filter((post) => process.env.NODE_ENV !== "production" || !post.draft)
 		.sort((a, b) => {
 			return new Date(b.datetime).getTime() - new Date(a.datetime).getTime();
 		});
 
-	const featuredPosts = isFiltered
-		? []
-		: sortedPosts.filter((post) => post.featured);
-	const regularPosts = sortedPosts.filter(
-		(post) => !post.featured || isFiltered
-	);
+	const featuredPosts = sortedPosts.filter((post) => post.featured);
+	const regularPosts = sortedPosts.filter((post) => !post.featured);
 
 	return (
 		<div
@@ -68,12 +51,6 @@ export default async function BlogPostsPage({
 					to share (usually in the domain of software).
 				</p>
 			</div>
-
-			<FilterBar
-				className="!mb-1 w-full"
-				tags={ALL_TAGS}
-				selectedTags={selectedTags}
-			/>
 
 			<div className="flex flex-col gap-y-8 md:gap-y-8 xl:gap-y-10">
 				{featuredPosts.length > 0 && (
