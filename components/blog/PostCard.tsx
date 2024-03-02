@@ -29,11 +29,12 @@ export function PostCard({ post, compact = false }: PostCardProps) {
 					className={`h-full w-full
 						 rounded-xl object-cover transition-all duration-300 ease-in-out hover:scale-105`}
 					src={post.headingImage}
-					width={500}
-					height={250}
+					width={compact ? 200 : 500}
+					height={compact ? 128 : 250}
 					alt={post.title}
 					placeholder="blur"
 					blurDataURL={BLUR_DATA_URL}
+					priority={!compact}
 				/>
 			</Link>
 
