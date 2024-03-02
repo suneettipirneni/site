@@ -47,7 +47,7 @@ figure[data-rehype-pretty-code-figure] {
 	@apply post:mb-4;
 }
 
-div[data-rehype-pretty-code-title] {
+figcaption[data-rehype-pretty-code-title] {
 	@apply text-sm;
 	@apply font-bold;
 	@apply font-mono dark:text-white;

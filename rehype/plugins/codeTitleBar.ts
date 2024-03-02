@@ -55,7 +55,7 @@ export const codeTitleBarPlugin: Plugin = () => {
 			const codeTitleBars = element.children.filter(
 				(node) =>
 					node.type === "element" &&
-					node.tagName === "div" &&
+					node.tagName === "figcaption" &&
 					"data-rehype-pretty-code-title" in node.properties!
 			) as Element[];
 
@@ -112,7 +112,7 @@ export const codeTitleBarPlugin: Plugin = () => {
 			// Create a new title bar for the code block.
 			const newTitleBar: Element = {
 				type: "element",
-				tagName: "div",
+				tagName: "figcaption",
 				properties: {
 					"data-rehype-pretty-code-title": "",
 				},
