@@ -109,6 +109,7 @@ export default async function Post({ params }: { params: { slug: string } }) {
 						options={{
 							mdxOptions: {
 								rehypePlugins: [
+									// @ts-expect-error rehype version conflicts
 									[rehypePrettyCode, rehypePrettyCodeOptions],
 									rehypeSlug,
 									inlineCodePlugin,

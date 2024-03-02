@@ -6,6 +6,6 @@ export const rehypePrettyCodeOptions: Partial<Options> = {
 		light: "light-plus",
 	},
 	onVisitHighlightedLine(node) {
-		node.properties.className.push("line--highlighted");
+		node.properties.className?.push("line--highlighted");
 	},
 };

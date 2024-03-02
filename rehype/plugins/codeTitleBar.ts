@@ -43,8 +43,8 @@ export const codeTitleBarPlugin: Plugin = () => {
 		// Check if the element is a div with the "data-rehype-pretty-code-fragment" property.
 		// If it is, then it is a code block that should have a title bar.
 		return Boolean(
-			element.tagName === "div" &&
-				"data-rehype-pretty-code-fragment" in (element.properties ?? {})
+			element.tagName === "figure" &&
+				"data-rehype-pretty-code-figure" in (element.properties ?? {})
 		);
 	};
 
