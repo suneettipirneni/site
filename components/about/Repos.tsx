@@ -33,6 +33,7 @@ const body = {
 						}
             owner {
               avatarUrl
+							login
             }
           }
         }
@@ -67,6 +68,7 @@ interface ResponseData {
 					};
 					owner: {
 						avatarUrl: string;
+						login: string;
 					};
 				}[];
 			};
@@ -94,33 +96,35 @@ export function Repo({ repo }: { repo: Repo }) {
 	);
 
 	return (
-		<div className="flex w-full flex-col gap-x-3 gap-y-2 rounded-xl bg-gray-200/60 p-2 dark:bg-white/10 md:min-h-[100px] md:p-4">
+		<div className="flex w-full flex-col gap-x-3 gap-y-2 rounded-xl bg-gray-200/60 p-2 dark:bg-white/10 md:min-h-[100px] md:p-5">
 			<a
 				href={repo.url}
-				className="flex items-center gap-x-2 font-semibold hover:underline"
+				className="flex items-center gap-x-2 text-sm font-semibold hover:underline"
 				target="_blank"
 				rel="noopener noreferrer"
 			>
 				<Image
 					src={repo.owner.avatarUrl}
 					alt=""
-					height={20}
-					width={20}
+					height={25}
+					width={25}
 					className="rounded-full"
 				/>
-				{repo.name}
+				<span className="font-normal">
+					{repo.owner.login}/<span className="font-semibold">{repo.name}</span>
+				</span>
 			</a>
 			{
-				<div className="flex flex-row flex-wrap gap-1">
-					{topics.map((topic) => (
-						<div
-							key={topic}
-							className="whitespace-nowrap rounded-full bg-gray-300/60 px-2 py-1 text-xs font-semibold text-gray-600 dark:bg-white/20 dark:text-white"
-						>
-							{topic}
-						</div>
-					))}
-				</div>
+				// <div className="flex flex-row flex-wrap gap-1">
+				// 	{topics.map((topic) => (
+				// 		<div
+				// 			key={topic}
+				// 			className="whitespace-nowrap rounded-full bg-gray-300/60 px-2 py-1 text-xs font-semibold text-gray-600 dark:bg-white/20 dark:text-white"
+				// 		>
+				// 			{topic}
+				// 		</div>
+				// 	))}
+				// </div>
 			}
 			<p className="line-clamp-2 text-xs text-gray-600 dark:text-white/50 md:block">
 				{repo.description}
