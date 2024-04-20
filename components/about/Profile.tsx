@@ -42,6 +42,8 @@ export function Profile() {
 			<div className="flex items-center gap-x-1">
 				<Image
 					src={profilePic}
+					height={50}
+					width={50}
 					alt="Profile Picture"
 					className="h-[50px] w-[50px] rounded-full bg-cover md:h-[50px] md:w-[50px] lg:h-[50px] lg:w-[50px]"
 				/>
