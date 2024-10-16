@@ -35,14 +35,14 @@ export function Heading({
 		headingLevelMappings[level as keyof typeof headingLevelMappings];
 
 	return (
-		// @ts-expect-error
-		<HeadingComponent
+        // @ts-expect-error
+        (<HeadingComponent
 			className={`group flex scroll-mt-nav flex-row gap-x-2 ${
 				headingTextSizes[level as keyof typeof headingTextSizes]
 			} ${className ?? ""}`}
 			{...props}
 		>
-			{children}
-		</HeadingComponent>
-	);
+            {children}
+        </HeadingComponent>)
+    );
 }

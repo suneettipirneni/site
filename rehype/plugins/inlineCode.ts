@@ -2,6 +2,7 @@ import { visit } from "unist-util-visit";
 import { Element } from "hast";
 import { Plugin } from "unified";
 import { Node } from "unified/lib";
+import { Text } from "hast-util-to-text/lib";
 
 /**
  * This plugin adds a `data-inline-code` attribute to inline code elements.
@@ -25,7 +26,7 @@ export const inlineCodePlugin: Plugin = () => {
 	 * @param node The node to check.
 	 * @returns True if the node is an inline code element, false otherwise.
 	 */
-	const inlineCodePredicate = (node: Node): boolean => {
+	const inlineCodePredicate = (node: Node): node is Element => {
 		if (node.type !== "element") {
 			return false;
 		}
@@ -35,31 +36,30 @@ export const inlineCodePlugin: Plugin = () => {
 		return Boolean(
 			element.tagName === "code" &&
 				Object.keys(element.properties ?? []).length === 0 &&
-				element.children.some((n: any) => n.type === "text")
+				element.children.some((n: Node) => n.type === "text")
 		);
 	};
 
 	return (tree: Node) => {
-		visit(tree, inlineCodePredicate, (node: Node) => {
-			const element = node as Element;
-
+		visit(tree, inlineCodePredicate, (element, index, parent: Element) => {
 			const textNode = element.children.find(
 				(node) => node.type === "text"
-			) as Element;
+			) as Text;
 
 			if (!textNode) {
 				return;
 			}
 
-			textNode.type = "element";
-			textNode.tagName = "code";
-			textNode.properties = {
-				// Add a data attribute for styling.
-				"data-inline-code": true,
+			const wrappedNode: Element = {
+				type: "element",
+				tagName: "code",
+				properties: {
+					"data-inline-code": true,
+				},
+				children: [textNode],
 			};
-			// @ts-expect-error
-			textNode.children = [{ type: "text", value: textNode.value }];
-			element.tagName = "span";
+
+			parent?.children.splice(index!, 1, wrappedNode);
 		});
 	};
 };
