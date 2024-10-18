@@ -25,9 +25,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<AutoRefresh>
-			<html lang="en" style={{ fontFeatureSettings: "cv02, cv03, cv04, cv11" }}>
+			<html lang="en">
 				<body
-					className={`${inter.className} ${jetBrainsMono.className} mx-auto flex h-full min-h-screen w-full scroll-pt-[65px] flex-col items-center overflow-y-auto bg-slate-50 bg-cover bg-no-repeat text-black dark:bg-zinc-950 dark:text-white`}
+					className={`${inter.className} ${jetBrainsMono.variable} mx-auto flex h-full min-h-screen w-full scroll-pt-[65px] flex-col items-center overflow-y-auto bg-slate-50 bg-cover bg-no-repeat text-black dark:bg-zinc-950 dark:text-white`}
 				>
 					<NavBar
 						tabs={[
