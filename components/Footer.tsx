@@ -1,4 +1,5 @@
 import { BsDiscord, BsGithub, BsLinkedin } from "react-icons/bs";
+import { SiBluesky } from "react-icons/si";
 
 export default function Footer() {
 	return (
@@ -18,6 +19,15 @@ export default function Footer() {
 					</h1>
 				</div>
 				<div className="flex flex-row space-x-2 text-lg">
+					<a
+						className="cursor-pointer"
+						href="https://bsky.app/profile/suneettipirneni.dev"
+						target="_blank"
+						rel="noopener noreferrer"
+						title="Bluesky Profile"
+					>
+						<SiBluesky />
+					</a>
 					<a
 						className="cursor-pointer"
 						href="https://discordapp.com/users/386337006764032002"

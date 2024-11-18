@@ -16,6 +16,7 @@ import {
 	SiAmazons3,
 	SiAstro,
 	SiAwslambda,
+	SiBluesky,
 	SiC,
 	SiCloudflare,
 	SiCplusplus,
@@ -55,6 +56,11 @@ export default function Home() {
 
 			<Profile />
 			<div className="!mt-2 flex flex-row gap-x-2 self-start">
+				<ContactButton
+					url="https://bsky.app/profile/suneettipirneni.dev"
+					icon={<SiBluesky size={20} />}
+					title="Follow me on Bluesky"
+				/>
 				<ContactButton
 					url="https://www.linkedin.com/in/suneettipirneni/"
 					icon={<FaLinkedin size={20} />}
