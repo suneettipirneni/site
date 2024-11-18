@@ -26,7 +26,6 @@ figure[data-rehype-pretty-code-figure] code {
 
 figure[data-rehype-pretty-code-figure] {
 	@apply rounded-lg;
-	@apply border border-gray-300 dark:border-white/25;
 	@apply overflow-clip;
 }
 
@@ -52,9 +51,8 @@ figcaption[data-rehype-pretty-code-title] {
 	@apply font-bold;
 	@apply font-mono dark:text-white;
 	@apply w-full;
-	@apply bg-white/30 dark:bg-white/10;
+	@apply bg-gray-300/25 dark:bg-white/20;
 	@apply px-5 py-2;
-	@apply border-b border-gray-300 dark:border-white/25;
 }
 
 figure[data-rehype-pretty-code-figure] .line--highlighted {

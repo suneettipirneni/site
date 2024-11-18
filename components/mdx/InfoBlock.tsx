@@ -18,9 +18,9 @@ const mappedIcons = {
 };
 
 const mappedStyles = {
-	info: "dark:bg-white/10 bg-white/30 border-gray-300 dark:border-white/25",
-	warning: "bg-yellow-400/50 border-yellow-400",
-	danger: "bg-red-400/50 border-red-400",
+	info: "dark:bg-white/10 bg-gray-400/20",
+	warning: "bg-yellow-400/50",
+	danger: "bg-red-400/50",
 };
 
 export function InfoBlock({ title, kind = "info", children }: InfoBlockProps) {
@@ -32,7 +32,7 @@ export function InfoBlock({ title, kind = "info", children }: InfoBlockProps) {
 
 	return (
 		<div
-			className={`grid grid-cols-[5fr_1fr] gap-y-4 rounded-lg border p-3 post:mb-5 ${mappedStyles[kind]}`}
+			className={`grid grid-cols-[5fr_1fr] gap-y-4 rounded-lg p-3 post:mb-5 ${mappedStyles[kind]}`}
 		>
 			<h1
 				className="flex cursor-pointer items-center gap-2 text-lg font-semibold"
