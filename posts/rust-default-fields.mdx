@@ -163,8 +163,8 @@ let server_with_sizes = Server::new_with_sizes(
 
 Ok but what about cases where we want to specify the `max_connections` only and not the max request size? Or what about cases where
 the inverse where we only want a `max_connections` set? We could just keep adding every constructor permutation that matches our arguments
-but this design choice only get's more overwhelming the more fields you add. The other alternative is to just use the built-in struct initialization
-syntax, but by this point it's become too overbearing to be considered feasible.
+but this design choice only gets more overwhelming the more fields you add. The other alternative is to just use the built-in struct initialization
+syntax, but by this point its become too overbearing to be considered feasible.
 
 The problem that is described here is commonly documented as the [telescoping constructors anti pattern](https://www.captaindebug.com/2011/05/telescoping-constructor-antipattern).
 
@@ -172,8 +172,8 @@ If you're a seasoned Java or Rust developer you'll probably be familiar with the
 
 ## Builders
 
-When faced with larger, and more complex objects the builder pattern has become the de-facto way to construct objects. Most of it's success is
-due to it's ability to effectively create an intuitive API for constructing any permutation of fields for an object. I won't go into the weeds on
+When faced with larger, and more complex objects the builder pattern has become the de-facto way to construct objects. Most of its success is
+due to its ability to effectively create an intuitive API for constructing any permutation of fields for an object. I won't go into the weeds on
 the different flavors of the builder pattern, but if you're interested in one of the canonical sources check out Joshua Bloch's [Effective Java](https://www.oreilly.com/library/view/effective-java-3rd/9780134686097/) book for more details.
 
 This pattern fits into our previous example quite nicely:
@@ -369,7 +369,7 @@ The fun doesn't end at structs either, this same pattern flows over to enum stru
 ```rust
 enum StateLocation {
   Client {
-    diskBinding: String = String::from("/tmp")
+    diskBinding: &'static str = "/tmp";
     name: String
   },
   Server {
@@ -397,6 +397,9 @@ let server = start_server(Server { host, port, .. });
 ## Const Values
 
 _I won't go through all caveats in detail here, I'll instead redirect you to the [RFC](https://github.com/rust-lang/rfcs/pull/3681)._
+
+You may have noticed in my enum example that we're using `&'static str` instead of `String` for the default value. There's a specific reason for this,
+default field values must be `const` functions.
 
 The default value provided for a struct field value must be `const`. Generally this means DFVs can't rely on runtime behavior. This may have some surprising
 interactions.
