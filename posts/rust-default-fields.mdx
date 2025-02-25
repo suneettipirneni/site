@@ -1,0 +1,425 @@
+---
+author: Suneet Tipirneni
+datetime: 2025-02-25T01:24:50.828Z
+title: "Rust Default Fields Values: Beyond the Builder Pattern"
+featured: true
+draft: false
+tags:
+  - rust
+headingImage: "/headers/default-field-values.webp"
+description: Simplifying struct initialization without sacrificing flexibility
+---
+
+# Intro
+
+Rust offers an excellent non-constructor approach to object initialization. However, this functionality is often overlooked due to its scalability challenges with larger structs. Fortunately, this limitation appears to be temporary, as the default field values [RFC](https://github.com/rust-lang/rfcs/pull/3681) is currently being implemented.
+
+_I highly recommend reading the [RFC](https://github.com/rust-lang/rfcs/pull/3681) to compliment this article._
+
+Before exploring this shiny new language feature, we should first understand the current landscape and why these changes became necessary.
+
+# The Problem
+
+## Telescoping Constructors
+
+Rust has suffered from a similar problem to Java. Both languages lack a first-class way to construct
+objects where fields may be omitted in favor of a default value (or `null` for Java). In the micro-scale
+of examples this may not seem like a bad thing. For example, if we have a simple struct defined like so:
+
+```rust
+struct Server {
+  port: u16,
+  host: String
+}
+```
+
+Creating an instance of this object is quite trivial:
+
+```rust
+let server = Server {
+  port: 443,
+  host: String::from("localhost")
+}
+```
+
+However, the problem starts to manifest at the macro-scale. Right now our server options are quite limited, we need to allow for much more configuration. Let's add
+some new options:
+
+```rust
+struct Server {
+  port: u16,
+  host: String,
+  keep_alive: bool,
+  tls_enabled: bool,
+  tls_cert_path: Option<String>,
+  tls_key_path: Option<String>,
+  max_request_size: usize,
+  max_connections: usize,
+}
+```
+
+Well this adds a lot of friction for making new instances of this struct.
+
+```rust
+let server = Server {
+  port: 443,
+  host: 'localhost',
+  max_connections: 42 // Is this a good connection size?,
+  tls_enabled: false // SSL who?,
+  tls_cert_path: None,
+  tls_key_path: None,
+  max_request_size: 53 // Idk maybe this works?,
+}
+```
+
+In the spirit of [convention over configuration](https://en.wikipedia.org/wiki/Convention_over_configuration), we should identify which fields have sensible
+defaults and try to remove their "required-ness".
+
+In cases like these it's common to reach for a bespoke constructor. Let's add a constructor that only takes in
+the `port` and the `host` as those are the only "required" fields. Fields that should always be present but
+should fallback to a sensible default will have their defaults set here.
+
+```rust
+const DEFAULT_MAX_CONNECTIONS: usize = 1000;
+const DEFAULT_MAX_REQUEST_SIZE: usize = 1024;
+
+impl Server {
+  pub fn new(port: u16, host: String) -> Self {
+
+    Self {
+      port,
+      host,
+      keep_alive: None,
+      tls_enabled: false,
+      tls_cert_path: None,
+      tls_key_path: None,
+      max_request_size: DEFAULT_MAX_REQUEST_SIZE,
+      max_connections: DEFAULT_MAX_CONNECTIONS,
+    }
+  }
+}
+
+// ...
+
+let server = Server::new(443, String::from("localhost"));
+```
+
+Ok now constructing isn't too bad
+
+But there are still cases where a user may not care about connection or request size but still wants to configure
+TLS for the server. No problem, we'll add a constructor for this as well:
+
+```rust
+impl Server {
+  // ...
+
+  pub fn new_with_tls(port: u16, host: String, tls_cert_path: String, tls_key_path: String) -> Self {
+    let mut base = Self::new(port, host);
+
+    base.tls_enabled = Some(true);
+    base.tls_cert_path = Some(tls_cert_path);
+    base.tls_key_path = Some(tls_key_path);
+
+    base
+  }
+}
+
+// ...
+
+let server_with_tls = Server::new_with_tls(
+  443,
+  String::from("localhost"),
+  String::from("/home/me/cert"),
+  String::from("/home/me/key")
+);
+```
+
+This works well but if we'll provide an option for easy construction for it only seems fair to add a constructor for
+max connection and request sizes right?
+
+```rust
+impl Server {
+  // ...
+
+  pub fn new_with_sizes(port: u16, host: String, max_connections: usize, max_request_size: usize) -> Self {
+    let mut base = Self::new(port, host);
+
+    base.max_connections = max_connections;
+    base.max_request_size = max_request_size;
+
+    base
+  }
+}
+
+// ...
+
+let server_with_sizes = Server::new_with_sizes(
+  443,
+  String::from("localhost"),
+  20,
+  2000
+);
+```
+
+Ok but what about cases where we want to specify the `max_connections` only and not the max request size? Or what about cases where
+the inverse where we only want a `max_connections` set? We could just keep adding every constructor permutation that matches our arguments
+but this design choice only get's more overwhelming the more fields you add. The other alternative is to just use the built-in struct initialization
+syntax, but by this point it's become too overbearing to be considered feasible.
+
+The problem that is described here is commonly documented as the [telescoping constructors anti pattern](https://www.captaindebug.com/2011/05/telescoping-constructor-antipattern).
+
+If you're a seasoned Java or Rust developer you'll probably be familiar with the (widely accepted) solution to this problem: [Builders](https://en.wikipedia.org/wiki/Builder_pattern)
+
+## Builders
+
+When faced with larger, and more complex objects the builder pattern has become the de-facto way to construct objects. Most of it's success is
+due to it's ability to effectively create an intuitive API for constructing any permutation of fields for an object. I won't go into the weeds on
+the different flavors of the builder pattern, but if you're interested in one of the canonical sources check out Joshua Bloch's [Effective Java](https://www.oreilly.com/library/view/effective-java-3rd/9780134686097/) book for more details.
+
+This pattern fits into our previous example quite nicely:
+
+```rust
+struct ServerBuilder {
+    data: Server,
+}
+
+impl ServerBuilder {
+    pub fn new(port: u16, host: String) -> Self {
+        Self {
+            data: Server {
+              port,
+              host,
+              keep_alive: None,
+              tls_enabled: false,
+              tls_cert_path: None,
+              tls_key_path: None,
+              max_request_size: DEFAULT_MAX_REQUEST_SIZE,
+              max_connections: DEFAULT_MAX_CONNECTIONS,
+          }
+        }
+    }
+
+    pub fn keep_alive(mut self, keep_alive: bool) -> Self {
+        self.data.keep_alive = Some(keep_alive);
+        self
+    }
+
+    pub fn tls_enabled(mut self, tls_enabled: bool) -> Self {
+        self.data.tls_enabled = Some(tls_enabled);
+        self
+    }
+
+    pub fn tls_cert_path(mut self, tls_cert_path: String) -> Self {
+        self.data.tls_cert_path = Some(tls_cert_path);
+        self
+    }
+
+    pub fn tls_key_path(mut self, tls_key_path: String) -> Self {
+        self.data.tls_key_path = Some(tls_key_path);
+        self
+    }
+
+    pub fn max_request_size(mut self, max_request_size: usize) -> Self {
+        self.data.max_request_size = Some(max_request_size);
+        self
+    }
+
+    pub fn max_connections(mut self, max_connections: usize) -> Self {
+        self.data.max_connections = Some(max_connections);
+        self
+    }
+
+    pub fn build(self) -> Server {
+        self.data
+    }
+}
+```
+
+Now if want to use TLS you can just set the fields as-needed:
+
+```rust
+let server = ServerBuilder::new(8080, "localhost".to_string())
+        .tls_enabled(true)
+        .tls_cert_path("cert.pem".to_string())
+        .tls_key_path("key.pem".to_string())
+        .build();
+```
+
+So problem solved? Well in some aspects yes, but in other aspects, no. The builder pattern is a tradeoff. More specifically
+you're trading ergonomic benefits for a larger maintenance burden and (in some cases) an increased runtime overhead.
+
+What specifically is wrong?
+
+- On the maintenance front, you're effectively doubling the amount of types you need. Every configuration-like struct will need an associated
+  builder struct. Making matters worse, adding one field to the canonical struct breaks the builder so it always needs to stay in sync with changes from the canonical struct.
+- On the performance side, we gain ergonomic wins at the cost of more indirection.
+- Builders commonly use mutable instance methods to set fields, this pattern can introduce unexpected side-effects despite best practices advising against them. The method of manually
+  initializing a struct was far more verbose, but it also far more explicit.
+
+## The `Default` trait
+
+You may think that the `Default` trait is rust's built-in solution to this problem. Unfortunately, this is not the case. `Default` works well in cases where
+all fields in a struct have sensible defaults. And yeah... that's a pretty strong assumption to have. To illustrate, let's make `Server` derive
+`Default`:
+
+```rust
+#[derive(Default)]
+struct Server {
+  // ...
+}
+```
+
+Ok let's use it now:
+
+```rust
+// No port or host? I mean if the compiler is ok with it I'm ok with it.
+let server = Server::default();
+```
+
+This approach fails to enforce required fields at compile time. While defaults for optional fields make sense, core fields like port and host must be mandatory. `Default` implementations
+fail to satisfy this constraint and thus are not an appropriate solution for this problem.
+
+# The Solution
+
+Default field values (hereafter referred to as DSVs) provide exactly what their name suggests: the ability to specify
+default values for struct fields at the point of declaration. What's the big deal about this? The big deal is that it
+fixes all the issues from above with little-to-no tradeoffs. Using them is extremely straightforward:
+
+## Structs
+
+```rust
+struct Server {
+  port: u16,
+  host: String,
+  keep_alive: bool = true,
+  tls_enabled: bool = false,
+  tls_cert_path: Option<String> = None,
+  tls_key_path: Option<String> = None,
+  max_request_size: usize = DEFAULT_MAX_CONNECTIONS,
+  max_connections: usize = DEFAULT_MAX_REQUEST_SIZE,
+}
+```
+
+And that's it! No need for specific constructors, or another builder type to make construction easy. The only thing we add inside the struct initializer is the special
+`..` DSV syntax.
+
+```rust
+let server = Server {
+  host: String::from("localhost"),
+  port: 443,
+  ..
+}
+```
+
+Want to configure optional fields ala-carte? Just set their values in the initializer:
+
+```rust
+let server = Server {
+  host: String::from("localhost"),
+  port: 443,
+  max_connections: 100,
+  ..
+}
+```
+
+Because this also has some overlap with the `Default` trait, DFVs are used when as the defaults when calling `Default::default()`.
+
+For example:
+
+```rust
+#[derive(Default)]
+struct Foo {
+  bar: u32 = 10,
+  baz: bool = false,
+}
+
+println!("{:#?}", Foo::default());
+```
+
+```output
+Foo {
+  bar: 10,
+  baz: false,
+}
+```
+
+In these cases calling `Default::default()` is equivalent to using the special `..` DFV initialization syntax:
+
+```rust
+println!("{:#?}", Foo { .. })
+```
+
+```output
+Foo {
+  bar: 10,
+  baz: false,
+}
+```
+
+As for when you'd prefer to use the `Default::default()` method over the `{ .. }` syntax, I speculate it's useful for code that requires a `Default` type bound and thus allows
+to dispatching to the `default()` method implementation. There are certain methods in the standard library that rely on these bounds. For example `unwrap_or_default` on `Result` and
+`Option` use the `Default` bound.
+
+`Default` and DFVs complement rather than obsolete each other - in fact, they work together to provide mutual benefits.
+
+## Enums
+
+The fun doesn't end at structs either, this same pattern flows over to enum structs.
+
+```rust
+enum StateLocation {
+  Client {
+    diskBinding: String = String::from("/tmp")
+    name: String
+  },
+  Server {
+    host: String;
+    port: u32 = 1234
+  }
+}
+
+
+const state_location = StateLocation::Client{ name: String::from("Local Storage"), .. };
+```
+
+## Bonus: Named arguments
+
+DFVs enable us to write functions that take in a bag of options in the form of an object. In other words, we can emulate named arguments. Why would we want this? Well it enables us to bypass the positional requirement for each argument, and more importantly it allows optional function arguments to be omitted
+in place of a defined default value. This is a similar strategy that JavaScript developers use to emulate named arguments.
+
+```rust
+let host = String::from("localhost");
+let port = 443;
+
+let server = start_server(Server { host, port, .. });
+```
+
+## Const Values
+
+_I won't go through all caveats in detail here, I'll instead redirect you to the [RFC](https://github.com/rust-lang/rfcs/pull/3681)._
+
+The default value provided for a struct field value must be `const`. Generally this means DFVs can't rely on runtime behavior. This may have some surprising
+interactions.
+
+```rust
+struct Foo<'a> {
+  prefix: &'a str = "foo"
+}
+```
+
+The code above will compile without any errors. However, this code will not:
+
+```rust
+struct Bar {
+  prefix: String = String::from("bar")
+}
+```
+
+As you may have guessed `Bar#items` requires runtime heap allocation whereas `&str` is (usually) statically allocated on the stack. Time will tell how much this
+specific restriction will affect the usage of this pattern.
+
+# Conclusion
+
+Rust default field values are a huge ergonomic win for Rust. It allows developers to focus on writing logic to interact with objects rather than forcing them to
+create abstractions to manage data construction. The feature has been accepted as an RFC, if you want to try it out today you can enabled the unstable `default_field_values` feature flag. As for when
+this feature will become stable your guess is as good as mine.

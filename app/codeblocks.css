@@ -2,6 +2,7 @@ code[data-theme*=" "],
 code[data-theme*=" "] span {
 	color: var(--shiki-light);
 	background-color: var(--shiki-light-bg);
+	font-size: 14px;
 }
 
 figure[data-rehype-pretty-code-figure] pre {
@@ -47,12 +48,12 @@ figure[data-rehype-pretty-code-figure] {
 }
 
 figcaption[data-rehype-pretty-code-title] {
-	@apply text-sm;
-	@apply font-bold;
-	@apply font-mono dark:text-white;
+	font-size: 14px;
+	@apply text-gray-600 dark:text-white;
 	@apply w-full;
 	@apply bg-gray-300/25 dark:bg-white/20;
-	@apply px-5 py-2;
+	@apply px-5 py-1;
+	@apply rounded-md;
 }
 
 figure[data-rehype-pretty-code-figure] .line--highlighted {

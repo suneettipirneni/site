@@ -1,7 +1,7 @@
 const plugin = require("tailwindcss/plugin");
 const colors = require("tailwindcss/colors");
 
-const postContentWidth = "650px";
+const postContentWidth = "700px";
 const navbarHeight = "80px";
 
 /** @type {import('tailwindcss').Config} */

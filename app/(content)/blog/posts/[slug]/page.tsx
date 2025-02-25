@@ -27,19 +27,17 @@ export async function generateStaticParams() {
 	return posts.map((post) => ({ slug: post.slug }));
 }
 
-export const generateMetadata = async (
-    props: {
-        params: Promise<{ slug: string }>;
-    }
-): Promise<Metadata> => {
-    const params = await props.params;
-    const post = await getPost(params.slug);
+export const generateMetadata = async (props: {
+	params: Promise<{ slug: string }>;
+}): Promise<Metadata> => {
+	const params = await props.params;
+	const post = await getPost(params.slug);
 
-    if (!post) {
+	if (!post) {
 		throw new Error(`No post found for slug ${params.slug}`);
 	}
 
-    return {
+	return {
 		title: post.title,
 		description: post.description,
 		authors: [
@@ -64,18 +62,20 @@ export const generateMetadata = async (
 	};
 };
 
-export default async function Post(props: { params: Promise<{ slug: string }> }) {
-    const params = await props.params;
-    const post = await getPost(params.slug);
+export default async function Post(props: {
+	params: Promise<{ slug: string }>;
+}) {
+	const params = await props.params;
+	const post = await getPost(params.slug);
 
-    if (!post) {
+	if (!post) {
 		throw new Error(`No post found for slug ${params.slug}`);
 	}
 
-    const headings = serializeHeadings(post.headings);
+	const headings = serializeHeadings(post.headings);
 
-    return (
-		<article className="relative z-10 mx-auto grid w-full items-start justify-center px-2 py-4 align-middle md:px-0 lg:grid-cols-postgrid lg:gap-x-10">
+	return (
+		<article className="relative z-10 mx-auto grid w-full items-start justify-center px-2 py-4 align-middle sm:px-10 md:px-5 lg:grid-cols-postgrid lg:gap-x-10">
 			<Link
 				href="/blog"
 				className="col-start-2 row-start-1 mb-5 flex flex-row items-center gap-2 text-xl font-medium text-gray-600 dark:text-gray-300/80"
