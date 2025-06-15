@@ -7,7 +7,7 @@ export default function NotFound() {
 			<p className="mb-4 text-gray-600 dark:text-gray-300">
 				We couldn't find the blog post you're looking for.
 			</p>
-			<Link href="/blog" className="text-blue-600 underline">
+			<Link href="/blog" className="text-blue-600 underline" aria-label="Go back to the blog homepage">
 				Return to blog
 			</Link>
 		</div>
