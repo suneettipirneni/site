@@ -1,10 +1,13 @@
 const { WebSocketServer } = require("ws");
 const chokidar = require("chokidar");
+const path = require("path");
+
+const POSTS_DIR = path.join(process.cwd(), "posts");
 
 const wss = new WebSocketServer({ port: 3001 });
 const watchCallbacks = [];
 
-chokidar.watch("./posts").on("all", (event) => {
+chokidar.watch(POSTS_DIR).on("all", (event) => {
 	if (event === "change") {
 		watchCallbacks.forEach((cb) => cb());
 	}

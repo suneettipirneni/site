@@ -1,6 +1,8 @@
 export const BASE_URL = "https://www.suneettipirneni.stream";
 
-export const POSTS_DIR = "./posts";
+import { join } from "path";
+
+export const POSTS_DIR = join(process.cwd(), "posts");
 
 export const ALL_TAGS = [
 	"language design",
