@@ -1,8 +1,6 @@
 const { WebSocketServer } = require("ws");
 const chokidar = require("chokidar");
-const path = require("path");
-
-const POSTS_DIR = path.join(process.cwd(), "posts");
+const { POSTS_DIR } = require("./lib/postsDir.js");
 
 const wss = new WebSocketServer({ port: 3001 });
 const watchCallbacks = [];
