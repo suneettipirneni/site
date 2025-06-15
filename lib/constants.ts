@@ -1,6 +1,5 @@
 export const BASE_URL = "https://www.suneettipirneni.stream";
 
-import { POSTS_DIR } from "./postsDir.js";
 
 export const ALL_TAGS = [
 	"language design",
