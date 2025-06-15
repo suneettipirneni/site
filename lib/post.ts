@@ -1,7 +1,7 @@
 import GithubSlugger from "github-slugger";
 import { cache } from "react";
 import fs from "fs/promises";
-import { POSTS_DIR } from "./postsDir.js";
+import { POSTS_DIR } from "./constants";
 import matter from "gray-matter";
 import path from "path";
 import { z } from "zod";
