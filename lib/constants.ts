@@ -1,6 +1,7 @@
+import path from "path";
+
 export const BASE_URL = "https://www.suneettipirneni.stream";
 
-export const POSTS_DIR = "./posts";
 
 export const ALL_TAGS = [
 	"language design",
@@ -18,3 +19,5 @@ export const GH_USERNAME = "suneettipirneni";
 export const GH_REPO_REVALIDATE_TIME = 3600; // 1 hour
 
 export const DISCORD_USER_ID = "386337006764032002";
+
+export const POSTS_DIR = path.join(process.cwd(), "posts");

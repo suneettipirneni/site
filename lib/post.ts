@@ -82,7 +82,27 @@ export const getPosts = cache(async (): Promise<Post[]> => {
 	);
 });
 
-export async function getPost(slug: string) {
-	const posts = await getPosts();
-	return posts.find((post) => post.slug === slug);
+export async function getPost(slug: string): Promise<Post | undefined> {
+	const postFile = path.join(POSTS_DIR, `${slug}.mdx`);
+
+	try {
+	       const postContents = await fs.readFile(postFile, "utf-8");
+	       const { content, data } = matter(postContents);
+
+	       const meta: PostMeta = postMetaValidator.parse(data);
+
+	       return {
+	               ...meta,
+	               slug,
+	               body: content,
+	               headings: resolveHeadings(content),
+	               timeToRead: calculateReadingTime(content),
+	               url: `/blog/posts/${slug}`,
+	       };
+	} catch (err: any) {
+	       if (err && err.code === "ENOENT") {
+	               return undefined;
+	       }
+	       throw err;
+	}
 }

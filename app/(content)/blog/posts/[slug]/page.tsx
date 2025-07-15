@@ -10,6 +10,7 @@ import Image from "next/image";
 import { BLUR_DATA_URL } from "@/lib/constants";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getPost, getPosts } from "@/lib/post";
+import { notFound } from "next/navigation";
 import { rehypeAutolinkHeadingsOptions } from "@/rehype/options/rehypeAutoLinkHeadingsOptions";
 import { rehypePrettyCodeOptions } from "@/rehype/options/rehypePrettyCodeOptions";
 import { codeTitleBarPlugin } from "@/rehype/plugins/codeTitleBar";
@@ -34,7 +35,7 @@ export const generateMetadata = async (props: {
 	const post = await getPost(params.slug);
 
 	if (!post) {
-		throw new Error(`No post found for slug ${params.slug}`);
+		notFound();
 	}
 
 	return {
@@ -69,7 +70,7 @@ export default async function Post(props: {
 	const post = await getPost(params.slug);
 
 	if (!post) {
-		throw new Error(`No post found for slug ${params.slug}`);
+		notFound();
 	}
 
 	const headings = serializeHeadings(post.headings);
