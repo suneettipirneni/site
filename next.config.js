@@ -10,9 +10,13 @@ const nextConfig = {
 				pathname: "/u/**",
 			},
 		],
+		formats: ["image/webp", "image/avif"],
 	},
 	experimental: {
 		reactCompiler: true,
+	},
+	compiler: {
+		removeConsole: process.env.NODE_ENV === "production",
 	},
 };
 

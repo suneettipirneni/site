@@ -8,14 +8,9 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "katex/dist/katex.min.css";
 import AutoRefresh from "@/components/AutoRefresh";
 
-// Use system fonts as fallback to avoid network issues
-const inter = {
-	className: "font-sans",
-};
-
-const jetBrainsMono = {
-	variable: "--font-mono",
-};
+// Font configuration that falls back gracefully
+const fontClasses = "font-sans";
+const monoFontVariable = "--font-mono";
 
 export const metadata: Metadata = {
 	metadataBase: new URL(BASE_URL),
@@ -27,8 +22,17 @@ export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<AutoRefresh>
 			<html lang="en">
+				<head>
+					<link rel="preconnect" href="https://fonts.googleapis.com" />
+					<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+					<link 
+						href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" 
+						rel="stylesheet" 
+					/>
+				</head>
 				<body
-					className={`${inter.className} ${jetBrainsMono.variable} mx-auto flex h-full min-h-screen w-full scroll-pt-[65px] flex-col items-center overflow-y-auto bg-slate-50 bg-cover bg-no-repeat text-black dark:bg-zinc-950 dark:text-white`}
+					className={`${fontClasses} mx-auto flex h-full min-h-screen w-full scroll-pt-[65px] flex-col items-center overflow-y-auto bg-slate-50 bg-cover bg-no-repeat text-black dark:bg-zinc-950 dark:text-white`}
+					style={{ "--font-mono": "'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace" } as React.CSSProperties}
 				>
 					<NavBar
 						tabs={[
