@@ -1,5 +1,4 @@
 import { NavBar } from "@/components/NavBar";
-import { Inter, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import type { PropsWithChildren } from "react";
 import "./globals.css";
@@ -9,12 +8,14 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "katex/dist/katex.min.css";
 import AutoRefresh from "@/components/AutoRefresh";
 
-const inter = Inter({ subsets: ["latin"], display: "swap" });
-const jetBrainsMono = JetBrains_Mono({
-	subsets: ["latin"],
-	display: "swap",
+// Use system fonts as fallback to avoid network issues
+const inter = {
+	className: "font-sans",
+};
+
+const jetBrainsMono = {
 	variable: "--font-mono",
-});
+};
 
 export const metadata: Metadata = {
 	metadataBase: new URL(BASE_URL),

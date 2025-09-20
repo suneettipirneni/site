@@ -154,25 +154,48 @@ export function Repo({ repo }: { repo: Repo }) {
 }
 
 export async function Repos() {
-	const repos = await fetch(url, {
-		method: "POST",
-		body: JSON.stringify(body),
-		headers: {
-			Authorization: `Bearer ${process.env.GH_TOKEN}`,
-			"Content-Type": "application/json",
-		},
-		next: {
-			revalidate: GH_REPO_REVALIDATE_TIME,
-		},
-	})
-		.then((res) => res.json() as Promise<ResponseData>)
-		.then((res) => res.data.user.pinnedItems.nodes);
+	try {
+		const repos = await fetch(url, {
+			method: "POST",
+			body: JSON.stringify(body),
+			headers: {
+				Authorization: `Bearer ${process.env.GH_TOKEN}`,
+				"Content-Type": "application/json",
+			},
+			next: {
+				revalidate: GH_REPO_REVALIDATE_TIME,
+			},
+		})
+			.then((res) => {
+				if (!res.ok) {
+					console.warn(`GitHub API error: ${res.status} ${res.statusText}`);
+					return { data: { user: { pinnedItems: { nodes: [] } } } };
+				}
+				return res.json() as Promise<ResponseData>;
+			})
+			.then((res) => res?.data?.user?.pinnedItems?.nodes || []);
 
-	return (
-		<div className="grid w-full max-w-[600px] grid-cols-1 gap-2 md:grid-cols-2">
-			{repos.map((repo) => (
-				<Repo key={repo.name} repo={repo} />
-			))}
-		</div>
-	);
+		if (repos.length === 0) {
+			return (
+				<div className="w-full max-w-[600px] text-center text-gray-500 dark:text-gray-400">
+					Unable to load repositories at this time.
+				</div>
+			);
+		}
+
+		return (
+			<div className="grid w-full max-w-[600px] grid-cols-1 gap-2 md:grid-cols-2">
+				{repos.map((repo) => (
+					<Repo key={repo.name} repo={repo} />
+				))}
+			</div>
+		);
+	} catch (error) {
+		console.warn("Failed to load GitHub repositories:", error);
+		return (
+			<div className="w-full max-w-[600px] text-center text-gray-500 dark:text-gray-400">
+				Unable to load repositories at this time.
+			</div>
+		);
+	}
 }

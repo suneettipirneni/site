@@ -27,7 +27,6 @@
 		"chokidar": "^3.6.0",
 		"eslint": "8.57.0",
 		"eslint-config-next": "15.4.1",
-		"eslint-plugin-unused-imports": "^3.0.0",
 		"github-slugger": "^2.0.0",
 		"gray-matter": "^4.0.3",
 		"hast-util-to-text": "^4.0.2",
@@ -57,7 +56,7 @@
 		"typescript": "^5.6.2",
 		"unified": "^11.0.4",
 		"unist-util-visit": "^5.0.0",
-		"ws": "^8.16.0",
+		"ws": "^8.18.3",
 		"zod": "^3.23.8"
 	},
 	"devDependencies": {
