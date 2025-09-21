@@ -9,11 +9,16 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "katex/dist/katex.min.css";
 import AutoRefresh from "@/components/AutoRefresh";
 
-const inter = Inter({ subsets: ["latin"], display: "swap" });
+const inter = Inter({ 
+	subsets: ["latin"], 
+	display: "swap",
+	fallback: ["system-ui", "arial"]
+});
 const jetBrainsMono = JetBrains_Mono({
 	subsets: ["latin"],
 	display: "swap",
 	variable: "--font-mono",
+	fallback: ["ui-monospace", "Menlo", "Monaco", "Consolas", "monospace"]
 });
 
 export const metadata: Metadata = {

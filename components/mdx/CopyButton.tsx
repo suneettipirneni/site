@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import { MdContentCopy, MdOutlineCheck } from "react-icons/md";
+import { MdContentCopy, MdOutlineCheck } from "@/lib/icons";
 
 export function CopyButton({ text }: { text: string }) {
 	const [copied, setCopied] = useState(false);

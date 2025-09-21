@@ -4,7 +4,7 @@ import Image from "next/image";
 import profilePic from "@/public/me.webp";
 import { useEffect, useState } from "react";
 import { DiscordStatus } from "../DiscordStatus";
-import { HiOutlineClock } from "react-icons/hi";
+import { HiOutlineClock } from "@/lib/icons";
 
 const timeOptions = {
 	timeZone: "America/New_York",
@@ -31,9 +31,10 @@ export function Profile() {
 	const [time, setTime] = useState("--:-- --");
 	useEffect(() => {
 		setTime(new Intl.DateTimeFormat("en-US", timeOptions).format(new Date()));
+		// Update every 60 seconds instead of 10 seconds to reduce re-renders
 		const interval = setInterval(() => {
 			setTime(new Intl.DateTimeFormat("en-US", timeOptions).format(new Date()));
-		}, 10_000);
+		}, 60_000);
 		return () => clearInterval(interval);
 	}, []);
 
@@ -45,7 +46,7 @@ export function Profile() {
 					height={50}
 					width={50}
 					alt="Profile Picture"
-					className="h-[50px] w-[50px] rounded-full bg-cover md:h-[50px] md:w-[50px] lg:h-[50px] lg:w-[50px]"
+					className="h-[50px] w-[50px] rounded-full"
 				/>
 			</div>
 

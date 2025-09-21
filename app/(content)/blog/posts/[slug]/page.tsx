@@ -1,4 +1,4 @@
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft } from "@/lib/icons";
 import Link from "next/link";
 import { serializeHeadings } from "@/util/HeaderTree";
 import { Outline } from "@/components/Outline";

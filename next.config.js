@@ -10,9 +10,14 @@ const nextConfig = {
 				pathname: "/u/**",
 			},
 		],
+		formats: ["image/webp", "image/avif"],
 	},
 	experimental: {
 		reactCompiler: true,
+		optimizePackageImports: ["react-icons"],
+	},
+	compiler: {
+		removeConsole: process.env.NODE_ENV === "production",
 	},
 };
 

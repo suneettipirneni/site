@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft } from "@/lib/icons";
 
 export default function NotFound() {
        return (
@@ -14,7 +14,7 @@ export default function NotFound() {
 
                        <h2 className="mb-4 text-2xl font-bold">Post not found</h2>
                        <p className="text-gray-600 dark:text-gray-300">
-                               We couldn't find the blog post you're looking for.
+                               We couldn&apos;t find the blog post you&apos;re looking for.
                        </p>
                </div>
        );

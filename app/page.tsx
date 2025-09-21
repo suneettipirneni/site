@@ -3,6 +3,7 @@ import profileBg from "../public/profile-bg.webp";
 import profileBgDark from "../public/profile-bg-dark.webp";
 import Image from "next/image";
 import { Repos } from "@/components/about/Repos";
+import { Section } from "@/components/about/Section";
 import {
 	FaDiscord,
 	FaGithub,
@@ -10,9 +11,6 @@ import {
 	FaLinkedin,
 	FaReact,
 	FaSwift,
-} from "react-icons/fa";
-import { Section } from "@/components/about/Section";
-import {
 	SiAmazons3,
 	SiAstro,
 	SiAwslambda,
@@ -33,7 +31,7 @@ import {
 	SiScikitlearn,
 	SiTailwindcss,
 	SiTypescript,
-} from "react-icons/si";
+} from "@/lib/icons";
 import { IconGroup } from "@/components/about/IconGroup";
 import { ContactButton } from "@/components/about/ContactButton";
 
@@ -51,6 +49,8 @@ export default function Home() {
 					placeholder="blur"
 					className="fixed inset-0 -z-10 hidden aspect-video w-full bg-fixed object-cover md:visible"
 					priority
+					sizes="100vw"
+					quality={85}
 				/>
 			</picture>
 

@@ -1,5 +1,4 @@
-import { BsDiscord, BsGithub, BsLinkedin } from "react-icons/bs";
-import { SiBluesky } from "react-icons/si";
+import { BsDiscord, BsGithub, BsLinkedin, SiBluesky } from "@/lib/icons";
 
 export default function Footer() {
 	return (

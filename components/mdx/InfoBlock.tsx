@@ -1,8 +1,12 @@
 "use client";
 
-import { FaChevronDown, FaChevronRight } from "react-icons/fa";
-import { IoInformationCircleSharp, IoWarning } from "react-icons/io5";
-import { MdDangerous } from "react-icons/md";
+import { 
+  FaChevronDown, 
+  FaChevronRight, 
+  IoInformationCircleSharp, 
+  IoWarning,
+  MdDangerous 
+} from "@/lib/icons";
 import { useCallback, useState } from "react";
 
 export interface InfoBlockProps {

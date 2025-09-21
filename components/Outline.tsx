@@ -45,7 +45,7 @@ export const OutlineNode = memo(function OutlineNode({
 	);
 });
 
-export function Outline({ headings, className }: OutlineProps) {
+export const Outline = memo(function Outline({ headings, className }: OutlineProps) {
 	const activeSlug = useActiveSlug(headings);
 
 	return (
@@ -60,4 +60,4 @@ export function Outline({ headings, className }: OutlineProps) {
 			))}
 		</div>
 	);
-}
+});
