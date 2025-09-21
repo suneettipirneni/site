@@ -1,39 +1,44 @@
 import { Profile } from "@/components/about/Profile";
+import { ProfileSkeleton } from "@/components/about/ProfileSkeleton";
 import profileBg from "../public/profile-bg.webp";
 import profileBgDark from "../public/profile-bg-dark.webp";
 import Image from "next/image";
 import { Repos } from "@/components/about/Repos";
+import { ReposSkeleton } from "@/components/about/ReposSkeleton";
 import { Section } from "@/components/about/Section";
 import {
 	FaDiscord,
 	FaGithub,
-	FaJava,
-	FaLinkedin,
-	FaReact,
-	FaSwift,
-	SiAmazons3,
-	SiAstro,
-	SiAwslambda,
 	SiBluesky,
-	SiC,
-	SiCloudflare,
-	SiCplusplus,
-	SiDocker,
-	SiHaskell,
-	SiJavascript,
-	SiNextdotjs,
-	SiNodedotjs,
-	SiNumpy,
-	SiPandas,
-	SiPython,
-	SiPytorch,
-	SiRust,
-	SiScikitlearn,
-	SiTailwindcss,
-	SiTypescript,
+	FaLinkedin,
 } from "@/lib/icons";
-import { IconGroup } from "@/components/about/IconGroup";
 import { ContactButton } from "@/components/about/ContactButton";
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
+
+// Dynamically import the Technologies section for better code splitting
+const TechnologiesSection = dynamic(() => 
+	import("@/components/about/TechnologiesSection").then(mod => ({ default: mod.TechnologiesSection })), 
+	{
+		loading: () => (
+			<Section title="Technologies & Frameworks" className="gap-y-5 font-semibold">
+				<div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+					{Array.from({ length: 4 }).map((_, i) => (
+						<div key={i} className="space-y-3">
+							<div className="h-5 w-32 bg-gray-300/60 dark:bg-white/20 rounded animate-pulse" />
+							<div className="flex flex-wrap gap-3">
+								{Array.from({ length: 6 }).map((_, j) => (
+									<div key={j} className="h-6 w-6 bg-gray-300/60 dark:bg-white/20 rounded animate-pulse" />
+								))}
+							</div>
+						</div>
+					))}
+				</div>
+			</Section>
+		),
+		ssr: false,
+	}
+);
 
 export default function Home() {
 	return (
@@ -54,7 +59,9 @@ export default function Home() {
 				/>
 			</picture>
 
-			<Profile />
+			<Suspense fallback={<ProfileSkeleton />}>
+				<Profile />
+			</Suspense>
 			<div className="!mt-2 flex flex-row gap-x-2 self-start">
 				<ContactButton
 					url="https://bsky.app/profile/suneettipirneni.dev"
@@ -86,48 +93,11 @@ export default function Home() {
 			</Section>
 
 			<Section title="Open Source Projects">
-				<Repos />
+				<Suspense fallback={<ReposSkeleton />}>
+					<Repos />
+				</Suspense>
 			</Section>
-			<Section
-				title="Technologies & Frameworks"
-				className="gap-y-5 font-semibold"
-			>
-				<div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-					<IconGroup title="Web">
-						<FaReact size={24} title="React" />
-						<SiJavascript size={24} title="JavaScript" />
-						<SiTypescript size={24} title="TypeScript" />
-						<SiNextdotjs size={24} title="Next.js" />
-						<SiAstro size={24} title="Astro" />
-						<SiTailwindcss size={24} title="TailwindCSS" />
-					</IconGroup>
-
-					<IconGroup title="General-Purpose">
-						<SiRust size={24} title="Rust" />
-						<SiC size={24} title="C" />
-						<SiCplusplus size={24} title="C++" />
-						<FaJava size={24} title="Java" />
-						<FaSwift size={24} title="Swift" />
-						<SiNodedotjs size={24} title="Node.js" />
-						<SiHaskell size={24} title="Haskell" />
-						<SiPython size={24} title="Python" />
-					</IconGroup>
-
-					<IconGroup title="Machine Learning &amp; Data Analytics">
-						<SiPytorch size={24} title="PyTorch" />
-						<SiNumpy size={24} title="NumPy" />
-						<SiScikitlearn size={24} title="scikit-learn" />
-						<SiPandas size={24} title="pandas" />
-					</IconGroup>
-
-					<IconGroup title="Deployment">
-						<SiDocker size={24} title="Docker" />
-						<SiAmazons3 size={24} title="Amazon S3" />
-						<SiCloudflare size={24} title="Cloudflare" />
-						<SiAwslambda size={24} title="AWS Lambda" />
-					</IconGroup>
-				</div>
-			</Section>
+			<TechnologiesSection />
 		</div>
 	);
 }

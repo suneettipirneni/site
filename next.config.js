@@ -15,6 +15,7 @@ const nextConfig = {
 	experimental: {
 		reactCompiler: true,
 		optimizePackageImports: ["react-icons"],
+		serverComponentsExternalPackages: [],
 	},
 	compiler: {
 		removeConsole: process.env.NODE_ENV === "production",
