@@ -1,7 +1,4 @@
 import { Profile } from "@/components/about/Profile";
-import profileBg from "../public/profile-bg.webp";
-import profileBgDark from "../public/profile-bg-dark.webp";
-import Image from "next/image";
 import { Repos } from "@/components/about/Repos";
 import {
 	FaDiscord,
@@ -41,20 +38,6 @@ import { Suspense } from "react";
 export default function Home() {
 	return (
 		<div className="mx-auto flex max-w-[600px] grow flex-col items-center justify-center space-y-10 overflow-hidden bg-fixed bg-center px-5 pb-10 md:space-y-10 md:px-0">
-			<picture>
-				<source
-					srcSet={profileBgDark.src}
-					media="(prefers-color-scheme: dark)"
-				/>
-				<Image
-					src={profileBg}
-					alt=""
-					placeholder="blur"
-					className="fixed inset-0 -z-10 hidden aspect-video w-full bg-fixed object-cover md:block"
-					sizes="100vw"
-				/>
-			</picture>
-
 			<Profile />
 			<div className="!mt-2 flex flex-row gap-x-2 self-start">
 				<ContactButton
