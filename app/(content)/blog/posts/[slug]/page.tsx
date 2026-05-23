@@ -128,7 +128,10 @@ export default async function Post(props: {
 					placeholder="blur"
 					blurDataURL={BLUR_DATA_URL}
 					className="mt-5 aspect-[1200_/_600] w-full rounded-xl object-cover"
-					priority
+					fetchPriority="high"
+					loading="eager"
+					preload
+					sizes="(min-width: 768px) 700px, calc(100vw - 1rem)"
 				/>
 			</h1>
 			<div className="col-start-2 row-start-3 mb-2 min-w-0 max-w-postcontent self-start">
