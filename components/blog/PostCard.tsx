@@ -8,9 +8,14 @@ import { Post } from "@/lib/post";
 export interface PostCardProps {
 	post: Post;
 	compact?: boolean;
+	imagePriority?: boolean;
 }
 
-export function PostCard({ post, compact = false }: PostCardProps) {
+export function PostCard({
+	post,
+	compact = false,
+	imagePriority = false,
+}: PostCardProps) {
 	return (
 		<div
 			className={`flex pt-5 @container first:pt-0 ${
@@ -34,7 +39,14 @@ export function PostCard({ post, compact = false }: PostCardProps) {
 					alt={post.title}
 					placeholder="blur"
 					blurDataURL={BLUR_DATA_URL}
-					priority={!compact}
+					fetchPriority={imagePriority ? "high" : undefined}
+					loading={imagePriority ? "eager" : undefined}
+					preload={imagePriority}
+					sizes={
+						compact
+							? "200px"
+							: "(min-width: 768px) 411px, calc(100vw - 1.5rem)"
+					}
 				/>
 			</Link>
 

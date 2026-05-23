@@ -36,6 +36,7 @@ import {
 } from "react-icons/si";
 import { IconGroup } from "@/components/about/IconGroup";
 import { ContactButton } from "@/components/about/ContactButton";
+import { Suspense } from "react";
 
 export default function Home() {
 	return (
@@ -49,8 +50,8 @@ export default function Home() {
 					src={profileBg}
 					alt=""
 					placeholder="blur"
-					className="fixed inset-0 -z-10 hidden aspect-video w-full bg-fixed object-cover md:visible"
-					priority
+					className="fixed inset-0 -z-10 hidden aspect-video w-full bg-fixed object-cover md:block"
+					sizes="100vw"
 				/>
 			</picture>
 
@@ -86,7 +87,9 @@ export default function Home() {
 			</Section>
 
 			<Section title="Open Source Projects">
-				<Repos />
+				<Suspense fallback={<RepoGridSkeleton />}>
+					<Repos />
+				</Suspense>
 			</Section>
 			<Section
 				title="Technologies & Frameworks"
@@ -128,6 +131,20 @@ export default function Home() {
 					</IconGroup>
 				</div>
 			</Section>
+		</div>
+	);
+}
+
+function RepoGridSkeleton() {
+	return (
+		<div className="grid w-full max-w-[600px] grid-cols-1 gap-2 md:grid-cols-2">
+			{Array.from({ length: 4 }).map((_, index) => (
+				<div
+					aria-hidden="true"
+					className="h-[100px] animate-pulse rounded-xl bg-gray-200/60 dark:bg-white/10"
+					key={index}
+				/>
+			))}
 		</div>
 	);
 }

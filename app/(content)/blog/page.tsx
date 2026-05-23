@@ -55,16 +55,25 @@ export default async function BlogPostsPage() {
 			<div className="flex flex-col gap-y-8 md:gap-y-8 xl:gap-y-10">
 				{featuredPosts.length > 0 && (
 					<PostSection className="grid grid-cols-1 divide-y dark:divide-gray-200/25 md:grid-cols-2 md:divide-none">
-						{featuredPosts.map((entry) => (
-							<PostCard key={entry.title} post={entry} />
+						{featuredPosts.map((entry, index) => (
+							<PostCard
+								imagePriority={index === 0}
+								key={entry.title}
+								post={entry}
+							/>
 						))}
 					</PostSection>
 				)}
 
 				{regularPosts.length > 0 && (
 					<PostSection className="flex flex-col !gap-y-4 divide-y dark:divide-gray-200/25 md:!gap-y-3 md:divide-none">
-						{regularPosts.map((entry) => (
-							<PostCard compact key={entry.title} post={entry} />
+						{regularPosts.map((entry, index) => (
+							<PostCard
+								compact
+								imagePriority={featuredPosts.length === 0 && index === 0}
+								key={entry.title}
+								post={entry}
+							/>
 						))}
 					</PostSection>
 				)}
