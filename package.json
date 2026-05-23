@@ -34,7 +34,7 @@
 		"hastscript": "^9.0.0",
 		"katex": "^0.16.9",
 		"next": "16.2.6",
-		"next-mdx-remote": "^5.0.0",
+		"next-mdx-remote": "^6.0.0",
 		"next-remote-watch": "^2.0.0",
 		"postcss": "^8.5.15",
 		"react": "19.2.6",
