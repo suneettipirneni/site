@@ -11,6 +11,7 @@ import { BLUR_DATA_URL } from "@/lib/constants";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getPost, getPosts } from "@/lib/post";
 import { notFound } from "next/navigation";
+import { cacheLife } from "next/cache";
 import { rehypeAutolinkHeadingsOptions } from "@/rehype/options/rehypeAutoLinkHeadingsOptions";
 import { rehypePrettyCodeOptions } from "@/rehype/options/rehypePrettyCodeOptions";
 import { codeTitleBarPlugin } from "@/rehype/plugins/codeTitleBar";
@@ -22,6 +23,31 @@ import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkReferenceLinks from "remark-reference-links";
+
+async function PostMdx({ source }: { source: string }) {
+	"use cache";
+	cacheLife("minutes");
+
+	return (
+		<MDXRemote
+			source={source}
+			components={mdxComponents}
+			options={{
+				mdxOptions: {
+					rehypePlugins: [
+						[rehypePrettyCode, rehypePrettyCodeOptions],
+						rehypeSlug,
+						inlineCodePlugin,
+						codeTitleBarPlugin,
+						rehypeKatex,
+						[rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions],
+					],
+					remarkPlugins: [remarkGfm, remarkMath, remarkReferenceLinks],
+				},
+			}}
+		/>
+	);
+}
 
 export async function generateStaticParams() {
 	const posts = await getPosts();
@@ -107,24 +133,7 @@ export default async function Post(props: {
 			</h1>
 			<div className="col-start-2 row-start-3 mb-2 min-w-0 max-w-postcontent self-start">
 				<div data-post className="col-start-2 min-w-0 max-w-postcontent">
-					<MDXRemote
-						source={post.body}
-						components={mdxComponents}
-						options={{
-							mdxOptions: {
-								rehypePlugins: [
-									[rehypePrettyCode, rehypePrettyCodeOptions],
-									rehypeSlug,
-									inlineCodePlugin,
-									codeTitleBarPlugin,
-									rehypeKatex,
-									[rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions],
-								],
-								remarkPlugins: [remarkGfm, remarkMath, remarkReferenceLinks],
-							},
-						}}
-					/>
-					{/* <MDXComponent components={mdxComponents} /> */}
+					<PostMdx source={post.body} />
 				</div>
 			</div>
 

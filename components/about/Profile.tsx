@@ -12,6 +12,10 @@ const timeOptions = {
 	minute: "numeric",
 } as const;
 
+function formatLocalTime() {
+	return new Intl.DateTimeFormat("en-US", timeOptions).format(new Date());
+}
+
 export function Section({
 	children,
 	title,
@@ -30,11 +34,16 @@ export function Section({
 export function Profile() {
 	const [time, setTime] = useState("--:-- --");
 	useEffect(() => {
-		setTime(new Intl.DateTimeFormat("en-US", timeOptions).format(new Date()));
+		const timeout = setTimeout(() => {
+			setTime(formatLocalTime());
+		}, 0);
 		const interval = setInterval(() => {
-			setTime(new Intl.DateTimeFormat("en-US", timeOptions).format(new Date()));
+			setTime(formatLocalTime());
 		}, 10_000);
-		return () => clearInterval(interval);
+		return () => {
+			clearTimeout(timeout);
+			clearInterval(interval);
+		};
 	}, []);
 
 	return (

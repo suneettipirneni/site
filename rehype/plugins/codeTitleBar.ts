@@ -1,8 +1,8 @@
 import type { Plugin } from "unified";
 import { visit } from "unist-util-visit";
 import type { Element } from "hast";
+import type { Node } from "unist";
 import { toText } from "hast-util-to-text";
-import { Node } from "unified/lib";
 
 const languageMap: Record<string, string> = {
 	cpp: "c++",

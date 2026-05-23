@@ -1,20 +1,19 @@
 import { defineConfig } from "eslint/config";
 import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
 import unusedImports from "eslint-plugin-unused-imports";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+export default defineConfig([
+	{
+		ignores: [".next/**", ".yarn/**"],
+	},
+	{
+		extends: [...nextCoreWebVitals],
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+		plugins: {
+			"unused-imports": unusedImports,
+		},
 
-export default defineConfig([{
-    extends: [...nextCoreWebVitals],
-
-    plugins: {
-        "unused-imports": unusedImports,
-    },
-
-    rules: {
-        "unused-imports/no-unused-imports": "error",
-    },
-}]);
+		rules: {
+			"unused-imports/no-unused-imports": "error",
+		},
+	},
+]);

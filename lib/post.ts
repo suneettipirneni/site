@@ -1,5 +1,5 @@
 import GithubSlugger from "github-slugger";
-import { cache } from "react";
+import { cacheLife } from "next/cache";
 import fs from "fs/promises";
 import { POSTS_DIR } from "./constants";
 import matter from "gray-matter";
@@ -55,7 +55,10 @@ function resolveHeadings(body: string): HeadingData[] {
 }
 
 // Based on https://maxleiter.com/blog/build-a-blog-with-nextjs-13#fetching-your-posts
-export const getPosts = cache(async (): Promise<Post[]> => {
+export async function getPosts(): Promise<Post[]> {
+	"use cache";
+	cacheLife("minutes");
+
 	const postFiles = await fs.readdir(POSTS_DIR);
 
 	return await Promise.all(
@@ -80,29 +83,32 @@ export const getPosts = cache(async (): Promise<Post[]> => {
 				};
 			})
 	);
-});
+}
 
 export async function getPost(slug: string): Promise<Post | undefined> {
+	"use cache";
+	cacheLife("minutes");
+
 	const postFile = path.join(POSTS_DIR, `${slug}.mdx`);
 
 	try {
-	       const postContents = await fs.readFile(postFile, "utf-8");
-	       const { content, data } = matter(postContents);
+		const postContents = await fs.readFile(postFile, "utf-8");
+		const { content, data } = matter(postContents);
 
-	       const meta: PostMeta = postMetaValidator.parse(data);
+		const meta: PostMeta = postMetaValidator.parse(data);
 
-	       return {
-	               ...meta,
-	               slug,
-	               body: content,
-	               headings: resolveHeadings(content),
-	               timeToRead: calculateReadingTime(content),
-	               url: `/blog/posts/${slug}`,
-	       };
+		return {
+			...meta,
+			slug,
+			body: content,
+			headings: resolveHeadings(content),
+			timeToRead: calculateReadingTime(content),
+			url: `/blog/posts/${slug}`,
+		};
 	} catch (err: any) {
-	       if (err && err.code === "ENOENT") {
-	               return undefined;
-	       }
-	       throw err;
+		if (err && err.code === "ENOENT") {
+			return undefined;
+		}
+		throw err;
 	}
 }

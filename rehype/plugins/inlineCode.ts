@@ -1,8 +1,7 @@
 import { visit } from "unist-util-visit";
-import { Element } from "hast";
-import { Plugin } from "unified";
-import { Node } from "unified/lib";
-import { Text } from "hast-util-to-text/lib";
+import type { Element, Text } from "hast";
+import type { Plugin } from "unified";
+import type { Node } from "unist";
 
 /**
  * This plugin adds a `data-inline-code` attribute to inline code elements.

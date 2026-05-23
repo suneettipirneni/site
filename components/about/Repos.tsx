@@ -2,6 +2,7 @@ import { GH_REPO_REVALIDATE_TIME, GH_USERNAME } from "@/lib/constants";
 import { FaStar } from "react-icons/fa";
 import { BiGitRepoForked } from "react-icons/bi";
 import Image from "next/image";
+import { cacheLife } from "next/cache";
 
 const url = "https://api.github.com/graphql";
 const numOfTopics = 4;
@@ -154,15 +155,19 @@ export function Repo({ repo }: { repo: Repo }) {
 }
 
 export async function Repos() {
+	"use cache";
+	cacheLife({
+		stale: GH_REPO_REVALIDATE_TIME,
+		revalidate: GH_REPO_REVALIDATE_TIME,
+		expire: GH_REPO_REVALIDATE_TIME * 24,
+	});
+
 	const repos = await fetch(url, {
 		method: "POST",
 		body: JSON.stringify(body),
 		headers: {
 			Authorization: `Bearer ${process.env.GH_TOKEN}`,
 			"Content-Type": "application/json",
-		},
-		next: {
-			revalidate: GH_REPO_REVALIDATE_TIME,
 		},
 	})
 		.then((res) => res.json() as Promise<ResponseData>)
