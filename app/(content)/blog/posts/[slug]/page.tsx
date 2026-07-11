@@ -14,7 +14,6 @@ import { notFound } from "next/navigation";
 import { cacheLife } from "next/cache";
 import { rehypeAutolinkHeadingsOptions } from "@/rehype/options/rehypeAutoLinkHeadingsOptions";
 import { rehypePrettyCodeOptions } from "@/rehype/options/rehypePrettyCodeOptions";
-import { codeTitleBarPlugin } from "@/rehype/plugins/codeTitleBar";
 import { inlineCodePlugin } from "@/rehype/plugins/inlineCode";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeKatex from "rehype-katex";
@@ -38,7 +37,6 @@ async function PostMdx({ source }: { source: string }) {
 						[rehypePrettyCode, rehypePrettyCodeOptions],
 						rehypeSlug,
 						inlineCodePlugin,
-						codeTitleBarPlugin,
 						rehypeKatex,
 						[rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions],
 					],

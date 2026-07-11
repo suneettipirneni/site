@@ -1,5 +1,5 @@
 import { NavBar } from "@/components/NavBar";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import type { PropsWithChildren } from "react";
 import "./globals.css";
@@ -14,9 +14,9 @@ const geist = Geist({
 	variable: "--font-geist",
 });
 
-const geistMono = Geist_Mono({
+const jetbrainsMono = JetBrains_Mono({
 	subsets: ["latin"],
-	variable: "--font-geist-mono",
+	variable: "--font-jetbrains-mono",
 });
 
 export const metadata: Metadata = {
@@ -28,7 +28,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<AutoRefresh>
-			<html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
+			<html
+				lang="en"
+				className={`${geist.variable} ${jetbrainsMono.variable}`}
+			>
 				<body
 					className={`${geist.className} mx-auto flex h-full min-h-screen w-full scroll-pt-[65px] flex-col items-center overflow-y-auto bg-slate-50 bg-cover bg-no-repeat text-black dark:bg-zinc-950 dark:text-white`}
 				>
