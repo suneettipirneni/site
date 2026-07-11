@@ -37,19 +37,24 @@ export interface NavBarProps {
 export function NavBar({ tabs }: NavBarProps) {
 	const segments = useSelectedLayoutSegments();
 	const segment = segments.length > 1 ? segments[1] : "home";
-	const [shouldShowBackground, setShouldShowBackground] = useState(false);
+	const [shouldShowTopFade, setShouldShowTopFade] = useState(false);
 
-	const handleScroll = (e: Event) => {
-		if (window.scrollY > 50) {
-			setShouldShowBackground(true);
-			return;
-		}
+	const handleScroll = () => {
+		const shouldFade = window.scrollY > 50;
 
-		setShouldShowBackground(false);
+		setShouldShowTopFade((previous) =>
+			previous === shouldFade ? previous : shouldFade
+		);
 	};
 
 	useEffect(() => {
-		window.addEventListener("scroll", handleScroll);
+		const animationFrame = window.requestAnimationFrame(handleScroll);
+		window.addEventListener("scroll", handleScroll, { passive: true });
+
+		return () => {
+			window.cancelAnimationFrame(animationFrame);
+			window.removeEventListener("scroll", handleScroll);
+		};
 	}, []);
 
 	// Determines if a tab is currently active based on the current path.
@@ -58,60 +63,61 @@ export function NavBar({ tabs }: NavBarProps) {
 		[segment]
 	);
 
-	const withBackgroundStyle =
-		"bg-white/80 dark:bg-black/50 dark:ring-gray-400/20 ring-gray-200/75 ring-1 backdrop-blur-xl lg:shadow-lg lg:shadow-gray-200/30";
-
-	const shouldShowAvatar = segment !== "home" || shouldShowBackground;
+	const shouldShowAvatar = segment !== "home" || shouldShowTopFade;
 
 	return (
-		<div
-			className={`sticky top-0 z-50 flex w-full flex-row items-center justify-center border-gray-200
+		<>
+			<div
+				aria-hidden="true"
+				className="pointer-events-none fixed inset-x-0 top-0 z-40 h-28 bg-gradient-to-b from-slate-50 via-slate-50/80 to-transparent dark:from-zinc-950 dark:via-zinc-950/80"
+			/>
+			<div
+				className={`sticky top-0 z-50 flex w-full flex-row items-center justify-center border-gray-200
 				
 			 p-0 lg:h-[70px]  lg:border-none lg:p-1`}
-		>
-			<div
-				className={`flex h-full w-[calc(850px_+_50px)] max-w-full flex-row items-center justify-between ${
-					shouldShowBackground ? withBackgroundStyle : "bg-transparent"
-				} p-5 bg-blend-saturation transition-colors md:p-3 lg:h-[60px] lg:rounded-full  lg:dark:border-gray-200/25 lg:dark:shadow-none`}
 			>
-				<NextLink
-					href="/"
-					className={`flex flex-row items-center ${
-						!shouldShowAvatar ? "pointer-events-none cursor-none" : ""
-					}`}
+				<div
+					className="flex h-full w-[calc(850px_+_50px)] max-w-full flex-row items-center justify-between bg-transparent p-5 bg-blend-saturation md:p-3 lg:h-[60px]"
 				>
-					<Image
-						src={profilePic}
-						width={35}
-						height={35}
-						className={`${
-							!shouldShowAvatar ? "opacity-0" : ""
-						} rounded-full ring-1 ring-gray-200 transition-all dark:ring-gray-400/20`}
-						alt="About"
-					/>
-				</NextLink>
+					<NextLink
+						href="/"
+						className={`flex flex-row items-center ${
+							!shouldShowAvatar ? "pointer-events-none cursor-none" : ""
+						}`}
+					>
+						<Image
+							src={profilePic}
+							width={35}
+							height={35}
+							className={`${
+								!shouldShowAvatar ? "opacity-0" : ""
+							} rounded-full ring-1 ring-gray-200 transition-all dark:ring-gray-400/20`}
+							alt="About"
+						/>
+					</NextLink>
 
-				<div className="flex max-h-[40px] flex-row p-1">
-					{tabs.map((tab, index) => (
-						<NextLink
-							key={tab.name}
-							className={`relative z-10 flex flex-row items-center px-4 py-1 text-sm font-medium transition-all ${
-								isActive(tab.href) && "text-white dark:text-black"
-							}`}
-							href={`/${tab.href}`}
-						>
-							{isActive(tab.href) && (
-								<span
-									key={`outer-${tab.name}`}
-									className="absolute inset-0 -z-10 rounded-full bg-black/90 text-white dark:bg-white"
-								/>
-							)}
+					<div className="flex max-h-[40px] flex-row p-1">
+						{tabs.map((tab) => (
+							<NextLink
+								key={tab.name}
+								className={`relative z-10 flex flex-row items-center px-4 py-1 text-sm font-medium transition-all ${
+									isActive(tab.href) && "text-white dark:text-black"
+								}`}
+								href={`/${tab.href}`}
+							>
+								{isActive(tab.href) && (
+									<span
+										key={`outer-${tab.name}`}
+										className="absolute inset-0 -z-10 rounded-full bg-black/90 text-white dark:bg-white"
+									/>
+								)}
 
-							<h1>{tab.name}</h1>
-						</NextLink>
-					))}
+								<h1>{tab.name}</h1>
+							</NextLink>
+						))}
+					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }

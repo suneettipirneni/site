@@ -1,5 +1,5 @@
 import { NavBar } from "@/components/NavBar";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import type { PropsWithChildren } from "react";
 import "./globals.css";
@@ -9,11 +9,14 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "katex/dist/katex.min.css";
 import AutoRefresh from "@/components/AutoRefresh";
 
-const inter = Inter({ subsets: ["latin"], display: "swap" });
-const jetBrainsMono = JetBrains_Mono({
+const geist = Geist({
 	subsets: ["latin"],
-	display: "swap",
-	variable: "--font-mono",
+	variable: "--font-geist",
+});
+
+const geistMono = Geist_Mono({
+	subsets: ["latin"],
+	variable: "--font-geist-mono",
 });
 
 export const metadata: Metadata = {
@@ -25,9 +28,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<AutoRefresh>
-			<html lang="en">
+			<html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
 				<body
-					className={`${inter.className} ${jetBrainsMono.variable} mx-auto flex h-full min-h-screen w-full scroll-pt-[65px] flex-col items-center overflow-y-auto bg-slate-50 bg-cover bg-no-repeat text-black dark:bg-zinc-950 dark:text-white`}
+					className={`${geist.className} mx-auto flex h-full min-h-screen w-full scroll-pt-[65px] flex-col items-center overflow-y-auto bg-slate-50 bg-cover bg-no-repeat text-black dark:bg-zinc-950 dark:text-white`}
 				>
 					<NavBar
 						tabs={[

@@ -135,7 +135,10 @@ export default async function Post(props: {
 				/>
 			</h1>
 			<div className="col-start-2 row-start-3 mb-2 min-w-0 max-w-postcontent self-start">
-				<div data-post className="col-start-2 min-w-0 max-w-postcontent">
+				<div
+					data-post
+					className="typeset typeset-docs max-w-[37em]"
+				>
 					<PostMdx source={post.body} />
 				</div>
 			</div>

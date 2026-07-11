@@ -32,6 +32,7 @@ export function InfoBlock({ title, kind = "info", children }: InfoBlockProps) {
 
 	return (
 		<div
+			data-not-typeset
 			className={`grid grid-cols-[5fr_1fr] gap-y-4 rounded-lg p-3 post:mb-5 ${mappedStyles[kind]}`}
 		>
 			<h1

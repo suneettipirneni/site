@@ -1,9 +1,19 @@
 @import "./codeblocks.css";
 @import "./math.css";
+@import "./typeset.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.typeset-docs {
+	--typeset-font-body: var(--font-geist);
+	--typeset-font-heading: var(--font-geist);
+	--typeset-font-mono: var(--font-geist-mono);
+	--typeset-size: 15px;
+	--typeset-leading: 1.75;
+	--typeset-flow: 1.25em;
+}
 
 @media (prefers-color-scheme: dark) {
 	html {
