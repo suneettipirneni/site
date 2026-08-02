@@ -1,17 +1,19 @@
 import { GH_REPO_REVALIDATE_TIME, GH_USERNAME } from "@/lib/constants";
-import { FaStar } from "react-icons/fa";
-import { BiGitRepoForked } from "react-icons/bi";
-import Image from "next/image";
 import { cacheLife } from "next/cache";
+import {
+	EntranceItem,
+	StaggeredEntrance,
+} from "@/components/motion/StaggeredEntrance";
+import { FaRegStar } from "react-icons/fa";
+import { VscRepoForked } from "react-icons/vsc";
 
 const url = "https://api.github.com/graphql";
-const numOfTopics = 4;
 
 const body = {
 	query: `
   {
     user(login: "${GH_USERNAME}") {
-      pinnedItems(first: 6, types: REPOSITORY) {
+      pinnedItems(first: 4, types: REPOSITORY) {
         nodes {
           ... on Repository {
             name
@@ -19,23 +21,7 @@ const body = {
             forkCount
             description
             url
-						repositoryTopics(first: ${numOfTopics}) {
-              edges {
-                node {
-                  topic {
-                    name
-                  }
-                }
-              }
-            }
-						primaryLanguage {
-							name
-							color
-						}
-            owner {
-              avatarUrl
-							login
-            }
+            primaryLanguage { name }
           }
         }
       }
@@ -48,109 +34,66 @@ interface ResponseData {
 	data: {
 		user: {
 			pinnedItems: {
-				nodes: {
+				nodes: Array<{
 					name: string;
 					stargazerCount: number;
 					forkCount: number;
-					description: string;
+					description: string | null;
 					url: string;
-					repositoryTopics: {
-						edges: {
-							node: {
-								topic: {
-									name: string;
-								};
-							};
-						}[];
-					};
-					primaryLanguage: {
-						name: string;
-						color: string;
-					};
-					owner: {
-						avatarUrl: string;
-						login: string;
-					};
-				}[];
+					primaryLanguage: { name: string } | null;
+				}>;
 			};
 		};
 	};
 }
 
-function formatNumber(num: number) {
-	if (Math.abs(num) >= 1000) {
-		let formatter = new Intl.NumberFormat(undefined, {
-			minimumFractionDigits: 1,
-			maximumFractionDigits: 1,
-		});
-		return formatter.format(num / 1000) + "K";
-	} else {
-		return num.toString();
-	}
+function formatNumber(value: number) {
+	return new Intl.NumberFormat("en-US", {
+		notation: value >= 1000 ? "compact" : "standard",
+		maximumFractionDigits: 1,
+	}).format(value);
 }
 
 type Repo = ResponseData["data"]["user"]["pinnedItems"]["nodes"][number];
 
-export function Repo({ repo }: { repo: Repo }) {
-	const topics = repo.repositoryTopics.edges.map(
-		(edge) => edge.node.topic.name
-	);
-
+function RepoRow({ repo }: { repo: Repo }) {
 	return (
-		<div className="flex w-full flex-col gap-x-3 gap-y-2 rounded-xl bg-gray-200/60 p-2 dark:bg-white/10 md:min-h-[100px] md:p-5">
-			<a
-				href={repo.url}
-				className="flex items-center gap-x-2 text-sm font-semibold hover:underline"
-				target="_blank"
-				rel="noopener noreferrer"
-			>
-				<Image
-					src={repo.owner.avatarUrl}
-					alt=""
-					height={25}
-					width={25}
-					className="rounded-full"
-				/>
-				<span className="font-normal">
-					{repo.owner.login}/<span className="font-semibold">{repo.name}</span>
-				</span>
-			</a>
-			{
-				// <div className="flex flex-row flex-wrap gap-1">
-				// 	{topics.map((topic) => (
-				// 		<div
-				// 			key={topic}
-				// 			className="whitespace-nowrap rounded-full bg-gray-300/60 px-2 py-1 text-xs font-semibold text-gray-600 dark:bg-white/20 dark:text-white"
-				// 		>
-				// 			{topic}
-				// 		</div>
-				// 	))}
-				// </div>
-			}
-			<p className="line-clamp-2 text-xs text-gray-600 dark:text-white/50 md:block">
-				{repo.description}
-			</p>
-
-			<div className="flex w-full grow flex-row items-center gap-x-2 self-end">
-				<p className="flex items-center gap-x-1 self-end text-sm text-gray-600 dark:text-white/50">
-					<FaStar />
-					{formatNumber(repo.stargazerCount)}
-				</p>
-
-				<p className="flex items-center gap-x-1 self-end text-sm text-gray-600 dark:text-white/50">
-					<BiGitRepoForked />
-					{formatNumber(repo.forkCount)}
-				</p>
-
-				<div className="ml-auto flex items-center gap-x-1 self-end text-xs text-gray-600 dark:text-white/50">
-					<div
-						className="h-[10px] w-[10px] rounded-full"
-						style={{ backgroundColor: repo.primaryLanguage.color }}
-					></div>
-					{repo.primaryLanguage.name}
+		<article className="site-list-row flex min-h-[var(--site-row-lg)] flex-col justify-center py-2">
+			<div className="flex min-w-0 items-baseline justify-between gap-4">
+				<a
+					href={repo.url}
+					target="_blank"
+					rel="noopener noreferrer"
+					className="min-w-0 truncate font-medium tracking-tight underline-offset-4 hover:underline"
+				>
+					{repo.name}
+				</a>
+				<div className="type-caption flex shrink-0 items-center gap-3 tabular-nums text-muted-foreground">
+					<span
+						className="inline-flex items-center gap-1"
+						aria-label={`${formatNumber(repo.stargazerCount)} stars`}
+					>
+						<FaRegStar className="h-4 w-4 shrink-0" aria-hidden="true" />
+						{formatNumber(repo.stargazerCount)}
+					</span>
+					<span
+						className="inline-flex items-center gap-1"
+						aria-label={`${formatNumber(repo.forkCount)} forks`}
+					>
+						<VscRepoForked className="h-4 w-4 shrink-0" aria-hidden="true" />
+						{formatNumber(repo.forkCount)}
+					</span>
 				</div>
 			</div>
-		</div>
+			<div className="flex min-w-0 items-baseline justify-between gap-4">
+				<p className="type-body-small line-clamp-1 min-w-0 text-muted-foreground">
+					{repo.description ?? "Open-source work and experiments."}
+				</p>
+				<span className="type-caption shrink-0 text-muted-foreground">
+					{repo.primaryLanguage?.name ?? "Code"}
+				</span>
+			</div>
+		</article>
 	);
 }
 
@@ -162,22 +105,29 @@ export async function Repos() {
 		expire: GH_REPO_REVALIDATE_TIME * 24,
 	});
 
-	const repos = await fetch(url, {
+	const response = await fetch(url, {
 		method: "POST",
 		body: JSON.stringify(body),
 		headers: {
 			Authorization: `Bearer ${process.env.GH_TOKEN}`,
 			"Content-Type": "application/json",
 		},
-	})
-		.then((res) => res.json() as Promise<ResponseData>)
-		.then((res) => res.data.user.pinnedItems.nodes);
+	});
+
+	if (!response.ok) {
+		throw new Error(`GitHub request failed with status ${response.status}`);
+	}
+
+	const payload = (await response.json()) as ResponseData;
+	const repos = payload.data.user.pinnedItems.nodes;
 
 	return (
-		<div className="grid w-full max-w-[600px] grid-cols-1 gap-2 md:grid-cols-2">
+		<StaggeredEntrance className="mt-4 flex flex-col">
 			{repos.map((repo) => (
-				<Repo key={repo.name} repo={repo} />
+				<EntranceItem key={repo.name}>
+					<RepoRow repo={repo} />
+				</EntranceItem>
 			))}
-		</div>
+		</StaggeredEntrance>
 	);
 }

@@ -1,4 +1,3 @@
-import { FaArrowLeft } from "react-icons/fa";
 import Link from "next/link";
 import { serializeHeadings } from "@/util/HeaderTree";
 import { Outline } from "@/components/Outline";
@@ -22,6 +21,11 @@ import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkReferenceLinks from "remark-reference-links";
+import {
+	EntranceItem,
+	StaggeredEntrance,
+} from "@/components/motion/StaggeredEntrance";
+import { HiArrowLeft } from "react-icons/hi2";
 
 async function PostMdx({ source }: { source: string }) {
 	"use cache";
@@ -100,51 +104,111 @@ export default async function Post(props: {
 	const headings = serializeHeadings(post.headings);
 
 	return (
-		<article className="relative z-10 mx-auto grid w-full items-start justify-center px-2 py-4 align-middle sm:px-10 md:px-5 lg:grid-cols-postgrid lg:gap-x-10">
-			<Link
-				href="/blog"
-				className="col-start-2 row-start-1 mb-5 flex flex-row items-center gap-2 text-xl font-medium text-gray-600 dark:text-gray-300/80"
-			>
-				<FaArrowLeft />
-				Back
-			</Link>
-			<h1 className="col-start-2 row-start-2 mb-5 flex w-auto max-w-postcontent flex-col gap-y-3 font-bold">
-				<Tags tags={post.tags} />
-				<span className="text-3xl leading-tight md:text-3xl">{post.title}</span>
-				<DateTime datetime={post.datetime} timeToRead={post.timeToRead} />
-				<div className="space-y-5">
-					<p className="font-normal text-gray-600 dark:text-gray-300">
-						{post.description}
-					</p>
-				</div>
+		<article className="site-content-grid w-full border-x border-border">
+			<aside className="order-2 border-t border-border p-[var(--site-panel)] lg:order-none lg:border-r lg:border-t-0">
+				<StaggeredEntrance className="flex flex-col gap-8 lg:sticky lg:top-[calc(var(--site-nav)+var(--site-panel))] lg:max-h-[calc(100dvh-var(--site-nav)-var(--site-panel)*2)] lg:overflow-y-auto">
+					<EntranceItem>
+						<section aria-labelledby="navigation-heading">
+							<h2 id="navigation-heading" className="type-label">
+								Navigation
+							</h2>
+							<Link
+								href="/blog"
+								transitionTypes={["nav-back"]}
+								className="site-list-row type-body-small mt-3 flex min-h-[var(--site-row-sm)] items-center justify-between text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+							>
+								<span>Back to blog</span>
+								<HiArrowLeft className="h-4 w-4 shrink-0" aria-hidden="true" />
+							</Link>
+						</section>
+					</EntranceItem>
+					<EntranceItem>
+						<section aria-labelledby="metadata-heading">
+							<h2 id="metadata-heading" className="type-label">
+								Metadata
+							</h2>
+							<dl className="mt-3 text-[0.8125rem] leading-5">
+								<div className="site-list-row grid min-h-[var(--site-row-sm)] grid-cols-[6.5rem_minmax(0,1fr)] items-center gap-4 py-2">
+									<dt className="font-medium">Published</dt>
+									<dd className="text-muted-foreground">
+										<DateTime
+											datetime={post.datetime}
+											timeToRead={post.timeToRead}
+										/>
+									</dd>
+								</div>
+								<div className="site-list-row grid min-h-[var(--site-row-sm)] grid-cols-[6.5rem_minmax(0,1fr)] items-center gap-4 py-2">
+									<dt className="font-medium">Author</dt>
+									<dd className="text-muted-foreground">{post.author}</dd>
+								</div>
+							</dl>
+						</section>
+					</EntranceItem>
+					<EntranceItem>
+						<section aria-labelledby="tags-heading">
+							<h2 id="tags-heading" className="type-label">
+								Tags
+							</h2>
+							<div className="mt-3">
+								<Tags tags={post.tags} />
+							</div>
+						</section>
+					</EntranceItem>
+					<EntranceItem className="hidden lg:block">
+						<section aria-labelledby="outline-heading">
+							<h2 id="outline-heading" className="type-label">
+								Outline
+							</h2>
+							<div className="mt-3">
+								<Outline headings={headings} hideHeading />
+							</div>
+						</section>
+					</EntranceItem>
+				</StaggeredEntrance>
+			</aside>
 
-				<Image
-					src={post.headingImage}
-					alt={post.title}
-					width={1200}
-					height={600}
-					placeholder="blur"
-					blurDataURL={BLUR_DATA_URL}
-					className="mt-5 aspect-[1200_/_600] w-full rounded-xl object-cover"
-					fetchPriority="high"
-					loading="eager"
-					preload
-					sizes="(min-width: 768px) 700px, calc(100vw - 1rem)"
-				/>
-			</h1>
-			<div className="col-start-2 row-start-3 mb-2 min-w-0 max-w-postcontent self-start">
-				<div
-					data-post
-					className="typeset typeset-docs max-w-[37em]"
-				>
-					<PostMdx source={post.body} />
+			<div className="order-1 min-w-0 lg:order-none">
+				<header className="border-b border-border">
+					<StaggeredEntrance>
+						<EntranceItem className="p-[var(--site-panel)]">
+							<div className="flex max-w-[960px] flex-col gap-6">
+								<h1 className="type-page-title max-w-[22ch]">{post.title}</h1>
+								<p className="type-body max-w-[65ch] text-muted-foreground">
+									{post.description}
+								</p>
+							</div>
+						</EntranceItem>
+						<EntranceItem className="border-t border-border">
+							<Image
+								src={post.headingImage}
+								alt=""
+								width={1200}
+								height={600}
+								placeholder="blur"
+								blurDataURL={BLUR_DATA_URL}
+								className="aspect-[2/1] w-full object-cover grayscale lg:aspect-[3/1]"
+								fetchPriority="high"
+								loading="eager"
+								preload
+								sizes="(min-width: 1024px) 980px, calc(100vw - 3rem)"
+							/>
+						</EntranceItem>
+					</StaggeredEntrance>
+				</header>
+
+				<div className="p-[var(--site-panel)]">
+					<StaggeredEntrance delay={0.12}>
+						<EntranceItem>
+							<div
+								data-post
+								className="typeset typeset-docs text-pretty max-w-[760px]"
+							>
+								<PostMdx source={post.body} />
+							</div>
+						</EntranceItem>
+					</StaggeredEntrance>
 				</div>
 			</div>
-
-			<Outline
-				className="sticky top-nav col-start-3 row-start-3 hidden min-w-[200px] flex-1 self-start overflow-y-auto border-gray-500 pt-8 lg:block"
-				headings={headings}
-			/>
 		</article>
 	);
 }

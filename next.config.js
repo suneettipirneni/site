@@ -13,6 +13,9 @@ const nextConfig = {
 		],
 	},
 	reactCompiler: true,
+	experimental: {
+		viewTransition: true,
+	},
 };
 
 module.exports = nextConfig;

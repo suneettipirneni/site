@@ -14,12 +14,12 @@ export function Image({
 	...props
 }: MdxImageProps) {
 	return (
-		<div className="flex w-full flex-col items-center justify-center post:mb-4">
+		<div className="flex w-full flex-col items-center justify-center border-y border-border post:-mx-[var(--space-page)] post:mb-4 post:w-auto">
 			<NextImage
 				alt={alt}
 				height={imageHeight}
 				width={imageWidth}
-				className={`overflow-clip rounded-lg border border-gray-300 dark:border-white/25 ${className ?? ""}`}
+				className={`w-full grayscale ${className ?? ""}`}
 				{...props}
 			/>
 		</div>

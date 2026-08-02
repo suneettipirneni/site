@@ -1,61 +1,55 @@
-import { BsDiscord, BsGithub, BsLinkedin } from "react-icons/bs";
+import { FaDiscord, FaGithub, FaLinkedin } from "react-icons/fa";
 import { SiBluesky } from "react-icons/si";
+
+const links = [
+	{
+		label: "GitHub",
+		href: "https://github.com/suneettipirneni",
+		icon: FaGithub,
+	},
+	{
+		label: "LinkedIn",
+		href: "https://www.linkedin.com/in/suneettipirneni/",
+		icon: FaLinkedin,
+	},
+	{
+		label: "Bluesky",
+		href: "https://bsky.app/profile/suneettipirneni.dev",
+		icon: SiBluesky,
+	},
+	{
+		label: "Discord",
+		href: "https://discordapp.com/users/386337006764032002",
+		icon: FaDiscord,
+	},
+] as const;
 
 export default function Footer() {
 	return (
-		<footer className="flex h-[70px] w-full items-center justify-center border-t border-gray-200 px-5 dark:border-gray-200/5 xl:px-0">
-			<div className="flex w-full max-w-[850px] items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-				<div className="flex flex-row">
-					<h1>
-						Suneet Tipirneni &mdash;{" "}
-						<a
-							className="cursor-pointer font-mono font-bold hover:underline"
-							href="https://github.com/suneettipirneni/site"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							Source
-						</a>
-					</h1>
-				</div>
-				<div className="flex flex-row space-x-2 text-lg">
-					<a
-						className="cursor-pointer"
-						href="https://bsky.app/profile/suneettipirneni.dev"
-						target="_blank"
-						rel="noopener noreferrer"
-						title="Bluesky Profile"
+		<footer className="border-t border-border">
+			<div className="type-caption grid min-h-[calc(var(--site-footer)-1px)] items-center gap-y-3 px-5 py-4 text-muted-foreground sm:px-6 lg:grid-cols-[var(--site-rail)_minmax(0,1fr)_auto] lg:gap-y-0 lg:py-0">
+				<p>© 2026 Suneet Tipirneni</p>
+				<p className="hidden lg:block">Building in public. Shipping quietly.</p>
+				<nav aria-label="Social links">
+					<ul
+						role="list"
+						className="flex flex-wrap items-center gap-5 sm:gap-7"
 					>
-						<SiBluesky />
-					</a>
-					<a
-						className="cursor-pointer"
-						href="https://discordapp.com/users/386337006764032002"
-						target="_blank"
-						rel="noopener noreferrer"
-						title="Discord Profile"
-					>
-						<BsDiscord />
-					</a>
-					<a
-						className="cursor-pointer"
-						href="https://github.com/suneettipirneni"
-						target="_blank"
-						rel="noopener noreferrer"
-						title="GitHub Profile"
-					>
-						<BsGithub />
-					</a>
-					<a
-						className="cursor-pointer"
-						href="https://www.linkedin.com/in/suneettipirneni/"
-						target="_blank"
-						rel="noopener noreferrer"
-						title="LinkedIn Profile"
-					>
-						<BsLinkedin />
-					</a>
-				</div>
+						{links.map(({ label, href, icon: Icon }) => (
+							<li key={label}>
+								<a
+									href={href}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="inline-flex items-center gap-2 font-normal text-foreground underline-offset-4 hover:underline"
+								>
+									<Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+									{label}
+								</a>
+							</li>
+						))}
+					</ul>
+				</nav>
 			</div>
 		</footer>
 	);

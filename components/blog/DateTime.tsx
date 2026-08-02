@@ -12,11 +12,9 @@ export function DateTime({
 	className = "",
 }: DateTimeProps) {
 	return (
-		<time
-			className={`text-sm font-medium text-gray-600 dark:text-gray-300/80 ${className}`}
-		>
-			{formatDatetime(datetime)} · {timeToRead}
-			min
+		<time className={`type-caption text-muted-foreground ${className}`}>
+			{formatDatetime(datetime)} <span aria-hidden="true">·</span> {timeToRead}{" "}
+			min read
 		</time>
 	);
 }

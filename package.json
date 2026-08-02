@@ -33,6 +33,7 @@
 		"hast-util-to-text": "^4.0.2",
 		"hastscript": "^9.0.0",
 		"katex": "^0.16.9",
+		"motion": "^12.43.0",
 		"next": "16.2.10",
 		"next-mdx-remote": "^6.0.0",
 		"next-remote-watch": "^2.0.0",

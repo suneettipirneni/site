@@ -1,21 +1,23 @@
 import Link from "next/link";
 
-export function Tag({
-	name,
-	compact = false,
-}: {
+interface TagProps {
 	name: string;
-	compact?: boolean;
-}) {
+	variant?: "inline" | "row";
+}
+
+export function Tag({ name, variant = "inline" }: TagProps) {
 	const params = new URLSearchParams({ tags: name }).toString();
 
 	return (
 		<Link
 			href={`/blog?${params}`}
+			transitionTypes={["page-crossfade"]}
 			scroll={false}
-			className={`line-clamp-1 rounded-full bg-black/5 ${
-				compact ? "px-2 py-0.5" : "px-2 py-1"
-			}  text-xs font-semibold text-black/70 dark:bg-white/10 dark:text-white`}
+			className={`type-caption text-muted-foreground underline-offset-4 hover:text-foreground hover:underline ${
+				variant === "row"
+					? "site-list-row flex min-h-[var(--site-row-sm)] w-full items-center px-[var(--space-cell)]"
+					: "inline-flex items-center"
+			}`}
 		>
 			{name}
 		</Link>
@@ -24,15 +26,21 @@ export function Tag({
 
 export function Tags({
 	tags,
-	compact = false,
+	variant = "inline",
 }: {
 	tags: string[];
-	compact?: boolean;
+	variant?: "inline" | "row";
 }) {
 	return (
-		<div className="flex grow flex-row flex-wrap items-end gap-2">
+		<div
+			className={
+				variant === "row"
+					? "flex w-full flex-col"
+					: "flex flex-wrap items-center gap-x-4 gap-y-1"
+			}
+		>
 			{tags.map((tag) => (
-				<Tag compact={compact} key={tag} name={tag} />
+				<Tag key={tag} name={tag} variant={variant} />
 			))}
 		</div>
 	);

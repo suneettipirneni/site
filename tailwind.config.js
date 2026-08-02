@@ -14,18 +14,22 @@ module.exports = {
 	],
 	theme: {
 		fontFamily: {
-			mono: "var(--font-mono)",
+			sans: "var(--font-inter)",
+			mono: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace",
 		},
 
 		extend: {
+			colors: {
+				border: "hsl(var(--border))",
+				background: "hsl(var(--background))",
+				foreground: "hsl(var(--foreground))",
+				muted: "hsl(var(--muted))",
+				"muted-foreground": "hsl(var(--muted-foreground))",
+			},
 			backgroundImage: {
 				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
 				"gradient-conic":
 					"conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-			},
-
-			colors: {
-				blurple: "#5865F2",
 			},
 
 			spacing: {

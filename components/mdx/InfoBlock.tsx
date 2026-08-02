@@ -1,9 +1,12 @@
 "use client";
 
-import { FaChevronDown, FaChevronRight } from "react-icons/fa";
-import { IoInformationCircleSharp, IoWarning } from "react-icons/io5";
-import { MdDangerous } from "react-icons/md";
 import { useCallback, useState } from "react";
+import {
+	HiChevronDown,
+	HiExclamationTriangle,
+	HiInformationCircle,
+	HiXCircle,
+} from "react-icons/hi2";
 
 export interface InfoBlockProps {
 	title: string;
@@ -12,19 +15,20 @@ export interface InfoBlockProps {
 }
 
 const mappedIcons = {
-	info: <IoInformationCircleSharp />,
-	warning: <IoWarning />,
-	danger: <MdDangerous />,
+	info: HiInformationCircle,
+	warning: HiExclamationTriangle,
+	danger: HiXCircle,
 };
 
 const mappedStyles = {
-	info: "dark:bg-white/10 bg-gray-400/20",
-	warning: "bg-yellow-400/50",
-	danger: "bg-red-400/50",
+	info: "border-border",
+	warning: "border-foreground/60",
+	danger: "border-foreground",
 };
 
 export function InfoBlock({ title, kind = "info", children }: InfoBlockProps) {
 	const [open, setOpen] = useState(false);
+	const Icon = mappedIcons[kind];
 
 	const toggleOpen = useCallback(() => {
 		setOpen((prevOpen) => !prevOpen);
@@ -33,28 +37,31 @@ export function InfoBlock({ title, kind = "info", children }: InfoBlockProps) {
 	return (
 		<div
 			data-not-typeset
-			className={`grid grid-cols-[5fr_1fr] gap-y-4 rounded-lg p-3 post:mb-5 ${mappedStyles[kind]}`}
+			className={`border-y post:-mx-[var(--space-page)] post:mb-5 ${mappedStyles[kind]}`}
 		>
-			<h1
-				className="flex cursor-pointer items-center gap-2 text-lg font-semibold"
+			<button
+				type="button"
+				aria-expanded={open}
+				className="type-label flex h-[var(--site-control)] w-full items-center justify-between gap-3 px-[var(--space-cell)] text-left hover:bg-muted"
 				onClick={toggleOpen}
 			>
-				<span>{mappedIcons[kind]}</span>
-				{title}
-			</h1>
+				<span className="flex items-center gap-2">
+					<Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+					{title}
+				</span>
+				<HiChevronDown
+					className={`h-4 w-4 shrink-0 transition-transform duration-200 ${
+						open ? "rotate-180" : ""
+					}`}
+					aria-hidden="true"
+				/>
+			</button>
 
-			<div
-				className="col-start-2 row-start-1 flex w-full cursor-pointer items-end justify-end self-center justify-self-end"
-				onClick={toggleOpen}
-			>
-				{open ? <FaChevronDown /> : <FaChevronRight />}
-			</div>
-
-			<div
-				className={`${open ? "flex flex-col gap-y-5" : "hidden"} col-span-2`}
-			>
-				{children}
-			</div>
+			{open ? (
+				<div className="flex flex-col gap-y-5 border-t border-border p-[var(--space-cell)]">
+					{children}
+				</div>
+			) : null}
 		</div>
 	);
 }

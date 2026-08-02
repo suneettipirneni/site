@@ -12,11 +12,16 @@ export interface FigureProps extends PropsWithChildren {
 
 export function Figure({ caption, children }: FigureProps) {
 	return (
-		<div className="flex flex-col items-center justify-center gap-y-3 post:mb-4">
+		<figure
+			data-not-typeset
+			className="flex flex-col border-y border-border post:-mx-[var(--space-page)] post:mb-4"
+		>
 			{children}
-			<figcaption className="w-full grow text-center text-sm text-gray-600 dark:text-white/60">
+			<figcaption className="type-caption flex h-[var(--site-control)] w-full items-center gap-2 border-t border-border px-[var(--space-cell)] text-left text-muted-foreground">
+				<span className="font-medium text-foreground">Figure</span>
+				<span aria-hidden="true">—</span>
 				{caption}
 			</figcaption>
-		</div>
+		</figure>
 	);
 }
