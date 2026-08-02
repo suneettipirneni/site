@@ -12,10 +12,10 @@ export function NavBar() {
 	const pathname = usePathname();
 
 	return (
-		<header className="sticky top-0 z-40 w-full border-b border-border bg-background [view-transition-name:site-header]">
+		<header className="sticky top-0 z-40 w-full bg-background [view-transition-name:site-header]">
 			<nav
 				aria-label="Primary"
-				className="flex h-[calc(var(--site-nav)-1px)] w-full items-center border-x border-border px-5 sm:px-6"
+				className="flex h-[var(--site-nav)] w-full items-center px-[var(--site-panel)]"
 			>
 				<div className="flex flex-1 items-center">
 					<NextLink
@@ -26,7 +26,7 @@ export function NavBar() {
 						ST
 					</NextLink>
 				</div>
-				<div className="type-nav flex items-center gap-6">
+				<div className="type-nav flex items-center gap-5">
 					{links.map((link) => {
 						const active =
 							link.href === "/"

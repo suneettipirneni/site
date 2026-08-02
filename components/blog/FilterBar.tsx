@@ -1,4 +1,4 @@
-import { type ReactNode, useCallback } from "react";
+import { type ReactNode } from "react";
 import Link from "next/link";
 import { FadedScroll } from "../FadedScroll";
 
@@ -50,34 +50,26 @@ function TagButton({ tagName: tag, selected = false, href }: TagButtonProps) {
 	);
 }
 
+function createTagHref(tag: string, selectedTags: string[]) {
+	const updatedTags = selectedTags.includes(tag)
+		? selectedTags.filter((selectedTag) => selectedTag !== tag)
+		: [...selectedTags, tag];
+
+	const params = new URLSearchParams(
+		updatedTags.map((selectedTag) => ["tags", selectedTag])
+	);
+	return `/blog?${params.toString()}`;
+}
+
 export function FilterBar({
 	tags,
 	className = "",
 	selectedTags = [],
 }: FilterBarProps) {
-	/**
-	 * Creates a URL with updated tags based on the selected tag.
-	 * @param tag - The tag to be updated.
-	 * @returns A URL with updated tags.
-	 */
-	const createTagHref = useCallback(
-		(tag: string) => {
-			const updatedTags = selectedTags.includes(tag)
-				? selectedTags.filter((t) => t !== tag)
-				: [...selectedTags, tag];
-
-			const params = new URLSearchParams(
-				updatedTags.map((tag) => ["tags", tag])
-			);
-			return `/blog?${params.toString()}`;
-		},
-		[selectedTags]
-	);
-
 	return (
 		<div className={`flex items-center justify-between gap-x-4 ${className}`}>
 			<FadedScroll
-				className="flex grow gap-x-2 gap-y-2 overflow-x-auto pr-5"
+				className="flex grow gap-x-2 gap-y-2 overflow-x-auto px-5"
 				direction="horizontal"
 			>
 				<TagButton
@@ -90,7 +82,7 @@ export function FilterBar({
 						key={tag}
 						tagName={tag}
 						selected={selectedTags.includes(tag)}
-						href={createTagHref(tag)}
+						href={createTagHref(tag, selectedTags)}
 					/>
 				))}
 			</FadedScroll>

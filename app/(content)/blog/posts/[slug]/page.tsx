@@ -104,9 +104,9 @@ export default async function Post(props: {
 	const headings = serializeHeadings(post.headings);
 
 	return (
-		<article className="site-content-grid w-full border-x border-border">
-			<aside className="order-2 border-t border-border p-[var(--site-panel)] lg:order-none lg:border-r lg:border-t-0">
-				<StaggeredEntrance className="flex flex-col gap-8 lg:sticky lg:top-[calc(var(--site-nav)+var(--site-panel))] lg:max-h-[calc(100dvh-var(--site-nav)-var(--site-panel)*2)] lg:overflow-y-auto">
+		<article className="site-post-grid w-full">
+			<aside className="order-2 p-[var(--site-panel)] lg:sticky lg:top-[var(--site-nav)] lg:order-none lg:max-h-[calc(100dvh-var(--site-nav))] lg:self-start lg:overflow-y-auto">
+				<StaggeredEntrance className="flex flex-col gap-6">
 					<EntranceItem>
 						<section aria-labelledby="navigation-heading">
 							<h2 id="navigation-heading" className="type-label">
@@ -115,7 +115,7 @@ export default async function Post(props: {
 							<Link
 								href="/blog"
 								transitionTypes={["nav-back"]}
-								className="site-list-row type-body-small mt-3 flex min-h-[var(--site-row-sm)] items-center justify-between text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+								className="type-body-small mt-2 flex min-h-[var(--site-row-sm)] items-center justify-between text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
 							>
 								<span>Back to blog</span>
 								<HiArrowLeft className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -127,8 +127,8 @@ export default async function Post(props: {
 							<h2 id="metadata-heading" className="type-label">
 								Metadata
 							</h2>
-							<dl className="mt-3 text-[0.8125rem] leading-5">
-								<div className="site-list-row grid min-h-[var(--site-row-sm)] grid-cols-[6.5rem_minmax(0,1fr)] items-center gap-4 py-2">
+							<dl className="mt-2 text-[0.8125rem] leading-5">
+								<div className="grid min-h-[var(--site-row-sm)] grid-cols-[6.5rem_minmax(0,1fr)] items-center gap-4 py-2">
 									<dt className="font-medium">Published</dt>
 									<dd className="text-muted-foreground">
 										<DateTime
@@ -137,7 +137,7 @@ export default async function Post(props: {
 										/>
 									</dd>
 								</div>
-								<div className="site-list-row grid min-h-[var(--site-row-sm)] grid-cols-[6.5rem_minmax(0,1fr)] items-center gap-4 py-2">
+								<div className="grid min-h-[var(--site-row-sm)] grid-cols-[6.5rem_minmax(0,1fr)] items-center gap-4 py-2">
 									<dt className="font-medium">Author</dt>
 									<dd className="text-muted-foreground">{post.author}</dd>
 								</div>
@@ -149,18 +149,8 @@ export default async function Post(props: {
 							<h2 id="tags-heading" className="type-label">
 								Tags
 							</h2>
-							<div className="mt-3">
+							<div className="mt-2">
 								<Tags tags={post.tags} />
-							</div>
-						</section>
-					</EntranceItem>
-					<EntranceItem className="hidden lg:block">
-						<section aria-labelledby="outline-heading">
-							<h2 id="outline-heading" className="type-label">
-								Outline
-							</h2>
-							<div className="mt-3">
-								<Outline headings={headings} hideHeading />
 							</div>
 						</section>
 					</EntranceItem>
@@ -168,17 +158,17 @@ export default async function Post(props: {
 			</aside>
 
 			<div className="order-1 min-w-0 lg:order-none">
-				<header className="border-b border-border">
+				<header>
 					<StaggeredEntrance>
 						<EntranceItem className="p-[var(--site-panel)]">
-							<div className="flex max-w-[960px] flex-col gap-6">
-								<h1 className="type-page-title max-w-[22ch]">{post.title}</h1>
-								<p className="type-body max-w-[65ch] text-muted-foreground">
+							<div className="mx-auto flex w-full max-w-[760px] flex-col gap-4">
+								<h1 className="type-page-title">{post.title}</h1>
+								<p className="type-body text-muted-foreground">
 									{post.description}
 								</p>
 							</div>
 						</EntranceItem>
-						<EntranceItem className="border-t border-border">
+						<EntranceItem className="px-[var(--site-panel)]">
 							<Image
 								src={post.headingImage}
 								alt=""
@@ -186,11 +176,11 @@ export default async function Post(props: {
 								height={600}
 								placeholder="blur"
 								blurDataURL={BLUR_DATA_URL}
-								className="aspect-[2/1] w-full object-cover grayscale lg:aspect-[3/1]"
+								className="mx-auto aspect-[2/1] w-full max-w-[760px] object-cover grayscale lg:aspect-[3/1]"
 								fetchPriority="high"
 								loading="eager"
 								preload
-								sizes="(min-width: 1024px) 980px, calc(100vw - 3rem)"
+								sizes="(min-width: 1024px) 760px, calc(100vw - 2rem)"
 							/>
 						</EntranceItem>
 					</StaggeredEntrance>
@@ -201,7 +191,7 @@ export default async function Post(props: {
 						<EntranceItem>
 							<div
 								data-post
-								className="typeset typeset-docs text-pretty max-w-[760px]"
+								className="typeset typeset-docs text-pretty mx-auto max-w-[760px]"
 							>
 								<PostMdx source={post.body} />
 							</div>
@@ -209,6 +199,21 @@ export default async function Post(props: {
 					</StaggeredEntrance>
 				</div>
 			</div>
+
+			<aside className="hidden p-[var(--site-panel)] lg:sticky lg:top-[var(--site-nav)] lg:block lg:max-h-[calc(100dvh-var(--site-nav))] lg:self-start lg:overflow-y-auto">
+				<StaggeredEntrance>
+					<EntranceItem>
+						<section aria-labelledby="outline-heading">
+							<h2 id="outline-heading" className="type-label">
+								Outline
+							</h2>
+							<div className="mt-2">
+								<Outline headings={headings} hideHeading />
+							</div>
+						</section>
+					</EntranceItem>
+				</StaggeredEntrance>
+			</aside>
 		</article>
 	);
 }

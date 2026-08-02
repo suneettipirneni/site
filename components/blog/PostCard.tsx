@@ -12,12 +12,12 @@ export function PostCard({ post, index = 0 }: { post: Post; index?: number }) {
 	return (
 		<StaggeredEntrance delay={Math.min(index * 0.04, 0.24)}>
 			<EntranceItem>
-				<article className="border-b border-border p-[var(--site-panel)]">
+				<article className="p-[var(--site-panel)]">
 					<div className="flex flex-wrap items-center justify-between gap-3 text-muted-foreground">
 						<DateTime datetime={post.datetime} timeToRead={post.timeToRead} />
 						<Tags tags={post.tags} />
 					</div>
-					<h3 className="type-card-title mt-4">
+					<h3 className="type-card-title mt-3">
 						<Link
 							href={post.url}
 							transitionTypes={["nav-forward"]}

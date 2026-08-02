@@ -29,6 +29,14 @@ interface StaggeredEntranceProps extends PropsWithChildren {
 	delay?: number;
 }
 
+function isViewTransitionActive() {
+	return (
+		typeof document !== "undefined" &&
+		"startViewTransition" in document &&
+		document.documentElement.matches(":active-view-transition")
+	);
+}
+
 export function StaggeredEntrance({
 	children,
 	className,
@@ -46,7 +54,7 @@ export function StaggeredEntrance({
 	};
 
 	useLayoutEffect(() => {
-		if (shouldReduceMotion) {
+		if (shouldReduceMotion || isViewTransitionActive()) {
 			controls.set("visible");
 			return;
 		}

@@ -1,6 +1,4 @@
-"use client";
-
-import { PropsWithChildren, useCallback, useState } from "react";
+import { PropsWithChildren } from "react";
 
 export interface FadedScrollProps extends PropsWithChildren {
 	className?: string;
@@ -18,27 +16,8 @@ export function FadedScroll({
 	direction = "vertical",
 	children,
 }: FadedScrollProps) {
-	const [shouldFadeStart, setShouldFadeStart] = useState(false);
-
-	const onScroll = useCallback((e: React.UIEvent<HTMLDivElement, UIEvent>) => {
-		const target = e.target as HTMLDivElement;
-		const scrollLeft = target.scrollLeft;
-
-		setShouldFadeStart(scrollLeft > 0);
-	}, []);
-
 	const directionClassName =
-		direction === "horizontal"
-			? shouldFadeStart
-				? "fade-x"
-				: "fade-right"
-			: shouldFadeStart
-			? "fade-y"
-			: "fade-bottom";
+		direction === "horizontal" ? "fade-scroll-x" : "fade-scroll-y";
 
-	return (
-		<div className={`${directionClassName} ${className}`} onScroll={onScroll}>
-			{children}
-		</div>
-	);
+	return <div className={`${directionClassName} ${className}`}>{children}</div>;
 }

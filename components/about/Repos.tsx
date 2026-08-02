@@ -58,13 +58,13 @@ type Repo = ResponseData["data"]["user"]["pinnedItems"]["nodes"][number];
 
 function RepoRow({ repo }: { repo: Repo }) {
 	return (
-		<article className="site-list-row flex min-h-[var(--site-row-lg)] flex-col justify-center py-2">
+		<article className="flex min-h-[var(--site-row-lg)] flex-col justify-center py-3 sm:py-2">
 			<div className="flex min-w-0 items-baseline justify-between gap-4">
 				<a
 					href={repo.url}
 					target="_blank"
 					rel="noopener noreferrer"
-					className="min-w-0 truncate font-medium tracking-tight underline-offset-4 hover:underline"
+					className="type-body-small min-w-0 truncate font-medium tracking-tight underline-offset-4 hover:underline"
 				>
 					{repo.name}
 				</a>
@@ -73,14 +73,14 @@ function RepoRow({ repo }: { repo: Repo }) {
 						className="inline-flex items-center gap-1"
 						aria-label={`${formatNumber(repo.stargazerCount)} stars`}
 					>
-						<FaRegStar className="h-4 w-4 shrink-0" aria-hidden="true" />
+						<FaRegStar className="size-4 shrink-0" aria-hidden="true" />
 						{formatNumber(repo.stargazerCount)}
 					</span>
 					<span
 						className="inline-flex items-center gap-1"
 						aria-label={`${formatNumber(repo.forkCount)} forks`}
 					>
-						<VscRepoForked className="h-4 w-4 shrink-0" aria-hidden="true" />
+						<VscRepoForked className="size-4 shrink-0" aria-hidden="true" />
 						{formatNumber(repo.forkCount)}
 					</span>
 				</div>
@@ -122,7 +122,7 @@ export async function Repos() {
 	const repos = payload.data.user.pinnedItems.nodes;
 
 	return (
-		<StaggeredEntrance className="mt-4 flex flex-col">
+		<StaggeredEntrance className="mt-2 flex flex-col sm:mt-3">
 			{repos.map((repo) => (
 				<EntranceItem key={repo.name}>
 					<RepoRow repo={repo} />

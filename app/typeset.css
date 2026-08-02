@@ -239,8 +239,6 @@
 			font-family: inherit;
 			font-size: 0.85em;
 			font-weight: 500;
-			border: 1px solid var(--typeset-rule);
-			border-block-end-width: 2px;
 			border-radius: min(calc(var(--radius, 0.5em) * 0.6), 0.35em);
 			padding: 0.0625em 0.35em;
 		}
@@ -303,7 +301,6 @@
 
 		/* Blockquote. */
 		&:where(blockquote) {
-			border-inline-start: 2px solid var(--typeset-rule);
 			padding-inline-start: 1em;
 			margin-block-start: var(--typeset-flow);
 			margin-block-end: 0;
@@ -312,8 +309,6 @@
 
 		/* Dividers. */
 		&:where(hr) {
-			border: 0;
-			border-block-start: 1px solid var(--typeset-rule);
 			margin-block-start: calc(var(--typeset-flow) * 2.4);
 			margin-block-end: 0;
 		}
@@ -324,7 +319,6 @@
 		/* GFM footnotes. */
 		&:where(.footnotes, [data-footnotes]) {
 			margin-block-start: calc(var(--typeset-flow) * 2);
-			border-block-start: 1px solid var(--typeset-rule);
 			padding-block-start: var(--typeset-flow);
 			font-size: 0.875em;
 			color: var(--typeset-muted);
@@ -374,7 +368,6 @@
 			font-variant-numeric: tabular-nums;
 			border-collapse: separate;
 			border-spacing: 0;
-			border-block-end: 1px solid var(--typeset-rule);
 			margin-block-start: var(--typeset-flow);
 			margin-block-end: 0;
 		}
@@ -403,7 +396,6 @@
 			padding: 0.75em 1em;
 			text-align: start;
 			vertical-align: top;
-			border-block-start: 1px solid var(--typeset-rule);
 		}
 		&:where(tbody th, tfoot th) {
 			font-weight: 500;
@@ -432,13 +424,6 @@
 			}
 			&:where(h1, h2, h3, h4) {
 				break-after: avoid;
-			}
-		}
-
-		/* Forced colors strips the code background, so give it a border. */
-		@media (forced-colors: active) {
-			&:where(:not(pre) > code) {
-				border: 1px solid;
 			}
 		}
 	}

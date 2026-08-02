@@ -15,7 +15,7 @@ export function Tag({ name, variant = "inline" }: TagProps) {
 			scroll={false}
 			className={`type-caption text-muted-foreground underline-offset-4 hover:text-foreground hover:underline ${
 				variant === "row"
-					? "site-list-row flex min-h-[var(--site-row-sm)] w-full items-center px-[var(--space-cell)]"
+					? "flex min-h-[var(--site-row-sm)] w-full items-center px-[var(--space-cell)]"
 					: "inline-flex items-center"
 			}`}
 		>

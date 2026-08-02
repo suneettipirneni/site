@@ -20,12 +20,6 @@ const mappedIcons = {
 	danger: HiXCircle,
 };
 
-const mappedStyles = {
-	info: "border-border",
-	warning: "border-foreground/60",
-	danger: "border-foreground",
-};
-
 export function InfoBlock({ title, kind = "info", children }: InfoBlockProps) {
 	const [open, setOpen] = useState(false);
 	const Icon = mappedIcons[kind];
@@ -35,10 +29,7 @@ export function InfoBlock({ title, kind = "info", children }: InfoBlockProps) {
 	}, []);
 
 	return (
-		<div
-			data-not-typeset
-			className={`border-y post:-mx-[var(--space-page)] post:mb-5 ${mappedStyles[kind]}`}
-		>
+		<div data-not-typeset className="post:-mx-[var(--space-page)] post:mb-5">
 			<button
 				type="button"
 				aria-expanded={open}
@@ -58,7 +49,7 @@ export function InfoBlock({ title, kind = "info", children }: InfoBlockProps) {
 			</button>
 
 			{open ? (
-				<div className="flex flex-col gap-y-5 border-t border-border p-[var(--space-cell)]">
+				<div className="flex flex-col gap-y-4 p-[var(--space-cell)]">
 					{children}
 				</div>
 			) : null}

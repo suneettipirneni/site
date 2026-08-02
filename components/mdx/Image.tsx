@@ -14,7 +14,7 @@ export function Image({
 	...props
 }: MdxImageProps) {
 	return (
-		<div className="flex w-full flex-col items-center justify-center border-y border-border post:-mx-[var(--space-page)] post:mb-4 post:w-auto">
+		<div className="flex w-full flex-col items-center justify-center post:-mx-[var(--space-page)] post:mb-4 post:w-auto">
 			<NextImage
 				alt={alt}
 				height={imageHeight}

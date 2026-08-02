@@ -55,9 +55,9 @@ async function BlogPostsContent({
 		: publishedPosts;
 
 	return (
-		<div className="site-content-grid min-h-[calc(100dvh-var(--site-nav)-var(--site-footer))] w-full border-x border-border">
-			<aside className="border-b border-border p-[var(--site-panel)] lg:border-b-0 lg:border-r">
-				<StaggeredEntrance className="flex flex-col gap-6">
+		<div className="site-content-grid min-h-[calc(100dvh-var(--site-nav))] w-full">
+			<aside className="p-[var(--site-panel)] lg:sticky lg:top-[var(--site-nav)] lg:self-start">
+				<StaggeredEntrance className="flex flex-col gap-5">
 					<EntranceItem>
 						<h1 className="type-page-title">Blog</h1>
 					</EntranceItem>
@@ -71,13 +71,13 @@ async function BlogPostsContent({
 							<h2 id="filters-heading" className="type-label">
 								Filters
 							</h2>
-							<nav aria-label="Filter posts" className="mt-3 flex flex-col">
+							<nav aria-label="Filter posts" className="mt-2 flex flex-col">
 								<Link
 									href="/blog"
 									transitionTypes={["nav-back"]}
 									scroll={false}
 									aria-current={selectedTags.length === 0 ? "page" : undefined}
-									className="site-list-row type-body-small flex min-h-[var(--site-row-sm)] items-center text-muted-foreground underline-offset-4 hover:text-foreground hover:underline aria-[current=page]:text-foreground aria-[current=page]:underline"
+									className="type-body-small flex min-h-[var(--site-row-sm)] items-center text-muted-foreground underline-offset-4 hover:text-foreground hover:underline aria-[current=page]:text-foreground aria-[current=page]:underline"
 								>
 									All posts
 								</Link>
@@ -93,7 +93,7 @@ async function BlogPostsContent({
 											transitionTypes={["page-crossfade"]}
 											scroll={false}
 											aria-current={active ? "page" : undefined}
-											className="site-list-row type-body-small flex min-h-[var(--site-row-sm)] items-center capitalize text-muted-foreground underline-offset-4 hover:text-foreground hover:underline aria-[current=page]:text-foreground aria-[current=page]:underline"
+											className="type-body-small flex min-h-[var(--site-row-sm)] items-center capitalize text-muted-foreground underline-offset-4 hover:text-foreground hover:underline aria-[current=page]:text-foreground aria-[current=page]:underline"
 										>
 											{tag}
 										</Link>
@@ -105,8 +105,11 @@ async function BlogPostsContent({
 				</StaggeredEntrance>
 			</aside>
 
-			<section aria-label="Posts" className="min-w-0">
-				<header className="flex min-h-[var(--site-row-lg)] items-center justify-between gap-4 border-b border-border px-[var(--site-panel)]">
+			<section
+				aria-label="Posts"
+				className="mx-auto w-full min-w-0 max-w-[760px]"
+			>
+				<header className="flex min-h-[var(--site-row-lg)] items-center justify-between gap-4 px-[var(--site-panel)]">
 					<h2 className="type-section-title">Writing</h2>
 					<span className="type-caption tabular-nums text-muted-foreground">
 						{visiblePosts.length} posts
@@ -124,7 +127,7 @@ async function BlogPostsContent({
 						<Link
 							href="/blog"
 							transitionTypes={["nav-back"]}
-							className="type-body-small mt-4 inline-flex h-11 items-center underline underline-offset-4"
+							className="type-body-small mt-3 inline-flex h-11 items-center underline underline-offset-4"
 						>
 							View all posts
 						</Link>
@@ -138,23 +141,23 @@ async function BlogPostsContent({
 function BlogPageSkeleton() {
 	return (
 		<div
-			className="site-content-grid min-h-[calc(100dvh-var(--site-nav)-var(--site-footer))] w-full border-x border-border"
+			className="site-content-grid min-h-[calc(100dvh-var(--site-nav))] w-full"
 			aria-label="Loading posts"
 		>
-			<div className="border-b border-border p-[var(--site-panel)] lg:border-b-0 lg:border-r">
+			<div className="p-[var(--site-panel)] lg:sticky lg:top-[var(--site-nav)] lg:self-start">
 				<div className="h-10 w-28 bg-muted" aria-hidden="true" />
-				<div className="mt-4 h-4 w-48 bg-muted" aria-hidden="true" />
+				<div className="mt-3 h-4 w-48 bg-muted" aria-hidden="true" />
 			</div>
-			<div>
-				<div className="h-16 border-b border-border" />
+			<div className="mx-auto w-full max-w-[760px]">
+				<div className="h-16" />
 				{Array.from({ length: 5 }).map((_, index) => (
 					<div
 						key={index}
-						className="min-h-36 border-b border-border p-[var(--site-panel)]"
+						className="min-h-36 p-[var(--site-panel)]"
 						aria-hidden="true"
 					>
 						<div className="h-5 w-1/3 bg-muted" />
-						<div className="mt-4 h-4 w-2/3 bg-muted" />
+						<div className="mt-3 h-4 w-2/3 bg-muted" />
 					</div>
 				))}
 			</div>
