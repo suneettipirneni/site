@@ -29,7 +29,7 @@ import { HiArrowLeft } from "react-icons/hi2";
 
 async function PostMdx({ source }: { source: string }) {
 	"use cache";
-	cacheLife("minutes");
+	cacheLife("max");
 
 	return (
 		<MDXRemote

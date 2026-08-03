@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 const ASCII_GLYPHS = " .:-=+*#%@";
-const FALLBACK_COLUMNS = 156;
+const FALLBACK_COLUMNS = 240;
 const FALLBACK_ROWS = 46;
 
 const VERTEX_SHADER = `#version 300 es
@@ -53,14 +53,17 @@ void main() {
 	vec2 cell_size = vec2(10.0, 15.0) * u_dpr;
 	vec2 cell_id = floor(gl_FragCoord.xy / cell_size);
 	vec2 glyph_uv = fract(gl_FragCoord.xy / cell_size);
-	vec2 field = cell_id * vec2(0.115, 0.19);
+	vec2 field_scale = vec2(0.115, 0.19);
+	vec2 field = cell_id * field_scale;
+	vec2 field_extent = (u_resolution / cell_size) * field_scale;
+	vec2 focal_point = vec2(field_extent.x * 0.78, field_extent.y * 0.5);
 	vec2 normalized = gl_FragCoord.xy / u_resolution;
 	float time = u_time * 0.18;
 
 	float wave = sin(field.x * 1.32 + time * 1.35);
 	wave += cos(field.y * 1.74 - time * 0.82);
 	wave += sin((field.x + field.y) * 0.78 + time * 0.64);
-	wave += cos(length(field - vec2(8.0, 2.5)) * 0.9 - time);
+	wave += cos(length(field - focal_point) * 0.9 - time);
 
 	vec2 noise_flow = vec2(time * 0.32, -time * 0.18);
 	float noise = value_noise(field * 0.72 + noise_flow);

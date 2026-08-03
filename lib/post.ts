@@ -57,7 +57,7 @@ function resolveHeadings(body: string): HeadingData[] {
 // Based on https://maxleiter.com/blog/build-a-blog-with-nextjs-13#fetching-your-posts
 export async function getPosts(): Promise<Post[]> {
 	"use cache";
-	cacheLife("minutes");
+	cacheLife("max");
 
 	const postFiles = await fs.readdir(POSTS_DIR);
 
@@ -87,7 +87,7 @@ export async function getPosts(): Promise<Post[]> {
 
 export async function getPost(slug: string): Promise<Post | undefined> {
 	"use cache";
-	cacheLife("minutes");
+	cacheLife("max");
 
 	const postFile = path.join(POSTS_DIR, `${slug}.mdx`);
 

@@ -1,4 +1,4 @@
-import { GH_REPO_REVALIDATE_TIME, GH_USERNAME } from "@/lib/constants";
+import { GH_USERNAME } from "@/lib/constants";
 import { cacheLife } from "next/cache";
 import {
 	EntranceItem,
@@ -99,11 +99,7 @@ function RepoRow({ repo }: { repo: Repo }) {
 
 export async function Repos() {
 	"use cache";
-	cacheLife({
-		stale: GH_REPO_REVALIDATE_TIME,
-		revalidate: GH_REPO_REVALIDATE_TIME,
-		expire: GH_REPO_REVALIDATE_TIME * 24,
-	});
+	cacheLife("hours");
 
 	const response = await fetch(url, {
 		method: "POST",

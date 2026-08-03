@@ -15,17 +15,8 @@ export function NavBar() {
 		<header className="sticky top-0 z-40 w-full bg-background [view-transition-name:site-header]">
 			<nav
 				aria-label="Primary"
-				className="flex h-[var(--site-nav)] w-full items-center px-[var(--site-panel)]"
+				className="flex h-[var(--site-nav)] w-full items-center justify-center px-[var(--site-panel)]"
 			>
-				<div className="flex flex-1 items-center">
-					<NextLink
-						href="/"
-						aria-label="Homepage"
-						className="font-semibold tracking-tight underline-offset-4 hover:underline"
-					>
-						ST
-					</NextLink>
-				</div>
 				<div className="type-nav flex items-center gap-5">
 					{links.map((link) => {
 						const active =
@@ -46,16 +37,6 @@ export function NavBar() {
 							</NextLink>
 						);
 					})}
-				</div>
-				<div className="type-nav flex flex-1 items-center justify-end">
-					<a
-						href="https://github.com/suneettipirneni"
-						target="_blank"
-						rel="noopener noreferrer"
-						className="text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
-					>
-						GitHub
-					</a>
 				</div>
 			</nav>
 		</header>

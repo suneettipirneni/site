@@ -13,7 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		lastModified: post.datetime.toISOString().split("T")[0],
 	}));
 
-	const routes = ["", "/work", "/blog"].map((route) => ({
+	const routes = ["", "/blog"].map((route) => ({
 		url: `${BASE_URL}${route}`,
 		lastModified: latestPostDate?.toISOString().split("T")[0],
 	}));
