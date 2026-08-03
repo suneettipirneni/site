@@ -36,6 +36,12 @@ export default function Home() {
 							</h1>
 						</EntranceItem>
 						<EntranceItem>
+							<p className="type-body-small font-medium">
+								AI Engineer{" "}
+								<span className="text-muted-foreground">@ AdventHealth</span>
+							</p>
+						</EntranceItem>
+						<EntranceItem>
 							<p className="type-lead max-w-[34ch]">
 								I build useful software at the intersection of systems,
 								interfaces, and machine learning.
@@ -43,9 +49,9 @@ export default function Home() {
 						</EntranceItem>
 						<EntranceItem>
 							<p className="type-body max-w-[52ch] text-muted-foreground">
-								I’m a student and open-source developer currently pursuing a
-								master’s degree in computer vision. I care about tools that are
-								thoughtful, accessible, and genuinely useful.
+								My work spans computer vision, product engineering, and
+								open-source software. I care about tools that are thoughtful,
+								accessible, and genuinely useful.
 							</p>
 						</EntranceItem>
 					</StaggeredEntrance>

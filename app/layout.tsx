@@ -9,6 +9,7 @@ import { BASE_URL } from "@/lib/constants";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "katex/dist/katex.min.css";
 import AutoRefresh from "@/components/AutoRefresh";
+import { BlockScrollbar } from "@/components/BlockScrollbar";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 							</ViewTransition>
 						</main>
 					</MotionProvider>
+					<BlockScrollbar />
 					<Analytics />
 					<SpeedInsights />
 				</body>
