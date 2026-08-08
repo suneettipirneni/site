@@ -20,7 +20,6 @@ export function PostCard({ post, index = 0 }: { post: Post; index?: number }) {
 					<h3 className="type-card-title mt-3">
 						<Link
 							href={post.url}
-							transitionTypes={["nav-forward"]}
 							className="inline-flex items-start gap-2 underline decoration-transparent underline-offset-4 hover:decoration-current"
 						>
 							<span>{post.title}</span>

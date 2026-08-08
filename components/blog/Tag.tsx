@@ -11,7 +11,6 @@ export function Tag({ name, variant = "inline" }: TagProps) {
 	return (
 		<Link
 			href={`/blog?${params}`}
-			transitionTypes={["page-crossfade"]}
 			scroll={false}
 			className={`type-caption text-muted-foreground underline-offset-4 hover:text-foreground hover:underline ${
 				variant === "row"

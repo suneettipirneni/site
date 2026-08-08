@@ -27,7 +27,6 @@ export default function NotFound() {
 				<EntranceItem className="max-w-xs pt-3">
 					<Link
 						href="/blog"
-						transitionTypes={["nav-back"]}
 						className="type-body-small flex min-h-[var(--site-row-sm)] items-center justify-between text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
 					>
 						<span>Back to blog</span>

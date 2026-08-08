@@ -1,6 +1,5 @@
 {
 	"compilerOptions": {
-		"baseUrl": ".",
 		"target": "ES2018",
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
@@ -30,7 +29,6 @@
 		"**/*.ts",
 		"**/*.tsx",
 		".next/types/**/*.ts",
-		"lib/watcher.js",
 		".next/dev/types/**/*.ts"
 	],
 	"exclude": ["node_modules"]

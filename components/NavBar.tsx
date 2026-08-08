@@ -12,7 +12,7 @@ export function NavBar() {
 	const pathname = usePathname();
 
 	return (
-		<header className="sticky top-0 z-40 w-full bg-background [view-transition-name:site-header]">
+		<header className="sticky top-0 z-40 w-full bg-background">
 			<nav
 				aria-label="Primary"
 				className="flex h-[var(--site-nav)] w-full items-center justify-center px-[var(--site-panel)]"
@@ -27,9 +27,6 @@ export function NavBar() {
 							<NextLink
 								key={link.href}
 								href={link.href}
-								transitionTypes={[
-									link.href === "/" ? "nav-back" : "nav-forward",
-								]}
 								aria-current={active ? "page" : undefined}
 								className="text-muted-foreground underline-offset-8 hover:text-foreground hover:underline aria-[current=page]:text-foreground aria-[current=page]:underline"
 							>

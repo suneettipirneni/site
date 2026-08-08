@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	cacheComponents: true,
+	partialPrefetching: true,
 	pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
 	images: {
 		remotePatterns: [
@@ -13,8 +14,14 @@ const nextConfig = {
 		],
 	},
 	reactCompiler: true,
-	experimental: {
-		viewTransition: true,
+	turbopack: {
+		rules: {
+			"*.mdx": {
+				condition: { query: "?raw" },
+				loaders: ["raw-loader"],
+				as: "*.js",
+			},
+		},
 	},
 };
 

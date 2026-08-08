@@ -1,5 +1,4 @@
 import { AsciiBackdrop } from "@/components/about/AsciiBackdrop";
-import { HeroPortrait } from "@/components/about/HeroPortrait";
 import { Repos } from "@/components/about/Repos";
 import {
 	EntranceItem,
@@ -45,8 +44,7 @@ export default function Home() {
 					aria-labelledby="intro-heading"
 				>
 					<AsciiBackdrop />
-					<div className="relative z-10 grid w-full max-w-[880px] grid-cols-1 items-start gap-4 sm:grid-cols-[4rem_minmax(0,1fr)] sm:gap-6">
-						<HeroPortrait className="hidden w-16 sm:block" />
+					<div className="relative z-10 w-full max-w-[880px]">
 						<StaggeredEntrance className="flex min-w-0 flex-col gap-3 sm:gap-4">
 							<EntranceItem>
 								<h1 id="intro-heading" className="type-display max-w-[20ch]">
@@ -87,7 +85,6 @@ export default function Home() {
 									<div className="type-caption shrink-0">
 										<Link
 											href="/blog"
-											transitionTypes={["nav-forward"]}
 											className="min-h-12 inline-flex items-center gap-1.5 text-muted-foreground underline-offset-4 hover:text-foreground hover:underline sm:min-h-0"
 										>
 											All posts
@@ -181,7 +178,6 @@ async function RecentPosts() {
 				<li key={post.slug}>
 					<Link
 						href={post.url}
-						transitionTypes={["nav-forward"]}
 						className="group flex min-h-[var(--site-row-lg)] min-w-0 items-center gap-3 py-2.5 sm:py-2"
 					>
 						<div className="flex min-w-0 grow flex-col gap-0.5">

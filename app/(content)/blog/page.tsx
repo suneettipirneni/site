@@ -109,7 +109,6 @@ async function BlogFilters({
 		<nav aria-label="Filter posts" className="mt-2 flex flex-col">
 			<Link
 				href="/blog"
-				transitionTypes={["nav-back"]}
 				scroll={false}
 				aria-current={selectedTags.length === 0 ? "page" : undefined}
 				className="type-body-small flex min-h-[var(--site-row-sm)] items-center text-muted-foreground underline-offset-4 hover:text-foreground hover:underline aria-[current=page]:text-foreground aria-[current=page]:underline"
@@ -125,7 +124,6 @@ async function BlogFilters({
 					<Link
 						key={tag}
 						href={href}
-						transitionTypes={["page-crossfade"]}
 						scroll={false}
 						aria-current={active ? "page" : undefined}
 						className="type-body-small flex min-h-[var(--site-row-sm)] items-center capitalize text-muted-foreground underline-offset-4 hover:text-foreground hover:underline aria-[current=page]:text-foreground aria-[current=page]:underline"
@@ -168,7 +166,6 @@ async function BlogPostList({
 			<h2 className="type-section-title">No posts in this category yet.</h2>
 			<Link
 				href="/blog"
-				transitionTypes={["nav-back"]}
 				className="type-body-small mt-3 inline-flex h-11 items-center underline underline-offset-4"
 			>
 				View all posts

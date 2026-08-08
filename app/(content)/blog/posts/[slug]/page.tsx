@@ -114,7 +114,6 @@ export default async function Post(props: {
 							</h2>
 							<Link
 								href="/blog"
-								transitionTypes={["nav-back"]}
 								className="type-body-small mt-2 flex min-h-[var(--site-row-sm)] items-center justify-between text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
 							>
 								<span>Back to blog</span>
