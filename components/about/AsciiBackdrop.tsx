@@ -89,6 +89,15 @@ void main() {
 	wave += sin((warped_field.x + warped_field.y) * 0.78 + time * 0.96);
 	wave += cos(length(warped_field - focal_point) * 0.9 - time * 1.4);
 
+	vec2 vortex_delta = warped_field - focal_point;
+	float vortex_radius = length(vortex_delta);
+	float vortex_angle = atan(vortex_delta.y, vortex_delta.x);
+	float spiral = sin(vortex_radius * 1.18 - vortex_angle * 2.0 - time * 1.8);
+	float diagonal_sweep = sin(
+		dot(warped_field, vec2(0.82, 0.57)) * 0.82 - time * 2.05
+	);
+	wave += spiral * 0.48 + diagonal_sweep * 0.32;
+
 	vec2 noise_flow = vec2(time * 0.55, -time * 0.34);
 	float noise = value_noise(warped_field * 0.72 + noise_flow);
 	noise += value_noise(warped_field * 1.46 - noise_flow * 0.7) * 0.5;
@@ -110,7 +119,7 @@ void main() {
 	glow += sample_glyph(glyph_index, glyph_uv + vec2(-0.055, -0.055));
 	glow *= 0.125;
 
-	float pulse = 0.88 + 0.12 * sin(cell_id.x * 0.23 + cell_id.y * 0.17 + time);
+	float pulse = 0.83 + 0.17 * sin(cell_id.x * 0.23 + cell_id.y * 0.17 + time);
 	float core_alpha = glyph * mix(0.5, 1.0, intensity) * pulse;
 	float halo_alpha = max(glow - glyph * 0.2, 0.0) * mix(0.32, 0.58, u_dark_mode);
 	float alpha = min(core_alpha + halo_alpha, 1.0);
@@ -119,7 +128,8 @@ void main() {
 		normalized.x * 0.92 +
 		normalized.y * 0.3 +
 		noise * 0.08 -
-		time * 0.045
+		time * 0.045 +
+		sin(vortex_angle * 2.0 + time * 0.8) * 0.035
 	);
 	vec3 spectrum = hsv_to_rgb(vec3(
 		hue,
