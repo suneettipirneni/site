@@ -272,6 +272,9 @@ body::after {
 	}
 
 	.ascii-backdrop {
+		--ascii-opacity: 0.48;
+		--ascii-opacity-sm: 0.42;
+		--ascii-opacity-lg: 0.48;
 		position: absolute;
 		inset: 0;
 		z-index: 0;
@@ -301,12 +304,14 @@ body::after {
 		width: 100%;
 		height: 100%;
 		color: hsl(var(--foreground));
+		filter: saturate(1.6) drop-shadow(0 0 0.26rem rgb(0 174 239 / 34%))
+			drop-shadow(0 0 0.56rem rgb(168 85 247 / 24%));
 		opacity: 0;
 		transition: opacity 400ms var(--motion-ease);
 	}
 
 	.ascii-backdrop__canvas[data-ready="true"] {
-		opacity: 0.2;
+		opacity: var(--ascii-opacity);
 	}
 
 	.ascii-backdrop__fallback {
@@ -321,13 +326,51 @@ body::after {
 		font-weight: 400;
 		letter-spacing: 0.055em;
 		line-height: 0.75rem;
-		opacity: 0.16;
+		background: linear-gradient(
+			110deg,
+			#f00062 4%,
+			#6d28d9 28%,
+			#007ea7 51%,
+			#007a4d 72%,
+			#c55a00 96%
+		);
+		background-clip: text;
+		filter: drop-shadow(0 0 0.48rem rgb(124 58 237 / 30%));
+		opacity: 0.34;
 		white-space: pre;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
 		transition: opacity 250ms var(--motion-ease);
 	}
 
 	.ascii-backdrop__canvas[data-ready="true"] + .ascii-backdrop__fallback {
 		opacity: 0;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.ascii-backdrop {
+		--ascii-opacity: 0.62;
+		--ascii-opacity-sm: 0.54;
+		--ascii-opacity-lg: 0.62;
+	}
+
+	.ascii-backdrop__canvas {
+		filter: saturate(1.7) drop-shadow(0 0 0.32rem rgb(34 211 238 / 48%))
+			drop-shadow(0 0 0.7rem rgb(192 132 252 / 36%));
+	}
+
+	.ascii-backdrop__fallback {
+		background-image: linear-gradient(
+			110deg,
+			#ff4d91 4%,
+			#a78bfa 28%,
+			#38bdf8 51%,
+			#34d399 72%,
+			#facc15 96%
+		);
+		filter: drop-shadow(0 0 0.62rem rgb(56 189 248 / 42%));
+		opacity: 0.46;
 	}
 }
 
@@ -378,7 +421,7 @@ body::after {
 	}
 
 	.ascii-backdrop__canvas[data-ready="true"] {
-		opacity: 0.28;
+		opacity: var(--ascii-opacity-sm);
 	}
 }
 
@@ -414,7 +457,7 @@ body::after {
 	}
 
 	.ascii-backdrop__canvas[data-ready="true"] {
-		opacity: 0.34;
+		opacity: var(--ascii-opacity-lg);
 	}
 }
 

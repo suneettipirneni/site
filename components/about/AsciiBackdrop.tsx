@@ -25,7 +25,7 @@ uniform vec2 u_resolution;
 uniform float u_time;
 uniform float u_dpr;
 uniform float u_glyph_count;
-uniform vec3 u_color;
+uniform float u_dark_mode;
 uniform sampler2D u_glyphs;
 
 out vec4 out_color;
@@ -49,6 +49,25 @@ float value_noise(vec2 point) {
 	return mix(mix(a, b, local.x), mix(c, d, local.x), local.y);
 }
 
+vec3 hsv_to_rgb(vec3 color) {
+	vec3 channels = clamp(
+		abs(fract(color.x + vec3(0.0, 2.0 / 3.0, 1.0 / 3.0)) * 6.0 - 3.0) - 1.0,
+		0.0,
+		1.0
+	);
+	channels = channels * channels * (3.0 - 2.0 * channels);
+	return color.z * mix(vec3(1.0), channels, color.y);
+}
+
+float sample_glyph(float glyph_index, vec2 glyph_uv) {
+	vec2 safe_uv = clamp(glyph_uv, vec2(0.035), vec2(0.965));
+	vec2 atlas_uv = vec2(
+		(glyph_index + safe_uv.x) / u_glyph_count,
+		safe_uv.y
+	);
+	return texture(u_glyphs, atlas_uv).a;
+}
+
 void main() {
 	vec2 cell_size = vec2(10.0, 15.0) * u_dpr;
 	vec2 cell_id = floor(gl_FragCoord.xy / cell_size);
@@ -56,33 +75,61 @@ void main() {
 	vec2 field_scale = vec2(0.115, 0.19);
 	vec2 field = cell_id * field_scale;
 	vec2 field_extent = (u_resolution / cell_size) * field_scale;
-	vec2 focal_point = vec2(field_extent.x * 0.78, field_extent.y * 0.5);
 	vec2 normalized = gl_FragCoord.xy / u_resolution;
-	float time = u_time * 0.18;
+	float time = u_time * 0.34;
+	vec2 focal_point = vec2(field_extent.x * 0.78, field_extent.y * 0.5);
+	focal_point += vec2(sin(time * 0.72), cos(time * 0.58)) * vec2(2.2, 1.4);
 
-	float wave = sin(field.x * 1.32 + time * 1.35);
-	wave += cos(field.y * 1.74 - time * 0.82);
-	wave += sin((field.x + field.y) * 0.78 + time * 0.64);
-	wave += cos(length(field - focal_point) * 0.9 - time);
+	vec2 warped_field = field;
+	warped_field.x += sin(field.y * 0.58 + time * 0.9) * 0.48;
+	warped_field.y += cos(field.x * 0.44 - time * 0.72) * 0.38;
 
-	vec2 noise_flow = vec2(time * 0.32, -time * 0.18);
-	float noise = value_noise(field * 0.72 + noise_flow);
-	noise += value_noise(field * 1.46 - noise_flow * 0.7) * 0.5;
+	float wave = sin(warped_field.x * 1.32 + time * 1.75);
+	wave += cos(warped_field.y * 1.74 - time * 1.22);
+	wave += sin((warped_field.x + warped_field.y) * 0.78 + time * 0.96);
+	wave += cos(length(warped_field - focal_point) * 0.9 - time * 1.4);
+
+	vec2 noise_flow = vec2(time * 0.55, -time * 0.34);
+	float noise = value_noise(warped_field * 0.72 + noise_flow);
+	noise += value_noise(warped_field * 1.46 - noise_flow * 0.7) * 0.5;
 
 	float intensity = smoothstep(-1.65, 2.7, wave + noise * 2.15 - 1.0);
 	intensity = pow(intensity, 0.88);
 	intensity *= mix(0.82, 1.0, smoothstep(0.05, 0.82, normalized.x));
 
 	float glyph_index = floor(intensity * (u_glyph_count - 1.0) + 0.5);
-	vec2 atlas_uv = vec2(
-		(glyph_index + glyph_uv.x) / u_glyph_count,
-		glyph_uv.y
-	);
-	float glyph = texture(u_glyphs, atlas_uv).a;
+	float glyph = sample_glyph(glyph_index, glyph_uv);
+	float glow = 0.0;
+	glow += sample_glyph(glyph_index, glyph_uv + vec2(0.075, 0.0));
+	glow += sample_glyph(glyph_index, glyph_uv + vec2(-0.075, 0.0));
+	glow += sample_glyph(glyph_index, glyph_uv + vec2(0.0, 0.075));
+	glow += sample_glyph(glyph_index, glyph_uv + vec2(0.0, -0.075));
+	glow += sample_glyph(glyph_index, glyph_uv + vec2(0.055, 0.055));
+	glow += sample_glyph(glyph_index, glyph_uv + vec2(-0.055, 0.055));
+	glow += sample_glyph(glyph_index, glyph_uv + vec2(0.055, -0.055));
+	glow += sample_glyph(glyph_index, glyph_uv + vec2(-0.055, -0.055));
+	glow *= 0.125;
 
 	float pulse = 0.88 + 0.12 * sin(cell_id.x * 0.23 + cell_id.y * 0.17 + time);
-	float alpha = glyph * mix(0.5, 1.0, intensity) * pulse;
-	out_color = vec4(u_color, alpha);
+	float core_alpha = glyph * mix(0.5, 1.0, intensity) * pulse;
+	float halo_alpha = max(glow - glyph * 0.2, 0.0) * mix(0.32, 0.58, u_dark_mode);
+	float alpha = min(core_alpha + halo_alpha, 1.0);
+
+	float hue = fract(
+		normalized.x * 0.92 +
+		normalized.y * 0.3 +
+		noise * 0.08 -
+		time * 0.045
+	);
+	vec3 spectrum = hsv_to_rgb(vec3(
+		hue,
+		mix(0.98, 0.9, u_dark_mode),
+		mix(0.8, 1.0, u_dark_mode)
+	));
+	vec3 neutral = mix(vec3(0.035), vec3(0.965), u_dark_mode);
+	vec3 glyph_color = mix(neutral, spectrum, 0.98);
+
+	out_color = vec4(glyph_color, alpha);
 }
 `;
 
@@ -191,22 +238,6 @@ function createGlyphTexture(gl: WebGL2RenderingContext) {
 	return texture;
 }
 
-function readCanvasColor(canvas: HTMLCanvasElement) {
-	const match = getComputedStyle(canvas).color.match(
-		/rgba?\((\d+)[, ]+(\d+)[, ]+(\d+)/
-	);
-
-	if (!match) {
-		return [0, 0, 0] as const;
-	}
-
-	return [
-		Number(match[1]) / 255,
-		Number(match[2]) / 255,
-		Number(match[3]) / 255,
-	] as const;
-}
-
 export function AsciiBackdrop() {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -236,14 +267,14 @@ export function AsciiBackdrop() {
 		const timeLocation = gl.getUniformLocation(program, "u_time");
 		const dprLocation = gl.getUniformLocation(program, "u_dpr");
 		const glyphCountLocation = gl.getUniformLocation(program, "u_glyph_count");
-		const colorLocation = gl.getUniformLocation(program, "u_color");
+		const darkModeLocation = gl.getUniformLocation(program, "u_dark_mode");
 		const glyphsLocation = gl.getUniformLocation(program, "u_glyphs");
 		const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 		const colorQuery = window.matchMedia("(prefers-color-scheme: dark)");
 		let animationFrame = 0;
 		let isIntersecting = true;
 		let lastTime = 0;
-		let foreground = readCanvasColor(canvas);
+		let isDarkMode = colorQuery.matches;
 
 		gl.useProgram(program);
 		gl.activeTexture(gl.TEXTURE0);
@@ -269,8 +300,7 @@ export function AsciiBackdrop() {
 
 		function draw(time: number) {
 			lastTime = time;
-			const [red, green, blue] = foreground;
-			gl.uniform3f(colorLocation, red, green, blue);
+			gl.uniform1f(darkModeLocation, isDarkMode ? 1 : 0);
 			gl.uniform1f(timeLocation, time / 1000);
 			gl.drawArrays(gl.TRIANGLES, 0, 3);
 		}
@@ -306,7 +336,7 @@ export function AsciiBackdrop() {
 		});
 		const handleVisibilityChange = () => syncAnimation();
 		const handleColorChange = () => {
-			foreground = readCanvasColor(canvas);
+			isDarkMode = colorQuery.matches;
 			draw(lastTime);
 		};
 
