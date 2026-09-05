@@ -35,7 +35,11 @@ export default function RootLayout({ children }: PropsWithChildren) {
 				</a>
 				<NavBar />
 				<MotionProvider>
-					<main id="main-content" className="isolate flex w-full grow">
+					<main
+						id="main-content"
+						tabIndex={-1}
+						className="isolate flex w-full grow"
+					>
 						{children}
 					</main>
 				</MotionProvider>

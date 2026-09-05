@@ -22,8 +22,11 @@ export function PostCard({ post, index = 0 }: { post: Post; index?: number }) {
 							href={post.url}
 							className="inline-flex items-start gap-2 underline decoration-transparent underline-offset-4 hover:decoration-current"
 						>
-							<span>{post.title}</span>
-							<HiArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+							<span className="min-w-0">{post.title}</span>
+							<HiArrowRight
+								className="h-[1lh] w-4 shrink-0"
+								aria-hidden="true"
+							/>
 						</Link>
 					</h3>
 					<p className="type-body-small mt-2 line-clamp-2 max-w-[65ch] text-muted-foreground">

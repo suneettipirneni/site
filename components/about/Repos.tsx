@@ -58,39 +58,35 @@ type Repo = ResponseData["data"]["user"]["pinnedItems"]["nodes"][number];
 
 function RepoRow({ repo }: { repo: Repo }) {
 	return (
-		<article className="flex min-h-[var(--site-row-lg)] flex-col justify-center py-3 sm:py-2">
-			<div className="flex min-w-0 items-baseline justify-between gap-4">
+		<article className="flex min-h-[5.5rem] min-w-0 flex-col gap-1 py-3">
+			<div className="type-body-small min-w-0 font-medium tracking-tight">
 				<a
 					href={repo.url}
 					target="_blank"
 					rel="noopener noreferrer"
-					className="type-body-small min-w-0 truncate font-medium tracking-tight underline-offset-4 hover:underline"
+					className="break-words underline-offset-4 hover:underline"
 				>
 					{repo.name}
 				</a>
-				<div className="type-caption flex shrink-0 items-center gap-3 tabular-nums text-muted-foreground">
-					<span
-						className="inline-flex items-center gap-1"
-						aria-label={`${formatNumber(repo.stargazerCount)} stars`}
-					>
-						<FaRegStar className="size-4 shrink-0" aria-hidden="true" />
-						{formatNumber(repo.stargazerCount)}
-					</span>
-					<span
-						className="inline-flex items-center gap-1"
-						aria-label={`${formatNumber(repo.forkCount)} forks`}
-					>
-						<VscRepoForked className="size-4 shrink-0" aria-hidden="true" />
-						{formatNumber(repo.forkCount)}
-					</span>
-				</div>
 			</div>
-			<div className="flex min-w-0 items-baseline justify-between gap-4">
-				<p className="type-body-small line-clamp-1 min-w-0 text-muted-foreground">
-					{repo.description ?? "Open-source work and experiments."}
-				</p>
-				<span className="type-caption shrink-0 text-muted-foreground">
-					{repo.primaryLanguage?.name ?? "Code"}
+			<p className="type-body-small line-clamp-2 text-muted-foreground">
+				{repo.description ?? "Open-source work and experiments."}
+			</p>
+			<div className="type-caption flex flex-wrap items-center gap-x-4 gap-y-1 tabular-nums text-muted-foreground">
+				<span>{repo.primaryLanguage?.name ?? "Code"}</span>
+				<span
+					className="inline-flex items-center gap-1"
+					aria-label={`${formatNumber(repo.stargazerCount)} stars`}
+				>
+					<FaRegStar className="h-4 w-4 shrink-0" aria-hidden="true" />
+					{formatNumber(repo.stargazerCount)}
+				</span>
+				<span
+					className="inline-flex items-center gap-1"
+					aria-label={`${formatNumber(repo.forkCount)} forks`}
+				>
+					<VscRepoForked className="h-4 w-4 shrink-0" aria-hidden="true" />
+					{formatNumber(repo.forkCount)}
 				</span>
 			</div>
 		</article>
@@ -118,7 +114,7 @@ export async function Repos() {
 	const repos = payload.data.user.pinnedItems.nodes;
 
 	return (
-		<StaggeredEntrance className="mt-2 flex flex-col sm:mt-3">
+		<StaggeredEntrance className="flex flex-col pt-2">
 			{repos.map((repo) => (
 				<EntranceItem key={repo.name}>
 					<RepoRow repo={repo} />

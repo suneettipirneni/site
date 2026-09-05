@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 const ASCII_GLYPHS = " .:-=+*#%@";
 const FALLBACK_COLUMNS = 240;
 const FALLBACK_ROWS = 46;
+const RIPPLE_COUNT = 12;
 
 const VERTEX_SHADER = `#version 300 es
 precision highp float;
@@ -27,6 +28,7 @@ uniform float u_dpr;
 uniform float u_glyph_count;
 uniform float u_dark_mode;
 uniform sampler2D u_glyphs;
+uniform vec3 u_ripples[${RIPPLE_COUNT}];
 
 out vec4 out_color;
 
@@ -39,7 +41,7 @@ float hash21(vec2 point) {
 float value_noise(vec2 point) {
 	vec2 cell = floor(point);
 	vec2 local = fract(point);
-	local = local * local * (3.0 - 2.0 * local);
+	local = local * local * local * (local * (local * 6.0 - 15.0) + 10.0);
 
 	float a = hash21(cell);
 	float b = hash21(cell + vec2(1.0, 0.0));
@@ -49,40 +51,54 @@ float value_noise(vec2 point) {
 	return mix(mix(a, b, local.x), mix(c, d, local.x), local.y);
 }
 
-vec3 hsv_to_rgb(vec3 color) {
-	vec3 channels = clamp(
-		abs(fract(color.x + vec3(0.0, 2.0 / 3.0, 1.0 / 3.0)) * 6.0 - 3.0) - 1.0,
-		0.0,
-		1.0
-	);
-	channels = channels * channels * (3.0 - 2.0 * channels);
-	return color.z * mix(vec3(1.0), channels, color.y);
-}
-
-float sample_glyph(float glyph_index, vec2 glyph_uv) {
+float sample_glyph(float glyph_index, vec2 glyph_uv, float weight_row) {
 	vec2 safe_uv = clamp(glyph_uv, vec2(0.035), vec2(0.965));
 	vec2 atlas_uv = vec2(
 		(glyph_index + safe_uv.x) / u_glyph_count,
-		safe_uv.y
+		(safe_uv.y + 1.0 - weight_row) * 0.5
 	);
 	return texture(u_glyphs, atlas_uv).a;
+}
+
+vec3 spectrum_color(float hue) {
+	vec3 channels = clamp(
+		abs(fract(hue + vec3(0.0, 2.0 / 3.0, 1.0 / 3.0)) * 6.0 - 3.0) - 1.0,
+		0.0,
+		1.0
+	);
+	float saturation = mix(1.0, 0.96, u_dark_mode);
+	float brightness = mix(0.62, 1.0, u_dark_mode);
+	return brightness * mix(vec3(1.0), channels, saturation);
 }
 
 void main() {
 	vec2 cell_size = vec2(10.0, 15.0) * u_dpr;
 	vec2 cell_id = floor(gl_FragCoord.xy / cell_size);
 	vec2 glyph_uv = fract(gl_FragCoord.xy / cell_size);
-	vec2 field_scale = vec2(0.115, 0.19);
+	vec2 field_scale = vec2(0.075, 0.125);
 	vec2 field = cell_id * field_scale;
 	vec2 field_extent = (u_resolution / cell_size) * field_scale;
-	vec2 normalized = gl_FragCoord.xy / u_resolution;
-	float time = u_time * 0.34;
+	vec2 normalized = (cell_id + 0.5) * cell_size / u_resolution;
+	float time = u_time * 0.2;
 	vec2 focal_point = vec2(field_extent.x * 0.78, field_extent.y * 0.5);
-	focal_point += vec2(sin(time * 0.72), cos(time * 0.58)) * vec2(2.2, 1.4);
+	vec2 wander = vec2(
+		value_noise(vec2(time * 0.28, 7.3)),
+		value_noise(vec2(19.1, time * 0.23))
+	) - 0.5;
+	focal_point += wander * field_extent * vec2(0.55, 0.65);
 
-	vec2 warped_field = field;
-	warped_field.x += sin(field.y * 0.58 + time * 0.9) * 0.48;
-	warped_field.y += cos(field.x * 0.44 - time * 0.72) * 0.38;
+	// Two scales of smoothly evolving currents bend the patterns like flowing ink.
+	vec2 flow_time = vec2(time * 0.26, -time * 0.19);
+	vec2 current = vec2(
+		value_noise(field * 0.3 + flow_time),
+		value_noise(field * 0.3 + flow_time + vec2(23.7, 9.2))
+	) - 0.5;
+	vec2 warped_field = field + current * 3.8 + wander * 1.4;
+	vec2 eddies = vec2(
+		value_noise(warped_field * 0.65 - flow_time * 0.7),
+		value_noise(warped_field * 0.65 - flow_time * 0.7 + vec2(8.4, 31.6))
+	) - 0.5;
+	warped_field += eddies * 1.2;
 
 	float wave = sin(warped_field.x * 1.32 + time * 1.75);
 	wave += cos(warped_field.y * 1.74 - time * 1.22);
@@ -98,46 +114,65 @@ void main() {
 	);
 	wave += spiral * 0.48 + diagonal_sweep * 0.32;
 
+	vec2 ripple_center = field_extent * vec2(0.3, 0.65);
+	ripple_center += vec2(wander.y, -wander.x) * field_extent * 0.4;
+	float ripples = sin(vortex_radius * 2.1 - time * 1.4);
+	ripples += sin(length(warped_field - ripple_center) * 1.8 + time * 0.7);
+	float ribbons = sin(warped_field.x * 0.9 + sin(warped_field.y * 0.65 + time * 0.4) * 2.4 + time);
+	ribbons += cos(warped_field.y * 1.1 - warped_field.x * 0.35 - time * 0.7);
+
+	// Overlapping weights morph between eddies, interference rings, and ribbons.
+	vec3 pattern_weights = 0.15 + vec3(
+		value_noise(vec2(time * 0.18, 3.1)),
+		value_noise(vec2(time * 0.16, 17.4)),
+		value_noise(vec2(time * 0.21, 29.8))
+	);
+	pattern_weights *= pattern_weights;
+	pattern_weights /= dot(pattern_weights, vec3(1.0));
+	wave = dot(pattern_weights, vec3(wave, ripples * 1.65, ribbons * 1.65));
+
 	vec2 noise_flow = vec2(time * 0.55, -time * 0.34);
 	float noise = value_noise(warped_field * 0.72 + noise_flow);
 	noise += value_noise(warped_field * 1.46 - noise_flow * 0.7) * 0.5;
 
-	float intensity = smoothstep(-1.65, 2.7, wave + noise * 2.15 - 1.0);
+	float hover_wave = 0.0;
+	float hover_emphasis = 0.0;
+	for (int index = 0; index < ${RIPPLE_COUNT}; index++) {
+		vec3 ripple = u_ripples[index];
+		float age = u_time - ripple.z;
+		if (ripple.z >= 0.0 && age >= 0.0 && age < 3.0) {
+			float distance = length((normalized - ripple.xy) * u_resolution / u_dpr);
+			float ring = distance - age * 100.0;
+			float envelope = exp(-ring * ring / 900.0) * exp(-age * 1.1);
+			hover_wave += cos(ring * 0.065) * envelope * smoothstep(0.0, 0.12, age);
+			hover_emphasis = max(hover_emphasis, envelope * smoothstep(0.0, 0.08, age));
+		}
+	}
+
+	float intensity = smoothstep(-1.65, 2.7, wave + noise * 2.15 - 1.0 + hover_wave * 2.5);
 	intensity = pow(intensity, 0.88);
 	intensity *= mix(0.82, 1.0, smoothstep(0.05, 0.82, normalized.x));
 
-	float glyph_index = floor(intensity * (u_glyph_count - 1.0) + 0.5);
-	float glyph = sample_glyph(glyph_index, glyph_uv);
-	float glow = 0.0;
-	glow += sample_glyph(glyph_index, glyph_uv + vec2(0.075, 0.0));
-	glow += sample_glyph(glyph_index, glyph_uv + vec2(-0.075, 0.0));
-	glow += sample_glyph(glyph_index, glyph_uv + vec2(0.0, 0.075));
-	glow += sample_glyph(glyph_index, glyph_uv + vec2(0.0, -0.075));
-	glow += sample_glyph(glyph_index, glyph_uv + vec2(0.055, 0.055));
-	glow += sample_glyph(glyph_index, glyph_uv + vec2(-0.055, 0.055));
-	glow += sample_glyph(glyph_index, glyph_uv + vec2(0.055, -0.055));
-	glow += sample_glyph(glyph_index, glyph_uv + vec2(-0.055, -0.055));
-	glow *= 0.125;
-
-	float pulse = 0.83 + 0.17 * sin(cell_id.x * 0.23 + cell_id.y * 0.17 + time);
-	float core_alpha = glyph * mix(0.5, 1.0, intensity) * pulse;
-	float halo_alpha = max(glow - glyph * 0.2, 0.0) * mix(0.32, 0.58, u_dark_mode);
-	float alpha = min(core_alpha + halo_alpha, 1.0);
-
-	float hue = fract(
-		normalized.x * 0.92 +
-		normalized.y * 0.3 +
-		noise * 0.08 -
-		time * 0.045 +
-		sin(vortex_angle * 2.0 + time * 0.8) * 0.035
+	// Stable variation breaks up repeated characters without random frame-to-frame flicker.
+	float glyph_density = clamp(intensity + (hash21(cell_id + vec2(17.0, 43.0)) - 0.5) * 0.18, 0.0, 1.0);
+	float glyph_index = intensity < 0.06 ? 0.0 : floor(glyph_density * (u_glyph_count - 1.0) + 0.5);
+	float glyph = mix(
+		sample_glyph(glyph_index, glyph_uv, 0.0),
+		sample_glyph(glyph_index, glyph_uv, 1.0),
+		smoothstep(0.05, 0.6, hover_emphasis)
 	);
-	vec3 spectrum = hsv_to_rgb(vec3(
-		hue,
-		mix(0.98, 0.9, u_dark_mode),
-		mix(0.8, 1.0, u_dark_mode)
-	));
-	vec3 neutral = mix(vec3(0.035), vec3(0.965), u_dark_mode);
-	vec3 glyph_color = mix(neutral, spectrum, 0.98);
+	float pulse = 0.94 + 0.06 * sin(cell_id.x * 0.23 + cell_id.y * 0.17 + time);
+	float alpha = glyph * mix(0.78, 1.0, intensity) * pulse;
+	// Cell-level inputs keep every pixel of a character the same color.
+	// Flowing color bands follow the spiral rather than a screen-space overlay.
+	float hue = fract(
+		intensity * 0.55 +
+		vortex_radius * 0.075 +
+		sin(vortex_angle + time * 0.3) * 0.18 -
+		time * 0.08 +
+		hash21(cell_id) * 0.06 + hover_wave * 0.14
+	);
+	vec3 glyph_color = spectrum_color(hue);
 
 	out_color = vec4(glyph_color, alpha);
 }
@@ -214,7 +249,7 @@ function createGlyphTexture(gl: WebGL2RenderingContext) {
 	const cellHeight = 48;
 	const atlas = document.createElement("canvas");
 	atlas.width = cellWidth * ASCII_GLYPHS.length;
-	atlas.height = cellHeight;
+	atlas.height = cellHeight * 2;
 
 	const context = atlas.getContext("2d");
 	if (!context) {
@@ -223,13 +258,18 @@ function createGlyphTexture(gl: WebGL2RenderingContext) {
 
 	context.clearRect(0, 0, atlas.width, atlas.height);
 	context.fillStyle = "white";
-	context.font =
-		'600 32px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace';
 	context.textAlign = "center";
 	context.textBaseline = "middle";
 
-	for (const [index, glyph] of Array.from(ASCII_GLYPHS).entries()) {
-		context.fillText(glyph, index * cellWidth + cellWidth / 2, cellHeight / 2);
+	for (const [row, weight] of [400, 800].entries()) {
+		context.font = `${weight} 32px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace`;
+		for (const [index, glyph] of Array.from(ASCII_GLYPHS).entries()) {
+			context.fillText(
+				glyph,
+				index * cellWidth + cellWidth / 2,
+				(row + 0.5) * cellHeight
+			);
+		}
 	}
 
 	const texture = gl.createTexture();
@@ -279,6 +319,14 @@ export function AsciiBackdrop() {
 		const glyphCountLocation = gl.getUniformLocation(program, "u_glyph_count");
 		const darkModeLocation = gl.getUniformLocation(program, "u_dark_mode");
 		const glyphsLocation = gl.getUniformLocation(program, "u_glyphs");
+		const ripplesLocation = gl.getUniformLocation(program, "u_ripples[0]");
+		const hoverTarget = canvas.closest("section");
+		const ripples = new Float32Array(RIPPLE_COUNT * 3);
+		for (let index = 0; index < RIPPLE_COUNT; index++) {
+			ripples[index * 3 + 2] = -1;
+		}
+		let nextRipple = 0;
+		let lastPointer: { x: number; y: number } | null = null;
 		const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 		const colorQuery = window.matchMedia("(prefers-color-scheme: dark)");
 		let animationFrame = 0;
@@ -312,6 +360,7 @@ export function AsciiBackdrop() {
 			lastTime = time;
 			gl.uniform1f(darkModeLocation, isDarkMode ? 1 : 0);
 			gl.uniform1f(timeLocation, time / 1000);
+			gl.uniform3fv(ripplesLocation, ripples);
 			gl.drawArrays(gl.TRIANGLES, 0, 3);
 		}
 
@@ -322,6 +371,12 @@ export function AsciiBackdrop() {
 
 		function syncAnimation() {
 			window.cancelAnimationFrame(animationFrame);
+			if (motionQuery.matches) {
+				for (let index = 0; index < RIPPLE_COUNT; index++) {
+					ripples[index * 3 + 2] = -1;
+				}
+				lastPointer = null;
+			}
 
 			if (
 				!motionQuery.matches &&
@@ -335,6 +390,47 @@ export function AsciiBackdrop() {
 			draw(motionQuery.matches ? 0 : lastTime);
 		}
 
+		const handlePointerMove = (event: PointerEvent) => {
+			if (
+				motionQuery.matches ||
+				event.pointerType === "touch" ||
+				!isIntersecting
+			) {
+				return;
+			}
+			const now = performance.now();
+			const start = lastPointer ?? { x: event.clientX, y: event.clientY };
+			const distance = Math.hypot(
+				event.clientX - start.x,
+				event.clientY - start.y
+			);
+			if (lastPointer && distance < 12) return;
+			const bounds = canvas.getBoundingClientRect();
+			if (!bounds.width || !bounds.height) return;
+			// Fill gaps between pointer events so quick sweeps leave a connected trail.
+			const steps = Math.min(
+				RIPPLE_COUNT,
+				Math.max(1, Math.ceil(distance / 24))
+			);
+			for (let step = 1; step <= steps; step++) {
+				const progress = step / steps;
+				const x = start.x + (event.clientX - start.x) * progress;
+				const y = start.y + (event.clientY - start.y) * progress;
+				ripples.set(
+					[
+						(x - bounds.left) / bounds.width,
+						1 - (y - bounds.top) / bounds.height,
+						now / 1000,
+					],
+					nextRipple * 3
+				);
+				nextRipple = (nextRipple + 1) % RIPPLE_COUNT;
+			}
+			lastPointer = { x: event.clientX, y: event.clientY };
+		};
+		const handlePointerLeave = () => {
+			lastPointer = null;
+		};
 		const handleResize = () => {
 			resize();
 			draw(lastTime);
@@ -356,6 +452,13 @@ export function AsciiBackdrop() {
 		document.addEventListener("visibilitychange", handleVisibilityChange);
 		motionQuery.addEventListener("change", syncAnimation);
 		colorQuery.addEventListener("change", handleColorChange);
+		hoverTarget?.addEventListener("pointerenter", handlePointerMove, {
+			passive: true,
+		});
+		hoverTarget?.addEventListener("pointermove", handlePointerMove, {
+			passive: true,
+		});
+		hoverTarget?.addEventListener("pointerleave", handlePointerLeave);
 		canvas.dataset.ready = "true";
 		resize();
 		draw(0);
@@ -369,6 +472,9 @@ export function AsciiBackdrop() {
 			document.removeEventListener("visibilitychange", handleVisibilityChange);
 			motionQuery.removeEventListener("change", syncAnimation);
 			colorQuery.removeEventListener("change", handleColorChange);
+			hoverTarget?.removeEventListener("pointerenter", handlePointerMove);
+			hoverTarget?.removeEventListener("pointermove", handlePointerMove);
+			hoverTarget?.removeEventListener("pointerleave", handlePointerLeave);
 			delete canvas.dataset.ready;
 			gl.deleteTexture(glyphTexture);
 			gl.deleteProgram(program);

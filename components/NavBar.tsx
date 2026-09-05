@@ -17,7 +17,7 @@ export function NavBar() {
 				aria-label="Primary"
 				className="flex h-[var(--site-nav)] w-full items-center justify-center px-[var(--site-panel)]"
 			>
-				<div className="type-nav flex items-center gap-5">
+				<div className="type-nav flex items-center gap-2">
 					{links.map((link) => {
 						const active =
 							link.href === "/"
@@ -28,7 +28,7 @@ export function NavBar() {
 								key={link.href}
 								href={link.href}
 								aria-current={active ? "page" : undefined}
-								className="text-muted-foreground underline-offset-8 hover:text-foreground hover:underline aria-[current=page]:text-foreground aria-[current=page]:underline"
+								className="inline-flex min-h-[3rem] min-w-[3rem] items-center justify-center px-3 text-muted-foreground decoration-foreground/30 underline-offset-8 hover:text-foreground hover:underline aria-[current=page]:text-foreground aria-[current=page]:underline"
 							>
 								{link.name}
 							</NextLink>

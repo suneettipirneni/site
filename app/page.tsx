@@ -37,44 +37,47 @@ const socialLinks = [
 
 export default function Home() {
 	return (
-		<div className="flex min-h-[calc(100dvh-var(--site-nav))] w-full flex-col">
-			<div className="site-home-grid grow">
-				<section
-					className="relative isolate flex min-h-[var(--site-hero)] items-center overflow-hidden p-[var(--site-panel)] lg:col-span-3"
-					aria-labelledby="intro-heading"
-				>
-					<AsciiBackdrop />
-					<div className="relative z-10 w-full max-w-[880px]">
-						<StaggeredEntrance className="flex min-w-0 flex-col gap-3 sm:gap-4">
-							<EntranceItem>
-								<h1 id="intro-heading" className="type-display max-w-[20ch]">
-									Suneet Tipirneni
-								</h1>
-							</EntranceItem>
-							<EntranceItem>
-								<p className="type-body-small font-medium">
-									AI Engineer{" "}
-									<span className="text-muted-foreground">@ AdventHealth</span>
-								</p>
-							</EntranceItem>
-							<EntranceItem>
-								<p className="type-lead max-w-[34ch]">
-									I build useful software at the intersection of systems,
-									interfaces, and machine learning.
-								</p>
-							</EntranceItem>
-							<EntranceItem>
-								<p className="type-body max-w-[52ch] text-muted-foreground">
-									My work spans computer vision, product engineering, and
-									open-source software. I care about tools that are thoughtful,
-									accessible, and genuinely useful.
-								</p>
-							</EntranceItem>
-						</StaggeredEntrance>
-					</div>
-				</section>
+		<div className="home-page w-full">
+			<section
+				className="relative isolate flex items-center overflow-hidden py-8 sm:py-10 lg:py-12"
+				aria-labelledby="intro-heading"
+			>
+				<AsciiBackdrop />
+				<div className="relative z-10 mx-auto w-full max-w-[1120px] px-6 sm:px-10">
+					<StaggeredEntrance className="flex min-w-0 flex-col gap-3">
+						<EntranceItem>
+							<h1
+								id="intro-heading"
+								className="max-w-[20ch] text-[2.5rem] font-medium tracking-tight [text-wrap:balance] lg:text-6xl"
+							>
+								Suneet Tipirneni
+							</h1>
+						</EntranceItem>
+						<EntranceItem>
+							<p className="type-body-small font-medium">
+								AI Engineer{" "}
+								<span className="text-muted-foreground">@ AdventHealth</span>
+							</p>
+						</EntranceItem>
+						<EntranceItem>
+							<p className="max-w-[40ch] text-xl tracking-tight [text-wrap:pretty] sm:text-2xl">
+								I build useful software at the intersection of systems,
+								interfaces, and machine learning.
+							</p>
+						</EntranceItem>
+						<EntranceItem>
+							<p className="type-body max-w-[52ch] text-muted-foreground">
+								My work spans computer vision, product engineering, and
+								open-source software. I care about tools that are thoughtful,
+								accessible, and genuinely useful.
+							</p>
+						</EntranceItem>
+					</StaggeredEntrance>
+				</div>
+			</section>
 
-				<aside className="min-w-0 p-[var(--site-panel)]">
+			<div className="site-home-grid mx-auto w-full max-w-[1120px] px-6 sm:px-10">
+				<aside className="min-w-0 py-4 sm:py-5">
 					<StaggeredEntrance className="h-full">
 						<EntranceItem>
 							<section aria-labelledby="recent-posts-heading">
@@ -85,11 +88,11 @@ export default function Home() {
 									<div className="type-caption shrink-0">
 										<Link
 											href="/blog"
-											className="min-h-12 inline-flex items-center gap-1.5 text-muted-foreground underline-offset-4 hover:text-foreground hover:underline sm:min-h-0"
+											className="inline-flex min-h-[3rem] items-center gap-1.5 text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
 										>
 											All posts
 											<HiArrowRight
-												className="size-4 shrink-0"
+												className="h-4 w-4 shrink-0"
 												aria-hidden="true"
 											/>
 										</Link>
@@ -104,7 +107,7 @@ export default function Home() {
 				</aside>
 
 				<section
-					className="min-w-0 p-[var(--site-panel)]"
+					className="min-w-0 py-4 sm:py-5"
 					aria-labelledby="projects-heading"
 				>
 					<div className="flex flex-wrap items-center justify-between gap-2 sm:gap-4">
@@ -115,10 +118,10 @@ export default function Home() {
 							href="https://github.com/suneettipirneni?tab=repositories"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="type-caption min-h-12 inline-flex shrink-0 items-center gap-1.5 text-muted-foreground underline-offset-4 hover:text-foreground hover:underline sm:min-h-0"
+							className="type-caption inline-flex min-h-[3rem] shrink-0 items-center gap-1.5 text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
 						>
 							View all on GitHub
-							<HiArrowUpRight className="size-4 shrink-0" aria-hidden="true" />
+							<HiArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" />
 						</a>
 					</div>
 					<Suspense fallback={<RepoListSkeleton />}>
@@ -126,39 +129,27 @@ export default function Home() {
 					</Suspense>
 				</section>
 
-				<section
-					className="min-w-0 p-[var(--site-panel)]"
-					aria-labelledby="social-heading"
-				>
-					<h2 id="social-heading" className="type-section-title">
-						Social links
-					</h2>
-					<nav aria-label="Social links" className="mt-2 sm:mt-3">
-						<ul role="list">
+				<footer className="py-3 lg:col-span-2">
+					<nav aria-label="Social links">
+						<ul role="list" className="flex flex-wrap gap-x-6 gap-y-1">
 							{socialLinks.map(({ label, href, icon: Icon }) => (
-								<li key={label}>
+								<li key={label} className="type-body-small">
 									<a
 										href={href}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="type-body-small group flex min-h-[var(--site-row-sm)] items-center justify-between gap-4 py-2 text-muted-foreground hover:text-foreground"
+										className="group inline-flex min-h-[3rem] items-center gap-2 text-muted-foreground hover:text-foreground"
 									>
-										<span className="flex items-center gap-2.5">
-											<Icon className="size-4 shrink-0" aria-hidden="true" />
-											<span className="underline-offset-4 group-hover:underline">
-												{label}
-											</span>
+										<Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+										<span className="underline-offset-4 group-hover:underline">
+											{label}
 										</span>
-										<HiArrowUpRight
-											className="size-4 shrink-0"
-											aria-hidden="true"
-										/>
 									</a>
 								</li>
 							))}
 						</ul>
 					</nav>
-				</section>
+				</footer>
 			</div>
 		</div>
 	);
@@ -173,14 +164,14 @@ async function RecentPosts() {
 		.slice(0, 3);
 
 	return (
-		<ul role="list" className="mt-1 sm:mt-2">
+		<ul role="list" className="pt-2">
 			{posts.map((post) => (
 				<li key={post.slug}>
 					<Link
 						href={post.url}
-						className="group flex min-h-[var(--site-row-lg)] min-w-0 items-center gap-3 py-2.5 sm:py-2"
+						className="group flex min-h-[4.5rem] min-w-0 items-start gap-3 py-3"
 					>
-						<div className="flex min-w-0 grow flex-col gap-0.5">
+						<div className="flex min-w-0 grow flex-col gap-1">
 							<p className="type-body-small line-clamp-2 font-medium tracking-tight underline-offset-4 group-hover:underline">
 								{post.title}
 							</p>
@@ -191,7 +182,7 @@ async function RecentPosts() {
 							</div>
 						</div>
 						<HiArrowRight
-							className="size-4 shrink-0 text-muted-foreground group-hover:text-foreground"
+							className="h-4 w-4 shrink-0 self-start text-muted-foreground group-hover:text-foreground"
 							aria-hidden="true"
 						/>
 					</Link>
@@ -203,12 +194,12 @@ async function RecentPosts() {
 
 function RecentPostsSkeleton() {
 	return (
-		<div className="mt-1 flex flex-col sm:mt-2" aria-label="Loading posts">
+		<div className="flex flex-col pt-2" aria-label="Loading posts">
 			{Array.from({ length: 3 }).map((_, index) => (
 				<div
 					key={index}
 					aria-hidden="true"
-					className="flex min-h-[var(--site-row-lg)] flex-col justify-center gap-2 py-2.5 sm:py-2"
+					className="flex min-h-[4.5rem] flex-col justify-center gap-1 py-3"
 				>
 					<div className="h-4 w-4/5 bg-muted" />
 					<div className="h-3 w-2/5 bg-muted" />
@@ -220,12 +211,12 @@ function RecentPostsSkeleton() {
 
 function RepoListSkeleton() {
 	return (
-		<div className="mt-3 flex flex-col" aria-label="Loading repositories">
+		<div className="flex flex-col pt-2" aria-label="Loading repositories">
 			{Array.from({ length: 4 }).map((_, index) => (
 				<div
 					key={index}
 					aria-hidden="true"
-					className="flex min-h-[var(--site-row-lg)] flex-col justify-center gap-2"
+					className="flex min-h-[5.5rem] flex-col justify-center gap-1 py-3"
 				>
 					<div className="h-4 w-2/5 bg-muted" />
 					<div className="h-3 w-4/5 bg-muted" />
