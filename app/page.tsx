@@ -65,13 +65,6 @@ export default function Home() {
 								interfaces, and machine learning.
 							</p>
 						</EntranceItem>
-						<EntranceItem>
-							<p className="max-w-[52ch] text-[0.9375rem]/6 [text-wrap:pretty] text-muted-foreground">
-								My work spans computer vision, product engineering, and
-								open-source software. I care about tools that are thoughtful,
-								accessible, and genuinely useful.
-							</p>
-						</EntranceItem>
 					</StaggeredEntrance>
 				</div>
 			</section>
