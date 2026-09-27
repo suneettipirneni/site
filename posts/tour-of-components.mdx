@@ -7,168 +7,178 @@ draft: false
 tags:
   - meta
 headingImage: "/headers/tour-of-components.webp"
-description: A post solely dedicated to the components used in this blog.
+description: The building blocks behind these notes, from a line of code to a longer explanation.
 ---
+
+Good technical writing moves between an idea and its details. This page collects the elements I use to make that movement easier to follow.
+
+# Text and hierarchy
+
+A paragraph sets the pace. **Emphasis** draws attention to the important part, while _italics_ leave room for a quieter aside. Links connect an explanation to [another article on this blog](/blog/posts/algebraic-data-types). Inline code, such as `Result<T, Error>`, belongs in the sentence around it.
+
+## A closer look
+
+Section headings describe the next idea. A short subsection should still have enough space to feel distinct from the paragraph before it.
+
+### A small detail
+
+Use <kbd>⌘</kbd> + <kbd>K</kbd> as an example of a keyboard shortcut. A <mark>highlight</mark> can call attention to a phrase. A ~~discarded approach~~ can remain visible when the correction matters.
+
+# Lists and definitions
+
+A useful explanation often starts with a short sequence.
+
+1. State the input and the expected result.
+2. Work through one concrete example.
+   - Include the ordinary case.
+   - Check what happens at the boundary.
+3. Connect the result to the original question.
+
+A checklist records progress without another paragraph.
+
+- [x] Keep headings descriptive.
+- [x] Give examples enough room to breathe.
+- [ ] Revisit the explanation after using it in practice.
+
+<dl>
+	<dt>Reading measure</dt>
+	<dd>
+		The width of a line of text, chosen to make it easy to find the next line.
+	</dd>
+	<dt>Vertical rhythm</dt>
+	<dd>
+		The repeated spacing that connects related ideas and separates sections.
+	</dd>
+</dl>
 
 # Code
 
-## Inline
-
-This is an example of inline code: `const x = 1;`
-
-## Basic Block
+A short function can explain a rule more precisely than a paragraph.
 
 ```typescript
-import { Component } from "react";
-
-export default class MyComponent extends Component {
-	render() {
-		return <div>Hello World</div>;
-	}
+function double(value: number) {
+	return value * 2;
 }
 ```
 
-## Block With Title
+## Titles and highlighted lines
 
-```typescript title="MyComponent.tsx"
-import { Component } from "react";
+A filename gives the example context. Highlighted lines show the part worth examining. Line numbers help when referring back to a specific step.
 
-export default class MyComponent extends Component {
-	render() {
-		return <div>Hello World</div>;
-	}
+```typescript title="examples/collections/sum-positive-values.ts" {2-4} showLineNumbers
+export function sumPositive(values: number[]) {
+	return values
+		.filter((value) => value > 0)
+		.reduce((total, value) => total + value, 0);
 }
 ```
-
-## Block With Highlighted Lines
-
-```typescript {1,5} title="MyComponent.tsx"
-import { Component } from "react";
-
-export default class MyComponent extends Component {
-	render() {
-		return <div>Hello World</div>;
-	}
-}
-```
-
-# Headings
-
-# H1
-
-## H2
-
-### H3
-
-#### H4
-
-##### H5
-
-###### H6
-
-# Lists
-
-- Item 1
-- Item 2
-- Item 3
-
-# Math
-
-## Inline Math
-
-This is an example of inline math: $x^2 + y^2 = z^2$
-
-## Block Math
-
-$$
-\begin{aligned}
-  x^2 + y^2 &= z^2 \\
-  x^2 + y^2 - z^2 &= 0 \\
-  (x + y - z)(x - y + z) &= 0 \\
-  (x + y - z) &= 0 \text{ or } (x - y + z) = 0 \\
-  x + y &= z \text{ or } x - y = -z
-\end{aligned}
-$$
 
 # Tables
 
-| Assignment                                                                                             | Date      |
-| ------------------------------------------------------------------------------------------------------ | --------- |
-| Report of findings of research from listed foundational work                                           | 6/10/2023 |
-| Creation of proof-of-concept training dataset for images of text.                                      | 6/25/2023 |
-| Code with experiementation via pytorch and available source code of realistic text-in-image generation | 7/20/2023 |
+Tables work best when their columns answer the same question about different choices.
 
-# Lists
+| Element    | Best used for                              | Reading behavior                                  |
+| :--------- | :----------------------------------------- | :------------------------------------------------ |
+| Paragraph  | Developing one idea in full sentences      | Wraps to the reading column                       |
+| Code block | An example the reader can trace or copy    | Preserves whitespace and scrolls when needed      |
+| Figure     | A diagram, table, or equation with context | Keeps the caption beside the material it explains |
 
-## Ordered
+# Figures and images
 
-1. Item 1
-2. Item 2
-3. Item 3
+An image keeps its original proportions. A small diagram should stay crisp instead of stretching across the page.
 
-## Unordered
-
-- Item 1
-- Item 2
-- Item 3
-
-# Block Quotes
-
-> This is a block quote.
-
-# Images
+<Figure caption="A small diagram keeps its natural size within the same column as the surrounding text. Captions can continue onto another line when the explanation needs more room, without clipping or squeezing the image.">
 
 <Image
 	src="/assets/array-diagram.png"
-	title="A sample screenshot."
-	data-image-width="251"
-	data-image-height="82"
-	alt="Five squares in a row, each with a number in them and a memory address below them."
-/>
-
-# Figures
-
-<Figure caption="A caption">
-
-<Image
-	src="/assets/array-diagram.png"
-	title="A sample screenshot."
-	data-image-width="251"
-	data-image-height="82"
-	alt="Five squares in a row, each with a number in them and a memory address below them."
+	alt="Array values arranged in adjacent indexed cells"
+	data-image-width={251}
+	data-image-height={82}
 />
 
 </Figure>
 
-<Figure caption="A caption">
+A figure can also group a table with its explanation.
 
-| Assignment                                                                                             | Date      |
-| ------------------------------------------------------------------------------------------------------ | --------- |
-| Report of findings of research from listed foundational work                                           | 6/10/2023 |
-| Creation of proof-of-concept training dataset for images of text.                                      | 6/25/2023 |
-| Code with experiementation via pytorch and available source code of realistic text-in-image generation | 7/20/2023 |
+<Figure caption="Spacing steps repeat across text and custom components.">
+
+| Relationship           | Space |
+| :--------------------- | ----: |
+| Related list items     |  8 px |
+| Heading to explanation | 16 px |
+| Paragraph to paragraph | 24 px |
+| Major section          | 48 px |
 
 </Figure>
 
-# Info Bars
+# Mathematics
 
-<InfoBlock kind="danger" title="Uh oh">
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum integer enim neque volutpat ac. Massa tempor nec feugiat nisl pretium fusce. Enim nunc faucibus a pellentesque sit amet porttitor eget dolor. In eu mi bibendum neque egestas. Rhoncus est pellentesque elit ullamcorper. Neque sodales ut etiam sit amet nisl. Volutpat consequat mauris nunc congue nisi. Tempus imperdiet nulla malesuada pellentesque elit. Viverra suspendisse potenti nullam ac tortor vitae. Massa placerat duis ultricies lacus. Pellentesque elit eget gravida cum sociis natoque penatibus et. Lobortis scelerisque fermentum dui faucibus in ornare. Ut placerat orci nulla pellentesque dignissim enim sit amet. Fames ac turpis egestas maecenas pharetra convallis. Adipiscing diam donec adipiscing tristique. Odio tempor orci dapibus ultrices in. Vitae congue eu consequat ac felis donec et odio.
+Inline expressions such as $a^2 + b^2 = c^2$ stay with the sentence. Display equations get their own space.
 
-Quisque sagittis purus sit amet. Vitae semper quis lectus nulla at volutpat. Egestas congue quisque egestas diam in arcu. Gravida rutrum quisque non tellus orci ac auctor augue mauris. Vitae suscipit tellus mauris a diam maecenas sed. Tortor dignissim convallis aenean et tortor. Viverra suspendisse potenti nullam ac tortor. Libero justo laoreet sit amet cursus sit amet. Vivamus arcu felis bibendum ut tristique et egestas quis. In massa tempor nec feugiat nisl pretium fusce id velit. Vitae elementum curabitur vitae nunc sed.
+<Figure caption="The sum of the first n positive integers.">
+
+$$
+\sum_{k=1}^{n} k = \frac{n(n+1)}{2}
+$$
+
+</Figure>
+
+# Quotations
+
+A regular quotation is part of the argument around it.
+
+> A useful example gives the reader something small enough to understand and specific enough to test.
+>
+> The explanation can then build on a shared result.
+
+The following example demonstrates an attributed quotation.
+
+<Quote attribution="Example attribution" cite="/blog/posts/tour-of-components">
+
+Keep the example small enough to understand, and the explanation close enough to use.
+
+</Quote>
+
+# Notes and disclosures
+
+Extra detail should be available when the reader needs it. Open a note to see how ordinary Markdown works inside a custom component.
+
+<InfoBlock title="Why an example should keep its assumptions close to the code that depends on them">
+
+A note can hold the same elements as the article.
+
+- State the assumption explicitly.
+- Show the smallest example that depends on it.
+
+```typescript title="average.ts"
+const average = (total: number, count: number) => total / count;
+```
+
+Here, the caller must ensure that $count > 0$.
 
 </InfoBlock>
 
-<InfoBlock kind="warning" title="Watch Out!">
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum integer enim neque volutpat ac. Massa tempor nec feugiat nisl pretium fusce. Enim nunc faucibus a pellentesque sit amet porttitor eget dolor. In eu mi bibendum neque egestas. Rhoncus est pellentesque elit ullamcorper. Neque sodales ut etiam sit amet nisl. Volutpat consequat mauris nunc congue nisi. Tempus imperdiet nulla malesuada pellentesque elit. Viverra suspendisse potenti nullam ac tortor vitae. Massa placerat duis ultricies lacus. Pellentesque elit eget gravida cum sociis natoque penatibus et. Lobortis scelerisque fermentum dui faucibus in ornare. Ut placerat orci nulla pellentesque dignissim enim sit amet. Fames ac turpis egestas maecenas pharetra convallis. Adipiscing diam donec adipiscing tristique. Odio tempor orci dapibus ultrices in. Vitae congue eu consequat ac felis donec et odio.
+<InfoBlock title="Check the boundary case" kind="warning">
 
-Quisque sagittis purus sit amet. Vitae semper quis lectus nulla at volutpat. Egestas congue quisque egestas diam in arcu. Gravida rutrum quisque non tellus orci ac auctor augue mauris. Vitae suscipit tellus mauris a diam maecenas sed. Tortor dignissim convallis aenean et tortor. Viverra suspendisse potenti nullam ac tortor. Libero justo laoreet sit amet cursus sit amet. Vivamus arcu felis bibendum ut tristique et egestas quis. In massa tempor nec feugiat nisl pretium fusce id velit. Vitae elementum curabitur vitae nunc sed.
+An empty collection changes the problem. Decide what the function should return before relying on the ordinary case.
+
+</InfoBlock>
+
+<InfoBlock title="Do not discard an error silently" kind="danger">
+
+A missing result and a failed computation tell the caller different things. Preserve that distinction in the return type.
 
 </InfoBlock>
 
-<InfoBlock kind="info" title="Check this out">
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum integer enim neque volutpat ac. Massa tempor nec feugiat nisl pretium fusce. Enim nunc faucibus a pellentesque sit amet porttitor eget dolor. In eu mi bibendum neque egestas. Rhoncus est pellentesque elit ullamcorper. Neque sodales ut etiam sit amet nisl. Volutpat consequat mauris nunc congue nisi. Tempus imperdiet nulla malesuada pellentesque elit. Viverra suspendisse potenti nullam ac tortor vitae. Massa placerat duis ultricies lacus. Pellentesque elit eget gravida cum sociis natoque penatibus et. Lobortis scelerisque fermentum dui faucibus in ornare. Ut placerat orci nulla pellentesque dignissim enim sit amet. Fames ac turpis egestas maecenas pharetra convallis. Adipiscing diam donec adipiscing tristique. Odio tempor orci dapibus ultrices in. Vitae congue eu consequat ac felis donec et odio.
+<details>
+<summary>A plain disclosure also works</summary>
 
-Quisque sagittis purus sit amet. Vitae semper quis lectus nulla at volutpat. Egestas congue quisque egestas diam in arcu. Gravida rutrum quisque non tellus orci ac auctor augue mauris. Vitae suscipit tellus mauris a diam maecenas sed. Tortor dignissim convallis aenean et tortor. Viverra suspendisse potenti nullam ac tortor. Libero justo laoreet sit amet cursus sit amet. Vivamus arcu felis bibendum ut tristique et egestas quis. In massa tempor nec feugiat nisl pretium fusce id velit. Vitae elementum curabitur vitae nunc sed.
+This uses the browser's native disclosure element. It can be opened with a pointer or with the keyboard, and its text follows the same spacing as the article.
 
-</InfoBlock>
+</details>
+
+---
+
+Small structural choices make a long article easier to follow. A footnote keeps a supporting detail available without interrupting the sentence.[^rhythm]
+
+[^rhythm]: Spacing values are shared across these components. The relationships stay consistent when the reading column narrows on a phone.

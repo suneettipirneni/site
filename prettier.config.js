@@ -1,4 +1,5 @@
 module.exports = {
-  useTabs: true,
-  plugins: [require("prettier-plugin-tailwindcss")],
+	useTabs: true,
+	plugins: ["prettier-plugin-tailwindcss"],
+	tailwindStylesheet: "./app/tailwind.css",
 };

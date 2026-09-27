@@ -12,9 +12,13 @@ export function DateTime({
 	className = "",
 }: DateTimeProps) {
 	return (
-		<time className={`type-caption text-muted-foreground ${className}`}>
-			{formatDatetime(datetime)} <span aria-hidden="true">·</span> {timeToRead}{" "}
-			min read
-		</time>
+		<span
+			className={`post-datetime type-caption text-muted-foreground ${className}`}
+		>
+			<time dateTime={datetime.toISOString()}>{formatDatetime(datetime)}</time>
+			<span className="post-duration">
+				<span aria-hidden="true">·</span> {timeToRead} min read
+			</span>
+		</span>
 	);
 }

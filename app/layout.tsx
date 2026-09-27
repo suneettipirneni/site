@@ -25,11 +25,11 @@ export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang="en" className={inter.variable}>
 			<body
-				className={`${inter.className} min-h-dvh mx-auto flex w-full flex-col bg-background text-foreground antialiased`}
+				className={`${inter.className} mx-auto flex min-h-dvh w-full flex-col bg-background text-foreground antialiased`}
 			>
 				<a
 					href="#main-content"
-					className="sr-only z-50 bg-background px-4 py-3 text-sm font-medium focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+					className="sr-only z-50 bg-background px-4 py-3 text-sm font-medium focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
 				>
 					Skip to content
 				</a>
@@ -41,9 +41,9 @@ export default function RootLayout({ children }: PropsWithChildren) {
 						className="isolate flex w-full grow"
 					>
 						{children}
+						<BlockScrollbar />
 					</main>
 				</MotionProvider>
-				<BlockScrollbar />
 				<Analytics />
 				<SpeedInsights />
 			</body>

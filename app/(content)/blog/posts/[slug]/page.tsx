@@ -17,15 +17,13 @@ import { inlineCodePlugin } from "@/rehype/plugins/inlineCode";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeKatex from "rehype-katex";
 import rehypePrettyCode from "rehype-pretty-code";
-import rehypeSlug from "rehype-slug";
+import { remarkHeadings } from "@/rehype/plugins/remarkHeadings";
+import { rehypeCodeHeaders } from "@/rehype/plugins/codeHeaders";
+import { rehypeTaskListLabels } from "@/rehype/plugins/taskListLabels";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkReferenceLinks from "remark-reference-links";
-import {
-	EntranceItem,
-	StaggeredEntrance,
-} from "@/components/motion/StaggeredEntrance";
-import { HiArrowLeft } from "react-icons/hi2";
+import { HiArrowLeft, HiChevronDown } from "react-icons/hi2";
 
 async function PostMdx({ source }: { source: string }) {
 	"use cache";
@@ -38,13 +36,19 @@ async function PostMdx({ source }: { source: string }) {
 			options={{
 				mdxOptions: {
 					rehypePlugins: [
+						rehypeTaskListLabels,
 						[rehypePrettyCode, rehypePrettyCodeOptions],
-						rehypeSlug,
+						rehypeCodeHeaders,
 						inlineCodePlugin,
 						rehypeKatex,
 						[rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions],
 					],
-					remarkPlugins: [remarkGfm, remarkMath, remarkReferenceLinks],
+					remarkPlugins: [
+						remarkGfm,
+						remarkMath,
+						remarkReferenceLinks,
+						remarkHeadings,
+					],
 				},
 			}}
 		/>
@@ -104,115 +108,58 @@ export default async function Post(props: {
 	const headings = serializeHeadings(post.headings);
 
 	return (
-		<article className="site-post-grid w-full">
-			<aside className="order-2 p-[var(--site-panel)] lg:sticky lg:top-[var(--site-nav)] lg:order-none lg:max-h-[calc(100dvh-var(--site-nav))] lg:self-start lg:overflow-y-auto">
-				<StaggeredEntrance className="flex flex-col gap-6">
-					<EntranceItem>
-						<section aria-labelledby="navigation-heading">
-							<h2 id="navigation-heading" className="type-label">
-								Navigation
-							</h2>
-							<Link
-								href="/blog"
-								className="type-body-small mt-2 flex min-h-[var(--site-row-sm)] items-center justify-between text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
-							>
-								<span>Back to blog</span>
-								<HiArrowLeft className="h-4 w-4 shrink-0" aria-hidden="true" />
-							</Link>
-						</section>
-					</EntranceItem>
-					<EntranceItem>
-						<section aria-labelledby="metadata-heading">
-							<h2 id="metadata-heading" className="type-label">
-								Metadata
-							</h2>
-							<dl className="mt-2 text-[0.8125rem] leading-5">
-								<div className="grid min-h-[var(--site-row-sm)] grid-cols-[6.5rem_minmax(0,1fr)] items-center gap-4 py-2">
-									<dt className="font-medium">Published</dt>
-									<dd className="text-muted-foreground">
-										<DateTime
-											datetime={post.datetime}
-											timeToRead={post.timeToRead}
-										/>
-									</dd>
-								</div>
-								<div className="grid min-h-[var(--site-row-sm)] grid-cols-[6.5rem_minmax(0,1fr)] items-center gap-4 py-2">
-									<dt className="font-medium">Author</dt>
-									<dd className="text-muted-foreground">{post.author}</dd>
-								</div>
-							</dl>
-						</section>
-					</EntranceItem>
-					<EntranceItem>
-						<section aria-labelledby="tags-heading">
-							<h2 id="tags-heading" className="type-label">
-								Tags
-							</h2>
-							<div className="mt-2">
-								<Tags tags={post.tags} />
-							</div>
-						</section>
-					</EntranceItem>
-				</StaggeredEntrance>
-			</aside>
-
-			<div className="order-1 min-w-0 lg:order-none">
-				<header>
-					<StaggeredEntrance>
-						<EntranceItem className="p-[var(--site-panel)]">
-							<div className="mx-auto flex w-full max-w-[760px] flex-col gap-4">
-								<h1 className="type-page-title">{post.title}</h1>
-								<p className="type-body text-muted-foreground">
-									{post.description}
-								</p>
-							</div>
-						</EntranceItem>
-						<EntranceItem className="px-[var(--site-panel)]">
-							<Image
-								src={post.headingImage}
-								alt=""
-								width={1200}
-								height={600}
-								placeholder="blur"
-								blurDataURL={BLUR_DATA_URL}
-								className="mx-auto aspect-[2/1] w-full max-w-[760px] object-cover grayscale lg:aspect-[3/1]"
-								fetchPriority="high"
-								loading="eager"
-								preload
-								sizes="(min-width: 1024px) 760px, calc(100vw - 2rem)"
-							/>
-						</EntranceItem>
-					</StaggeredEntrance>
+		<article className="site-post-grid">
+			<div className="post-reading">
+				<header className="post-header">
+					<Link href="/blog" className="post-back">
+						<HiArrowLeft aria-hidden="true" className="size-4" />
+						Back to blog
+					</Link>
+					<h1 className="post-title">{post.title}</h1>
+					<p className="post-description">{post.description}</p>
+					<div className="post-meta">
+						<div className="post-byline">
+							<span className="post-author">{post.author}</span>
+							<DateTime datetime={post.datetime} timeToRead={post.timeToRead} />
+						</div>
+						<Tags tags={post.tags} />
+					</div>
+					<Image
+						src={post.headingImage}
+						alt=""
+						width={1200}
+						height={600}
+						placeholder="blur"
+						blurDataURL={BLUR_DATA_URL}
+						className="post-hero"
+						preload
+						sizes="(min-width: 768px) 640px, calc(100vw - 2rem)"
+					/>
 				</header>
-
-				<div className="p-[var(--site-panel)]">
-					<StaggeredEntrance delay={0.12}>
-						<EntranceItem>
-							<div
-								data-post
-								className="typeset typeset-docs text-pretty mx-auto max-w-[760px]"
-							>
-								<PostMdx source={post.body} />
-							</div>
-						</EntranceItem>
-					</StaggeredEntrance>
+				{headings.length > 0 && (
+					<details className="post-outline-mobile">
+						<summary>
+							On this page
+							<HiChevronDown aria-hidden="true" className="size-4" />
+						</summary>
+						<Outline headings={headings} hideHeading />
+					</details>
+				)}
+				<div data-post className="typeset typeset-docs">
+					<PostMdx source={post.body} />
 				</div>
+				<footer className="post-footer">
+					<Link href="/blog" className="post-back">
+						<HiArrowLeft aria-hidden="true" className="size-4" />
+						Back to blog
+					</Link>
+				</footer>
 			</div>
-
-			<aside className="hidden p-[var(--site-panel)] lg:sticky lg:top-[var(--site-nav)] lg:block lg:max-h-[calc(100dvh-var(--site-nav))] lg:self-start lg:overflow-y-auto">
-				<StaggeredEntrance>
-					<EntranceItem>
-						<section aria-labelledby="outline-heading">
-							<h2 id="outline-heading" className="type-label">
-								Outline
-							</h2>
-							<div className="mt-2">
-								<Outline headings={headings} hideHeading />
-							</div>
-						</section>
-					</EntranceItem>
-				</StaggeredEntrance>
-			</aside>
+			{headings.length > 0 && (
+				<aside className="post-outline-rail">
+					<Outline headings={headings} />
+				</aside>
+			)}
 		</article>
 	);
 }

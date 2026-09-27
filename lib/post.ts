@@ -1,4 +1,9 @@
-import GithubSlugger from "github-slugger";
+import { unified } from "unified";
+import remarkParse from "remark-parse";
+import remarkMdx from "remark-mdx";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import { remarkHeadings } from "../rehype/plugins/remarkHeadings";
 import matter from "gray-matter";
 import { z } from "zod";
 import { calculateReadingTime } from "./calculateReadingTime";
@@ -36,18 +41,14 @@ export interface Post extends PostMeta {
 }
 
 function resolveHeadings(body: string): HeadingData[] {
-	const regXHeader = /\n(?<flag>#{1,6})\s+(?<content>.+)/g;
-	const slugger = new GithubSlugger();
-	const headings = Array.from(body.matchAll(regXHeader)).map(({ groups }) => {
-		const flag = groups?.flag;
-		const content = groups?.content!;
-		return {
-			level: flag?.length!,
-			text: content,
-			slug: slugger.slug(content),
-		};
-	});
-
+	const headings: HeadingData[] = [];
+	const processor = unified()
+		.use(remarkParse)
+		.use(remarkMdx)
+		.use(remarkGfm)
+		.use(remarkMath)
+		.use(remarkHeadings, headings);
+	processor.runSync(processor.parse(body));
 	return headings;
 }
 

@@ -9,17 +9,19 @@ type MdxImageProps = Omit<ImageProps, "alt" | "height" | "width"> & {
 export function Image({
 	alt = "",
 	className,
+	style,
 	"data-image-height": imageHeight = 630,
 	"data-image-width": imageWidth = 1200,
 	...props
 }: MdxImageProps) {
 	return (
-		<div className="flex w-full flex-col items-center justify-center post:-mx-[var(--space-page)] post:mb-4 post:w-auto">
+		<div className="mdx-image">
 			<NextImage
 				alt={alt}
 				height={imageHeight}
 				width={imageWidth}
-				className={`w-full grayscale ${className ?? ""}`}
+				style={{ width: Number(imageWidth), ...style }}
+				className={`h-auto max-w-full ${className ?? ""}`}
 				{...props}
 			/>
 		</div>

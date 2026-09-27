@@ -15,7 +15,7 @@ export function Tag({ name, variant = "inline" }: TagProps) {
 			className={`type-caption text-muted-foreground underline-offset-4 hover:text-foreground hover:underline ${
 				variant === "row"
 					? "flex min-h-[var(--site-row-sm)] w-full items-center px-[var(--space-cell)]"
-					: "inline-flex items-center"
+					: "post-tag inline-flex items-center"
 			}`}
 		>
 			{name}
@@ -35,7 +35,7 @@ export function Tags({
 			className={
 				variant === "row"
 					? "flex w-full flex-col"
-					: "flex flex-wrap items-center gap-x-4 gap-y-1"
+					: "post-tags flex flex-wrap items-center gap-x-4 gap-y-2"
 			}
 		>
 			{tags.map((tag) => (

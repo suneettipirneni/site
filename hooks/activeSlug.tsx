@@ -1,55 +1,40 @@
 import type { HeadingNode } from "@/util/HeaderTree";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 // Hook adapted from https://nickymeuleman.netlify.app/blog/table-of-contents
 export function useActiveSlug(headers: HeadingNode[]) {
-	const [activeSlug, setActiveSlug] = useState(``);
+	const [activeSlug, setActiveSlug] = useState("");
 
 	useEffect(() => {
+		const elements: HTMLElement[] = [];
+		const collect = (nodes: HeadingNode[]) => {
+			for (const node of nodes) {
+				const element = document.getElementById(node.slug);
+				if (element) elements.push(element);
+				collect(node.children);
+			}
+		};
+		collect(headers);
+
+		const visible = new Set<Element>();
 		const observer = new IntersectionObserver(
 			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						setActiveSlug(entry.target.id);
-					}
-				});
+				for (const entry of entries) {
+					if (entry.isIntersecting) visible.add(entry.target);
+					else visible.delete(entry.target);
+				}
+				const current = elements.findLast(
+					(element) =>
+						visible.has(element) && element.getClientRects().length > 0,
+				);
+				if (current) setActiveSlug(current.id);
 			},
-			{ rootMargin: `0% 0% -80% 0%` }
+			{ rootMargin: "0px 0px -80% 0px" },
 		);
 
-		const idCallback = (nodes: HeadingNode[]) => {
-			const elements: HTMLElement[] = [];
-
-			nodes.forEach((node) => {
-				if (node.children.length > 0) {
-					elements.push(...idCallback(node.children));
-				}
-
-				const { slug: id } = node;
-				const element = document.getElementById(id);
-
-				if (!element) {
-					throw new Error(`Cannot find heading with id: ${id}`);
-				}
-
-				elements.push(element);
-			});
-
-			return elements;
-		};
-
-		const elements = idCallback(headers);
-
-		elements.forEach((element) => {
-			observer.observe(element);
-		});
-
-		return () => {
-			elements.forEach((element) => {
-				observer.unobserve(element);
-			});
-		};
+		for (const element of elements) observer.observe(element);
+		return () => observer.disconnect();
 	}, [headers]);
 
-	return useMemo(() => activeSlug, [activeSlug]);
+	return activeSlug;
 }

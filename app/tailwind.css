@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme inline {
+	--font-sans: var(--font-inter);
+	--font-mono: var(--font-code);
+	--color-border: hsl(var(--border));
+	--color-background: hsl(var(--background));
+	--color-foreground: hsl(var(--foreground));
+	--color-muted: hsl(var(--muted));
+	--color-muted-foreground: hsl(var(--muted-foreground));
+}
+
+@custom-variant post ([data-post="true"] > &);

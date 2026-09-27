@@ -27,11 +27,13 @@ export const OutlineNode = memo(function OutlineNode({
 		<div className="flex flex-col">
 			<a
 				href={`#${node.slug}`}
-				className={`type-caption flex min-h-[var(--site-row-xs)] w-full items-center truncate underline-offset-4 hover:underline ${
+				aria-current={isActive ? "location" : undefined}
+				data-depth={depth}
+				className={`outline-link ${
 					isActive ? "font-medium text-foreground" : "text-muted-foreground"
 				}`}
 				style={{
-					paddingInlineStart: `${0.5 + depth * 0.75}rem`,
+					paddingInlineStart: `${8 + depth * 10}px`,
 				}}
 			>
 				{node.text}
@@ -61,9 +63,12 @@ export function Outline({
 	const activeSlug = useActiveSlug(headings);
 
 	return (
-		<div className={`flex flex-col ${className ?? ""}`}>
+		<nav
+			aria-label="On this page"
+			className={`post-outline ${className ?? ""}`}
+		>
 			{hideHeading ? null : (
-				<h2 className="type-label text-muted-foreground">Outline</h2>
+				<h2 className="type-label text-muted-foreground">On this page</h2>
 			)}
 			{headings.map((heading) => (
 				<OutlineNode
@@ -72,6 +77,6 @@ export function Outline({
 					activeSlug={activeSlug}
 				/>
 			))}
-		</div>
+		</nav>
 	);
 }

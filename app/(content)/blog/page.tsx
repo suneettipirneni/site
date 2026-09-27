@@ -1,8 +1,4 @@
 import { PostCard } from "@/components/blog/PostCard";
-import {
-	EntranceItem,
-	StaggeredEntrance,
-} from "@/components/motion/StaggeredEntrance";
 import { getPosts } from "@/lib/post";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -22,36 +18,19 @@ export default function BlogPostsPage({
 	searchParams: Promise<BlogPostsSearchParams>;
 }) {
 	return (
-		<div className="site-content-grid min-h-[calc(100dvh-var(--site-nav))] w-full">
-			<aside className="p-[var(--site-panel)] lg:sticky lg:top-[var(--site-nav)] lg:self-start">
-				<StaggeredEntrance className="flex flex-col gap-5">
-					<EntranceItem>
-						<h1 className="type-page-title">Blog</h1>
-					</EntranceItem>
-					<EntranceItem>
-						<p className="type-body text-muted-foreground">
-							Notes on software, systems, and things I’m learning.
-						</p>
-					</EntranceItem>
-					<EntranceItem>
-						<section aria-labelledby="filters-heading">
-							<h2 id="filters-heading" className="type-label">
-								Filters
-							</h2>
-							<Suspense fallback={<BlogFiltersSkeleton />}>
-								<BlogFilters searchParams={searchParams} />
-							</Suspense>
-						</section>
-					</EntranceItem>
-				</StaggeredEntrance>
-			</aside>
-
-			<section
-				aria-label="Posts"
-				className="mx-auto w-full min-w-0 max-w-[760px]"
-			>
-				<header className="flex min-h-[var(--site-row-lg)] items-center justify-between gap-4 px-[var(--site-panel)]">
-					<h2 className="type-section-title">Writing</h2>
+		<div className="blog-index">
+			<header className="blog-index-header">
+				<h1 className="post-title">Blog</h1>
+				<p className="post-description">
+					Notes on software, systems, and things I’m learning.
+				</p>
+			</header>
+			<Suspense fallback={<BlogFiltersSkeleton />}>
+				<BlogFilters searchParams={searchParams} />
+			</Suspense>
+			<section aria-label="Posts" className="blog-post-list">
+				<header className="blog-list-heading">
+					<h2>Latest posts</h2>
 					<Suspense fallback={<PostCountSkeleton />}>
 						<PostCount searchParams={searchParams} />
 					</Suspense>
@@ -68,15 +47,15 @@ function getSelectedTags(params: BlogPostsSearchParams) {
 	return Array.isArray(params.tags)
 		? params.tags
 		: params.tags
-		? [params.tags]
-		: [];
+			? [params.tags]
+			: [];
 }
 
 async function getPublishedPosts() {
 	return (await getPosts())
 		.filter((post) => process.env.NODE_ENV !== "production" || !post.draft)
 		.toSorted(
-			(a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime()
+			(a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime(),
 		);
 }
 
@@ -88,8 +67,8 @@ async function getBlogView(searchParams: Promise<BlogPostsSearchParams>) {
 	const selectedTags = getSelectedTags(params);
 	const visiblePosts = selectedTags.length
 		? publishedPosts.filter((post) =>
-				selectedTags.every((tag) => post.tags.includes(tag))
-		  )
+				selectedTags.every((tag) => post.tags.includes(tag)),
+			)
 		: publishedPosts;
 
 	return { publishedPosts, selectedTags, visiblePosts };
@@ -105,15 +84,16 @@ async function BlogFilters({
 		...new Set(publishedPosts.flatMap((post) => post.tags)),
 	].toSorted();
 
-	return (
-		<nav aria-label="Filter posts" className="mt-2 flex flex-col">
+	const links = (
+		<nav aria-label="Filter posts" className="blog-filters">
 			<Link
 				href="/blog"
 				scroll={false}
 				aria-current={selectedTags.length === 0 ? "page" : undefined}
-				className="type-body-small flex min-h-[var(--site-row-sm)] items-center text-muted-foreground underline-offset-4 hover:text-foreground hover:underline aria-[current=page]:text-foreground aria-[current=page]:underline"
+				className="blog-filter"
 			>
-				All posts
+				<span>All posts</span>
+				<span className="blog-topic-count">{publishedPosts.length}</span>
 			</Link>
 			{tags.map((tag) => {
 				const active = selectedTags.includes(tag);
@@ -126,13 +106,36 @@ async function BlogFilters({
 						href={href}
 						scroll={false}
 						aria-current={active ? "page" : undefined}
-						className="type-body-small flex min-h-[var(--site-row-sm)] items-center capitalize text-muted-foreground underline-offset-4 hover:text-foreground hover:underline aria-[current=page]:text-foreground aria-[current=page]:underline"
+						className="blog-filter"
 					>
-						{tag}
+						<span>{tag}</span>
+						<span className="blog-topic-count">
+							{publishedPosts.filter((post) => post.tags.includes(tag)).length}
+						</span>
 					</Link>
 				);
 			})}
 		</nav>
+	);
+	return (
+		<>
+			<details className="blog-topics-mobile">
+				<summary>
+					<span>Topics</span>
+					<span className="blog-selected-topic">
+						{selectedTags.join(", ") || "All posts"}
+					</span>
+					<span aria-hidden="true" className="blog-topics-chevron">
+						⌄
+					</span>
+				</summary>
+				{links}
+			</details>
+			<aside className="blog-topics-rail">
+				<h2>Topics</h2>
+				{links}
+			</aside>
+		</>
 	);
 }
 
@@ -144,7 +147,7 @@ async function PostCount({
 	const { visiblePosts } = await getBlogView(searchParams);
 
 	return (
-		<span className="type-caption tabular-nums text-muted-foreground">
+		<span className="type-caption text-muted-foreground tabular-nums">
 			{visiblePosts.length} {visiblePosts.length === 1 ? "post" : "posts"}
 		</span>
 	);
@@ -176,7 +179,7 @@ async function BlogPostList({
 
 function BlogFiltersSkeleton() {
 	return (
-		<div className="mt-2 flex flex-col" aria-label="Loading filters">
+		<div className="blog-topics-loading" aria-label="Loading filters">
 			{Array.from({ length: 5 }).map((_, index) => (
 				<div
 					key={index}
@@ -203,11 +206,7 @@ function BlogPostsSkeleton() {
 	return (
 		<div aria-label="Loading posts">
 			{Array.from({ length: 5 }).map((_, index) => (
-				<div
-					key={index}
-					className="min-h-36 p-[var(--site-panel)]"
-					aria-hidden="true"
-				>
+				<div key={index} className="blog-post-card min-h-36" aria-hidden="true">
 					<div className="h-5 w-1/3 bg-muted" />
 					<div className="mt-3 h-4 w-2/3 bg-muted" />
 				</div>

@@ -1,12 +1,25 @@
-.katex-display {
-	/* @apply bg-white/30 dark:bg-white/10;
-	@apply border border-gray-300 dark:border-white/25;
-	@apply rounded-lg;
-	@apply p-5; */
-	/* @apply text-lg; */
-	@apply overflow-x-auto;
-}
-
-div[data-post="true"] > .katex-display {
-	@apply mb-4;
+@layer components {
+	.typeset .katex-display {
+		margin-block: 2rem;
+		padding-block: 0.5rem;
+		overflow-x: auto;
+		overflow-y: hidden;
+		font-size: 1em;
+	}
+	.typeset .katex-display > .katex {
+		white-space: nowrap;
+	}
+	.typeset
+		:is(.mdx-figure-content, .mdx-callout-body)
+		> .katex-display:first-child,
+	.typeset
+		:is(.mdx-figure-content, .mdx-callout-body)
+		> :first-child
+		> .katex-display:first-child {
+		margin-top: 0;
+	}
+	.typeset .mdx-figure-content > .katex-display:last-child,
+	.typeset .mdx-figure-content > :last-child > .katex-display:last-child {
+		margin-bottom: 0;
+	}
 }

@@ -12,16 +12,12 @@ export function PostCard({ post, index = 0 }: { post: Post; index?: number }) {
 	return (
 		<StaggeredEntrance delay={Math.min(index * 0.04, 0.24)}>
 			<EntranceItem>
-				<article className="p-[var(--site-panel)]">
+				<article className="blog-post-card">
 					<div className="flex flex-wrap items-center justify-between gap-3 text-muted-foreground">
 						<DateTime datetime={post.datetime} timeToRead={post.timeToRead} />
-						<Tags tags={post.tags} />
 					</div>
-					<h3 className="type-card-title mt-3">
-						<Link
-							href={post.url}
-							className="inline-flex items-start gap-2 underline decoration-transparent underline-offset-4 hover:decoration-current"
-						>
+					<h3>
+						<Link href={post.url} className="post-card-link">
 							<span className="min-w-0">{post.title}</span>
 							<HiArrowRight
 								className="h-[1lh] w-4 shrink-0"
@@ -29,9 +25,10 @@ export function PostCard({ post, index = 0 }: { post: Post; index?: number }) {
 							/>
 						</Link>
 					</h3>
-					<p className="type-body-small mt-2 line-clamp-2 max-w-[65ch] text-muted-foreground">
-						{post.description}
-					</p>
+					<p>{post.description}</p>
+					<div className="post-card-tags">
+						<Tags tags={post.tags} />
+					</div>
 				</article>
 			</EntranceItem>
 		</StaggeredEntrance>
