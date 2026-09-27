@@ -58,8 +58,8 @@ type Repo = ResponseData["data"]["user"]["pinnedItems"]["nodes"][number];
 
 function RepoRow({ repo }: { repo: Repo }) {
 	return (
-		<article className="flex min-h-[5.5rem] min-w-0 flex-col gap-1 py-3">
-			<div className="type-body-small min-w-0 font-medium tracking-tight">
+		<article className="flex min-h-20 min-w-0 flex-col gap-1 py-3">
+			<div className="min-w-0 text-sm/5 font-medium tracking-tight">
 				<a
 					href={repo.url}
 					target="_blank"
@@ -69,10 +69,10 @@ function RepoRow({ repo }: { repo: Repo }) {
 					{repo.name}
 				</a>
 			</div>
-			<p className="type-body-small line-clamp-2 text-muted-foreground">
+			<p className="line-clamp-2 text-sm/5 text-muted-foreground">
 				{repo.description ?? "Open-source work and experiments."}
 			</p>
-			<div className="type-caption flex flex-wrap items-center gap-x-4 gap-y-1 tabular-nums text-muted-foreground">
+			<div className="type-caption flex flex-wrap items-center gap-x-4 gap-y-1 text-muted-foreground tabular-nums">
 				<span>{repo.primaryLanguage?.name ?? "Code"}</span>
 				<span
 					className="inline-flex items-center gap-1"

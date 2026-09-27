@@ -174,7 +174,7 @@ void main() {
 	);
 	vec3 glyph_color = spectrum_color(hue);
 
-	out_color = vec4(glyph_color, alpha);
+	out_color = vec4(glyph_color * alpha, alpha);
 }
 `;
 
@@ -188,11 +188,11 @@ function createFallbackField() {
 			const intensity = Math.max(0, (wave + 3) / 6 - 0.14);
 			const glyphIndex = Math.min(
 				ASCII_GLYPHS.length - 1,
-				Math.floor(intensity * ASCII_GLYPHS.length)
+				Math.floor(intensity * ASCII_GLYPHS.length),
 			);
 
 			return ASCII_GLYPHS[glyphIndex];
-		}).join("")
+		}).join(""),
 	).join("\n");
 }
 
@@ -201,7 +201,7 @@ const fallbackField = createFallbackField();
 function compileShader(
 	gl: WebGL2RenderingContext,
 	type: number,
-	source: string
+	source: string,
 ) {
 	const shader = gl.createShader(type);
 	if (!shader) {
@@ -267,7 +267,7 @@ function createGlyphTexture(gl: WebGL2RenderingContext) {
 			context.fillText(
 				glyph,
 				index * cellWidth + cellWidth / 2,
-				(row + 0.5) * cellHeight
+				(row + 0.5) * cellHeight,
 			);
 		}
 	}
@@ -303,7 +303,7 @@ export function AsciiBackdrop() {
 			antialias: false,
 			depth: false,
 			powerPreference: "low-power",
-			premultipliedAlpha: false,
+			premultipliedAlpha: true,
 		});
 
 		if (!mountedContext) {
@@ -402,7 +402,7 @@ export function AsciiBackdrop() {
 			const start = lastPointer ?? { x: event.clientX, y: event.clientY };
 			const distance = Math.hypot(
 				event.clientX - start.x,
-				event.clientY - start.y
+				event.clientY - start.y,
 			);
 			if (lastPointer && distance < 12) return;
 			const bounds = canvas.getBoundingClientRect();
@@ -410,7 +410,7 @@ export function AsciiBackdrop() {
 			// Fill gaps between pointer events so quick sweeps leave a connected trail.
 			const steps = Math.min(
 				RIPPLE_COUNT,
-				Math.max(1, Math.ceil(distance / 24))
+				Math.max(1, Math.ceil(distance / 24)),
 			);
 			for (let step = 1; step <= steps; step++) {
 				const progress = step / steps;
@@ -422,7 +422,7 @@ export function AsciiBackdrop() {
 						1 - (y - bounds.top) / bounds.height,
 						now / 1000,
 					],
-					nextRipple * 3
+					nextRipple * 3,
 				);
 				nextRipple = (nextRipple + 1) % RIPPLE_COUNT;
 			}

@@ -39,7 +39,7 @@ export default function Home() {
 	return (
 		<div className="home-page w-full">
 			<section
-				className="relative isolate flex items-center overflow-hidden py-8 sm:py-10 lg:py-12"
+				className="relative isolate flex items-center overflow-hidden py-6 sm:py-8 lg:py-10"
 				aria-labelledby="intro-heading"
 			>
 				<AsciiBackdrop />
@@ -48,25 +48,25 @@ export default function Home() {
 						<EntranceItem>
 							<h1
 								id="intro-heading"
-								className="max-w-[20ch] text-[2.5rem] font-medium tracking-tight [text-wrap:balance] lg:text-6xl"
+								className="max-w-[20ch] text-[2rem]/[1.125] font-medium tracking-tight [text-wrap:balance] sm:text-[2.5rem] lg:text-[3rem]"
 							>
 								Suneet Tipirneni
 							</h1>
 						</EntranceItem>
 						<EntranceItem>
-							<p className="type-body-small font-medium">
+							<p className="text-sm/5 font-medium">
 								AI Engineer{" "}
 								<span className="text-muted-foreground">@ AdventHealth</span>
 							</p>
 						</EntranceItem>
 						<EntranceItem>
-							<p className="max-w-[40ch] text-xl tracking-tight [text-wrap:pretty] sm:text-2xl">
+							<p className="max-w-[40ch] text-lg/6 tracking-tight [text-wrap:pretty] sm:text-xl/7">
 								I build useful software at the intersection of systems,
 								interfaces, and machine learning.
 							</p>
 						</EntranceItem>
 						<EntranceItem>
-							<p className="type-body max-w-[52ch] text-muted-foreground">
+							<p className="max-w-[52ch] text-[0.9375rem]/6 [text-wrap:pretty] text-muted-foreground">
 								My work spans computer vision, product engineering, and
 								open-source software. I care about tools that are thoughtful,
 								accessible, and genuinely useful.
@@ -82,7 +82,10 @@ export default function Home() {
 						<EntranceItem>
 							<section aria-labelledby="recent-posts-heading">
 								<div className="flex items-center justify-between gap-3">
-									<h2 id="recent-posts-heading" className="type-section-title">
+									<h2
+										id="recent-posts-heading"
+										className="text-base/6 font-semibold tracking-tight"
+									>
 										Recent posts
 									</h2>
 									<div className="type-caption shrink-0">
@@ -111,7 +114,10 @@ export default function Home() {
 					aria-labelledby="projects-heading"
 				>
 					<div className="flex flex-wrap items-center justify-between gap-2 sm:gap-4">
-						<h2 id="projects-heading" className="type-section-title">
+						<h2
+							id="projects-heading"
+							className="text-base/6 font-semibold tracking-tight"
+						>
 							Selected open source
 						</h2>
 						<a
@@ -133,7 +139,7 @@ export default function Home() {
 					<nav aria-label="Social links">
 						<ul role="list" className="flex flex-wrap gap-x-6 gap-y-1">
 							{socialLinks.map(({ label, href, icon: Icon }) => (
-								<li key={label} className="type-body-small">
+								<li key={label} className="text-sm/5">
 									<a
 										href={href}
 										target="_blank"
@@ -159,7 +165,7 @@ async function RecentPosts() {
 	const posts = (await getPosts())
 		.filter((post) => process.env.NODE_ENV !== "production" || !post.draft)
 		.toSorted(
-			(a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime()
+			(a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime(),
 		)
 		.slice(0, 3);
 
@@ -169,10 +175,10 @@ async function RecentPosts() {
 				<li key={post.slug}>
 					<Link
 						href={post.url}
-						className="group flex min-h-[4.5rem] min-w-0 items-start gap-3 py-3"
+						className="group flex min-h-16 min-w-0 items-start gap-3 py-3"
 					>
 						<div className="flex min-w-0 grow flex-col gap-1">
-							<p className="type-body-small line-clamp-2 font-medium tracking-tight underline-offset-4 group-hover:underline">
+							<p className="line-clamp-2 text-sm/5 font-medium tracking-tight underline-offset-4 group-hover:underline">
 								{post.title}
 							</p>
 							<div className="type-caption text-muted-foreground">
@@ -199,7 +205,7 @@ function RecentPostsSkeleton() {
 				<div
 					key={index}
 					aria-hidden="true"
-					className="flex min-h-[4.5rem] flex-col justify-center gap-1 py-3"
+					className="flex min-h-16 flex-col justify-center gap-1 py-3"
 				>
 					<div className="h-4 w-4/5 bg-muted" />
 					<div className="h-3 w-2/5 bg-muted" />
@@ -216,7 +222,7 @@ function RepoListSkeleton() {
 				<div
 					key={index}
 					aria-hidden="true"
-					className="flex min-h-[5.5rem] flex-col justify-center gap-1 py-3"
+					className="flex min-h-20 flex-col justify-center gap-1 py-3"
 				>
 					<div className="h-4 w-2/5 bg-muted" />
 					<div className="h-3 w-4/5 bg-muted" />
