@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 import {
 	HiChevronDown,
-	HiExclamationTriangle,
-	HiInformationCircle,
-	HiXCircle,
+	HiOutlineExclamationTriangle,
+	HiOutlineInformationCircle,
+	HiOutlineXCircle,
 } from "react-icons/hi2";
 
 export interface InfoBlockProps {
@@ -12,9 +12,9 @@ export interface InfoBlockProps {
 	children?: ReactNode;
 }
 const kinds = {
-	info: { icon: HiInformationCircle, label: "Note" },
-	warning: { icon: HiExclamationTriangle, label: "Warning" },
-	danger: { icon: HiXCircle, label: "Caution" },
+	info: { icon: HiOutlineInformationCircle, label: "Note" },
+	warning: { icon: HiOutlineExclamationTriangle, label: "Warning" },
+	danger: { icon: HiOutlineXCircle, label: "Caution" },
 };
 export function InfoBlock({ title, kind = "info", children }: InfoBlockProps) {
 	const { icon: Icon, label } = kinds[kind];
@@ -23,13 +23,10 @@ export function InfoBlock({ title, kind = "info", children }: InfoBlockProps) {
 			<summary data-not-typeset className="mdx-callout-summary">
 				<Icon aria-hidden="true" className="mdx-callout-icon" />
 				<span className="mdx-callout-heading">
-					<span className="mdx-callout-kind">{label}</span>
+					<span className="mdx-callout-kind">{label}.</span>{" "}
 					<span className="mdx-callout-title">{title}</span>
 				</span>
-				<HiChevronDown
-					aria-hidden="true"
-					className="mdx-callout-chevron size-4 shrink-0"
-				/>
+				<HiChevronDown aria-hidden="true" className="mdx-callout-chevron" />
 			</summary>
 			<div className="mdx-callout-body">{children}</div>
 		</details>
