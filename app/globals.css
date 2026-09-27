@@ -377,9 +377,8 @@ body::after {
 		line-height: 1rem;
 	}
 
-	.ascii-backdrop__canvas[data-ready="true"],
-	.ascii-backdrop__fallback {
-		opacity: var(--ascii-opacity-sm);
+	.ascii-backdrop {
+		--ascii-opacity: var(--ascii-opacity-sm);
 	}
 }
 
@@ -410,9 +409,8 @@ body::after {
 		grid-template-columns: var(--site-rail) minmax(0, 1fr);
 	}
 
-	.ascii-backdrop__canvas[data-ready="true"],
-	.ascii-backdrop__fallback {
-		opacity: var(--ascii-opacity-lg);
+	.ascii-backdrop {
+		--ascii-opacity: var(--ascii-opacity-lg);
 	}
 }
 
@@ -897,14 +895,8 @@ body:has(.site-post-grid, .blog-index)::after {
 			--reading-inset: 1.5rem;
 			--reading-title-size: 2.25rem;
 			--reading-title-leading: 2.625rem;
-			--reading-section-size: 1.5rem;
-			--reading-section-leading: 2rem;
-			--reading-subheading-size: 1.25rem;
-			--reading-subheading-leading: 1.75rem;
 			--reading-card-size: 1.375rem;
 			--reading-card-leading: 1.875rem;
-			--reading-body-size: 1.0625rem;
-			--reading-body-leading: 1.625rem;
 			--reading-deck-size: 1.125rem;
 			--reading-deck-leading: 1.75rem;
 		}
