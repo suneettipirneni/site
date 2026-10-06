@@ -1,5 +1,8 @@
-export const postSources = import.meta.glob("./posts/*.mdx", {
+const modules = import.meta.glob<{ default: string }>("./posts/*.mdx", {
 	eager: true,
-	import: "default",
 	query: "?raw",
-}) as Record<string, string>;
+});
+
+export const postSources = Object.fromEntries(
+	Object.entries(modules).map(([path, source]) => [path, source.default]),
+);

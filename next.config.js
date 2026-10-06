@@ -18,8 +18,7 @@ const nextConfig = {
 		rules: {
 			"*.mdx": {
 				condition: { query: "?raw" },
-				loaders: ["raw-loader"],
-				as: "*.js",
+				type: "text",
 			},
 		},
 	},
