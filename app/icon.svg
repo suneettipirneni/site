@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 44 44">
+  <style>
+    @media (prefers-color-scheme: dark) {
+      .background { fill: #0a0a0a; }
+      .monogram { fill: #f5f5f5; }
+    }
+  </style>
+  <rect class="background" width="64" height="64" fill="#ffffff"/>
+  <path class="monogram" d="M12 12H52V18H46V52H40V18H18V29H34V52H12V46H28V35H12Z" fill="#0a0a0a"/>
+</svg>
