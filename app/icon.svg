@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="-0.2 -0.2 5.4 5.4">
   <style>
     @media (prefers-color-scheme: dark) {
       .background { fill: #0a0a0a; }
       .monogram { fill: #f5f5f5; }
     }
   </style>
-  <rect class="background" width="64" height="64" fill="#ffffff"/>
-  <path class="monogram" d="M4 4H60V12H52V60H44V12H12V28H36V60H4V52H28V36H4Z" fill="#0a0a0a"/>
+  <rect class="background" x="-0.2" y="-0.2" width="5.4" height="5.4" fill="#ffffff"/>
+  <path class="monogram" d="M0 0H5V1H4V5H3V1H1V2H2V5H0V4H1V3H0Z" fill="#0a0a0a"/>
 </svg>
