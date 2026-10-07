@@ -534,6 +534,18 @@ textarea {
 	animation: blog-page-fade-in 320ms ease-out 40ms both;
 }
 
+::view-transition-old(.blog-page) {
+	animation:
+		blog-page-fade-out 180ms ease-out both,
+		blog-page-slide-out 240ms var(--motion-ease) both;
+}
+
+::view-transition-new(.blog-page) {
+	animation:
+		blog-page-fade-in 320ms ease-out 40ms both,
+		blog-page-slide-in 420ms var(--motion-ease) 40ms both;
+}
+
 @keyframes blog-page-fade-out {
 	to {
 		opacity: 0;
@@ -546,6 +558,21 @@ textarea {
 	}
 	to {
 		opacity: 1;
+	}
+}
+
+@keyframes blog-page-slide-out {
+	to {
+		transform: translateY(-6px);
+	}
+}
+
+@keyframes blog-page-slide-in {
+	from {
+		transform: translateY(12px);
+	}
+	to {
+		transform: translateY(0);
 	}
 }
 
