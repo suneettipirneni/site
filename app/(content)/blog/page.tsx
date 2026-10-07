@@ -161,9 +161,7 @@ async function BlogPostList({
 	const { visiblePosts } = await getBlogView(searchParams);
 
 	return visiblePosts.length ? (
-		visiblePosts.map((post, index) => (
-			<PostCard key={post.slug} post={post} index={index} />
-		))
+		visiblePosts.map((post) => <PostCard key={post.slug} post={post} />)
 	) : (
 		<div className="p-[var(--site-panel)]">
 			<h2 className="type-section-title">No posts in this category yet.</h2>

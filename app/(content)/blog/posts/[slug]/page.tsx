@@ -131,9 +131,13 @@ export default async function Post(props: {
 					<div className="post-meta">
 						<div className="post-byline">
 							<span className="post-author">{post.author}</span>
-							<DateTime datetime={post.datetime} timeToRead={post.timeToRead} />
+							<DateTime
+								datetime={post.datetime}
+								timeToRead={post.timeToRead}
+								transitionSlug={post.slug}
+							/>
 						</div>
-						<Tags tags={post.tags} />
+						<Tags tags={post.tags} transitionSlug={post.slug} />
 					</div>
 					<Image
 						src={post.headingImage}
@@ -143,7 +147,6 @@ export default async function Post(props: {
 						placeholder="blur"
 						blurDataURL={BLUR_DATA_URL}
 						className="post-hero"
-						style={getPostTransitionStyle(post.slug, "image")}
 						preload
 						sizes="(min-width: 768px) 640px, calc(100vw - 2rem)"
 					/>
