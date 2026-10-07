@@ -5,6 +5,7 @@ import { mdxComponents } from "@/components/mdx/components";
 import type { Metadata } from "next";
 import { DateTime } from "@/components/blog/DateTime";
 import { Tags } from "@/components/blog/Tag";
+import { getPostTransitionStyle } from "@/lib/blog-transition";
 import Image from "next/image";
 import { BLUR_DATA_URL } from "@/lib/constants";
 import { MDXRemote } from "next-mdx-remote/rsc";
@@ -111,12 +112,22 @@ export default async function Post(props: {
 		<article className="site-post-grid">
 			<div className="post-reading">
 				<header className="post-header">
-					<Link href="/blog" className="post-back">
+					<Link href="/blog" prefetch={true} className="post-back">
 						<HiArrowLeft aria-hidden="true" className="size-4" />
 						Back to blog
 					</Link>
-					<h1 className="post-title">{post.title}</h1>
-					<p className="post-description">{post.description}</p>
+					<h1
+						className="post-title"
+						style={getPostTransitionStyle(post.slug, "title")}
+					>
+						{post.title}
+					</h1>
+					<p
+						className="post-description"
+						style={getPostTransitionStyle(post.slug, "description")}
+					>
+						{post.description}
+					</p>
 					<div className="post-meta">
 						<div className="post-byline">
 							<span className="post-author">{post.author}</span>
@@ -132,6 +143,7 @@ export default async function Post(props: {
 						placeholder="blur"
 						blurDataURL={BLUR_DATA_URL}
 						className="post-hero"
+						style={getPostTransitionStyle(post.slug, "image")}
 						preload
 						sizes="(min-width: 768px) 640px, calc(100vw - 2rem)"
 					/>
@@ -149,7 +161,7 @@ export default async function Post(props: {
 					<PostMdx source={post.body} />
 				</div>
 				<footer className="post-footer">
-					<Link href="/blog" className="post-back">
+					<Link href="/blog" prefetch={true} className="post-back">
 						<HiArrowLeft aria-hidden="true" className="size-4" />
 						Back to blog
 					</Link>
