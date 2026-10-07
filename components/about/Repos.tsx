@@ -54,7 +54,38 @@ function formatNumber(value: number) {
 	}).format(value);
 }
 
-type Repo = ResponseData["data"]["user"]["pinnedItems"]["nodes"][number];
+type Repo = Omit<
+	ResponseData["data"]["user"]["pinnedItems"]["nodes"][number],
+	"stargazerCount" | "forkCount"
+> & { stargazerCount?: number; forkCount?: number };
+
+const fallbackRepos: Repo[] = [
+	{
+		name: "pill-identification",
+		description: "Pill identification using vision transformers.",
+		url: "https://github.com/suneettipirneni/pill-identification",
+		primaryLanguage: { name: "Python" },
+	},
+	{
+		name: "mdm-2-ddgan-report",
+		description: "Research into motion diffusion efficiency using DDGAN.",
+		url: "https://github.com/CAP6412-Group-4/mdm-2-ddgan-report",
+		primaryLanguage: { name: "TeX" },
+	},
+	{
+		name: "discord-mock-server",
+		description: "A mock implementation of the Discord API and Gateway.",
+		url: "https://github.com/suneettipirneni/discord-mock-server",
+		primaryLanguage: { name: "TypeScript" },
+	},
+	{
+		name: "site",
+		description:
+			"My website and blog, built with Next.js, Tailwind CSS, and MDX.",
+		url: "https://github.com/suneettipirneni/site",
+		primaryLanguage: { name: "MDX" },
+	},
+];
 
 function RepoRow({ repo }: { repo: Repo }) {
 	return (
@@ -74,20 +105,24 @@ function RepoRow({ repo }: { repo: Repo }) {
 			</p>
 			<div className="type-caption flex flex-wrap items-center gap-x-4 gap-y-1 text-muted-foreground tabular-nums">
 				<span>{repo.primaryLanguage?.name ?? "Code"}</span>
-				<span
-					className="inline-flex items-center gap-1"
-					aria-label={`${formatNumber(repo.stargazerCount)} stars`}
-				>
-					<FaRegStar className="h-4 w-4 shrink-0" aria-hidden="true" />
-					{formatNumber(repo.stargazerCount)}
-				</span>
-				<span
-					className="inline-flex items-center gap-1"
-					aria-label={`${formatNumber(repo.forkCount)} forks`}
-				>
-					<VscRepoForked className="h-4 w-4 shrink-0" aria-hidden="true" />
-					{formatNumber(repo.forkCount)}
-				</span>
+				{repo.stargazerCount !== undefined && (
+					<span
+						className="inline-flex items-center gap-1"
+						aria-label={`${formatNumber(repo.stargazerCount)} stars`}
+					>
+						<FaRegStar className="h-4 w-4 shrink-0" aria-hidden="true" />
+						{formatNumber(repo.stargazerCount)}
+					</span>
+				)}
+				{repo.forkCount !== undefined && (
+					<span
+						className="inline-flex items-center gap-1"
+						aria-label={`${formatNumber(repo.forkCount)} forks`}
+					>
+						<VscRepoForked className="h-4 w-4 shrink-0" aria-hidden="true" />
+						{formatNumber(repo.forkCount)}
+					</span>
+				)}
 			</div>
 		</article>
 	);
@@ -96,22 +131,7 @@ function RepoRow({ repo }: { repo: Repo }) {
 export async function Repos() {
 	"use cache";
 	cacheLife("hours");
-
-	const response = await fetch(url, {
-		method: "POST",
-		body: JSON.stringify(body),
-		headers: {
-			Authorization: `Bearer ${process.env.GH_TOKEN}`,
-			"Content-Type": "application/json",
-		},
-	});
-
-	if (!response.ok) {
-		throw new Error(`GitHub request failed with status ${response.status}`);
-	}
-
-	const payload = (await response.json()) as ResponseData;
-	const repos = payload.data.user.pinnedItems.nodes;
+	const repos = await getRepos();
 
 	return (
 		<StaggeredEntrance className="flex flex-col pt-2">
@@ -122,4 +142,26 @@ export async function Repos() {
 			))}
 		</StaggeredEntrance>
 	);
+}
+
+async function getRepos(): Promise<Repo[]> {
+	if (!process.env.GH_TOKEN) return fallbackRepos;
+
+	try {
+		const response = await fetch(url, {
+			method: "POST",
+			body: JSON.stringify(body),
+			headers: {
+				Authorization: `Bearer ${process.env.GH_TOKEN}`,
+				"Content-Type": "application/json",
+			},
+		});
+
+		if (!response.ok) return fallbackRepos;
+
+		const payload = (await response.json()) as ResponseData;
+		return payload.data?.user?.pinnedItems?.nodes ?? fallbackRepos;
+	} catch {
+		return fallbackRepos;
+	}
 }
