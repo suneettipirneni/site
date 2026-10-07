@@ -14,6 +14,9 @@ const nextConfig = {
 		],
 	},
 	reactCompiler: true,
+	experimental: {
+		turbopackRustReactCompiler: true,
+	},
 	turbopack: {
 		rules: {
 			"*.mdx": {
