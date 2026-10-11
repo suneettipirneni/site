@@ -10,7 +10,8 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "eslint ."
+		"lint": "oxlint .",
+		"lint:fix": "oxlint --fix ."
 	},
 	"dependencies": {
 		"@mdx-js/loader": "^3.1.1",
@@ -24,9 +25,6 @@
 		"@vercel/analytics": "^2.0.1",
 		"@vercel/speed-insights": "^2.0.0",
 		"babel-plugin-react-compiler": "1.0.0",
-		"eslint": "9.39.5",
-		"eslint-config-next": "16.4.0",
-		"eslint-plugin-unused-imports": "^4.4.1",
 		"github-slugger": "^2.0.0",
 		"gray-matter": "^4.0.3",
 		"hast-util-to-text": "^4.0.2",
@@ -59,9 +57,11 @@
 		"zod": "4.6.5"
 	},
 	"devDependencies": {
+		"@next/eslint-plugin-next": "16.4.0",
 		"@types/mdast": "^4.0.4",
 		"@types/node": "^24.19.2",
 		"@types/unist": "^3.0.3",
+		"oxlint": "1.87.0",
 		"prettier": "3.9.10",
 		"prettier-plugin-tailwindcss": "0.8.1",
 		"typescript": "6.0.3"
