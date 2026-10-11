@@ -1,6 +1,10 @@
 {
 	"$schema": "./node_modules/oxlint/configuration_schema.json",
-	"plugins": ["nextjs", "react", "import", "jsx-a11y"],
+	"plugins": ["nextjs", "react", "import", "jsx-a11y", "typescript"],
+	"options": {
+		"typeAware": true,
+		"typeCheck": true
+	},
 	"categories": {
 		"correctness": "off"
 	},
@@ -17,6 +21,7 @@
 		"next-env.d.ts"
 	],
 	"rules": {
+		"typescript/no-deprecated": "error",
 		"nextjs/google-font-display": "warn",
 		"nextjs/google-font-preconnect": "warn",
 		"nextjs/next-script-for-ga": "warn",
