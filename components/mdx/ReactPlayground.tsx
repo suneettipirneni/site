@@ -19,6 +19,7 @@ import {
 	useSandpack,
 } from "@codesandbox/sandpack-react";
 import { Group, Panel, Separator } from "react-resizable-panels";
+import type { SandpackFiles } from "@codesandbox/sandpack-react";
 import type { ReactExampleProps } from "./ReactExample";
 import styles from "./ReactExample.module.css";
 import { ExampleFiles } from "./ExampleFiles";
@@ -71,8 +72,19 @@ function ExampleConsole() {
 	);
 }
 
-function Workspace({ onReset }: { onReset: () => void }) {
+function Workspace({
+	originalFiles,
+	onReset,
+	onFilesChange,
+}: {
+	originalFiles: SandpackFiles;
+	onReset: () => void;
+	onFilesChange?: (files: SandpackFiles) => void;
+}) {
 	const { sandpack, dispatch } = useSandpack();
+	useEffect(() => {
+		onFilesChange?.(sandpack.files);
+	}, [sandpack.files, onFilesChange]);
 	const compact = useSyncExternalStore(
 		subscribeToViewport,
 		isCompactViewport,
@@ -85,7 +97,13 @@ function Workspace({ onReset }: { onReset: () => void }) {
 		filesToggle.current?.focus({ preventScroll: true });
 	}
 	const [expanded, setExpanded] = useState(false);
-	const changed = sandpack.editorState === "dirty";
+	const changed =
+		sandpack.editorState === "dirty" ||
+		Object.entries(originalFiles).some(
+			([path, file]) =>
+				sandpack.files[path]?.code !==
+				(typeof file === "string" ? file : file.code),
+		);
 	const tabList = useRef<HTMLElement>(null);
 	useEffect(() => {
 		const list = tabList.current;
@@ -294,7 +312,12 @@ export default function ReactPlayground({
 	activeFile,
 	dependencies,
 	tailwind = false,
-}: ReactExampleProps) {
+	resumeFiles,
+	onFilesChange,
+}: ReactExampleProps & {
+	resumeFiles?: SandpackFiles;
+	onFilesChange?: (files: SandpackFiles) => void;
+}) {
 	// Remounting also clears failed workers and pending compilation messages.
 	const [revision, setRevision] = useState(0);
 	return (
@@ -306,7 +329,7 @@ export default function ReactPlayground({
 					? "react-ts"
 					: "react")
 			}
-			files={files}
+			files={revision === 0 && resumeFiles ? resumeFiles : files}
 			theme={{
 				colors: {
 					surface1: "var(--example-surface)",
@@ -353,7 +376,11 @@ export default function ReactPlayground({
 				recompileDelay: 400,
 			}}
 		>
-			<Workspace onReset={() => setRevision((value) => value + 1)} />
+			<Workspace
+				originalFiles={files}
+				onReset={() => setRevision((value) => value + 1)}
+				onFilesChange={onFilesChange}
+			/>
 		</SandpackProvider>
 	);
 }

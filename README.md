@@ -2,8 +2,13 @@ My website, wow very cool.
 
 ## Runnable React examples in MDX
 
-Use `ReactExample` in any post without an import. Readers select **Run example**
-to load the editor and preview, then edits automatically recompile. **Reset code**
+Use `ReactExample` in any post without an import. The editor and preview load
+automatically when the example enters the viewport, then edits automatically
+recompile. Offscreen examples stay unloaded until first visible; activated
+examples keep running during a 3-minute offscreen grace period. After that, the
+sandbox unloads to release its runtime and editor. Scrolling back restarts it with
+code edits preserved; app state and console history reset. **Run example**
+remains available as a fallback when viewport observation is unavailable. **Reset code**
 restores the original files and restarts the preview runtime, including after a compilation error.
 Use the file tabs or collapsible folder browser to navigate. The expand control
 provides more room for longer examples; refresh restarts the preview.
@@ -59,7 +64,7 @@ Add the `tailwind` prop to enable Tailwind v4 utilities with no configuration:
 ```
 
 Tailwind's browser compiler loads only in an opted-in example's isolated preview,
-after Run example. It observes class changes as you edit. Existing examples keep
+when the example first enters the viewport (or when Run example is selected). It observes class changes as you edit. Existing examples keep
 their CSS unchanged. This is a playground runtime, not a production Tailwind build
 pipeline; build plugins and project PostCSS configuration are not loaded.
 TypeScript is transpiled for execution with syntax highlighting; the editor does
