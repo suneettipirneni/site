@@ -66,14 +66,24 @@ function parsePost(slug: string, source: string): Post {
 	};
 }
 
+// Sources are bundled with the deployment; HMR replaces this module on edits.
+const parsedPosts = new Map<string, Post>();
+
 export function getPosts(): Post[] {
-	return Object.entries(postSources).map(([postPath, source]) => {
+	return Object.keys(postSources).map((postPath) => {
 		const filename = postPath.slice(postPath.lastIndexOf("/") + 1);
-		return parsePost(filename.replace(/\.mdx$/, ""), source);
+		return getPost(filename.replace(/\.mdx$/, ""))!;
 	});
 }
 
 export function getPost(slug: string): Post | undefined {
 	const source = postSources[`./posts/${slug}.mdx`];
-	return source === undefined ? undefined : parsePost(slug, source);
+	if (source === undefined) return undefined;
+
+	let post = parsedPosts.get(slug);
+	if (!post) {
+		post = parsePost(slug, source);
+		parsedPosts.set(slug, post);
+	}
+	return post;
 }

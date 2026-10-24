@@ -26,6 +26,8 @@ import remarkMath from "remark-math";
 import remarkReferenceLinks from "remark-reference-links";
 import { HiArrowLeft, HiChevronDown } from "react-icons/hi2";
 
+export const ensureStatic = "navigation";
+
 async function PostMdx({ source }: { source: string }) {
 	"use cache";
 	cacheLife("max");

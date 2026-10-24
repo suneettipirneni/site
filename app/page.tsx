@@ -12,6 +12,8 @@ import { FaDiscord, FaGithub, FaLinkedin } from "react-icons/fa";
 import { HiArrowRight, HiArrowUpRight } from "react-icons/hi2";
 import { SiBluesky } from "react-icons/si";
 
+export const ensureStatic = "navigation";
+
 const socialLinks = [
 	{
 		label: "GitHub",
@@ -168,6 +170,7 @@ async function RecentPosts() {
 				<li key={post.slug}>
 					<Link
 						href={post.url}
+						prefetch={true}
 						className="group flex min-h-16 min-w-0 items-start gap-3 py-3"
 					>
 						<div className="flex min-w-0 grow flex-col gap-1">
