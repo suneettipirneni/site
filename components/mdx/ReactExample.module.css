@@ -1,0 +1,635 @@
+.example {
+	--example-surface: #fff;
+	--example-warning: #6a4516;
+	--example-warning-surface: #fff8e0;
+	--example-height: 320px;
+	--example-preview-height: var(--example-height);
+	--example-heading-height: 32px;
+	--example-control-size: 24px;
+	--example-control-radius: 2px;
+	--example-inset: 12px;
+	--example-muted: var(--reading-surface);
+	--example-border: var(--reading-rule);
+	--example-foreground: hsl(var(--foreground));
+	--example-secondary: hsl(var(--muted-foreground));
+	--example-accent: hsl(var(--foreground));
+	--example-keyword: #a40e26;
+	--example-definition: #0550ae;
+	--example-string: #0a3069;
+	width: min(68rem, calc(100vw - 2 * var(--reading-gutter, 1rem)));
+	margin-block: var(--reading-block);
+	margin-inline: calc(
+		(100% - min(68rem, 100vw - 2 * var(--reading-gutter, 1rem))) / 2
+	);
+	font-family: var(--font-inter);
+	font-size: 12px;
+	line-height: 1.5;
+	color: var(--example-foreground);
+}
+.heading {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 16px;
+	padding-block: 0 6px;
+}
+.title {
+	min-width: 0;
+	font-size: 11px;
+	line-height: 16px;
+	font-weight: 400;
+	color: var(--example-secondary);
+}
+.example svg {
+	width: 14px;
+	height: 14px;
+	flex-shrink: 0;
+}
+.example button {
+	font: inherit;
+	cursor: pointer;
+}
+.example button:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: -2px;
+}
+.launch {
+	display: grid;
+	grid-template-columns: minmax(0, 5fr) minmax(0, 3fr);
+	border: 1px solid var(--reading-rule);
+	border-radius: var(--reading-radius);
+	overflow: hidden;
+	gap: 0;
+	background: var(--example-surface);
+}
+.source,
+.previewPanel,
+.sourceExcerpt {
+	min-width: 0;
+}
+.source,
+.sourceExcerpt {
+	border-right: 1px solid var(--reading-rule);
+}
+.panelHeading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	height: var(--example-heading-height);
+	padding-inline: var(--example-inset);
+	border-bottom: 1px solid var(--reading-rule);
+	background: var(--reading-surface);
+	color: var(--example-secondary);
+	font-size: 11px;
+}
+.sourceExcerpt .panelHeading {
+	font-family: var(--font-code);
+	color: var(--example-foreground);
+}
+.previewLabel {
+	font-size: 11px;
+}
+.iconButton {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	min-height: var(--example-control-size);
+	color: var(--example-secondary);
+	border-radius: var(--example-control-radius);
+	width: var(--example-control-size);
+	flex-shrink: 0;
+}
+.iconButton:hover {
+	color: var(--example-foreground);
+	background: var(--example-border);
+}
+.editorBody {
+	display: flex;
+	min-width: 0;
+	height: var(--example-height);
+}
+.fileRail {
+	flex: 0 0 152px;
+	min-width: 0;
+	border-right: 1px solid var(--reading-rule);
+	padding-block: 6px;
+	overflow: auto;
+	scrollbar-width: thin;
+}
+.railHeading {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 4px 2px 12px;
+	min-height: 24px;
+}
+
+.railLabel {
+	display: block;
+	padding: 0;
+	font-size: 10px;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--example-secondary);
+}
+.files {
+	font-family: var(--font-code);
+	font-size: 11px;
+}
+.fileList {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.directory > .fileList {
+	padding-left: 14px;
+}
+.directory > summary,
+.example .fileRow {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	width: 100%;
+	min-height: 22px;
+	padding: 2px 8px;
+	color: var(--example-secondary);
+	cursor: pointer;
+	text-align: left;
+	position: relative;
+	line-height: 18px;
+}
+.directory > summary {
+	list-style: none;
+}
+.directory > summary::-webkit-details-marker {
+	display: none;
+}
+.directory > summary svg {
+	width: 11px;
+	height: 11px;
+	transition: transform 120ms ease;
+}
+.directory[open] > summary svg {
+	transform: rotate(90deg);
+}
+.directory > summary span,
+.fileRow span {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.directory > summary:hover,
+.example .fileRow:hover {
+	background: var(--reading-surface);
+	color: var(--example-foreground);
+}
+.directory > summary:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: -2px;
+}
+.example .fileRow {
+	padding-left: 24px;
+}
+.example .fileRow[aria-current="true"] {
+	background: var(--reading-surface);
+	color: var(--example-foreground);
+}
+.fileRow[aria-current="true"]::before {
+	content: "";
+	position: absolute;
+	left: 8px;
+	top: 5px;
+	bottom: 5px;
+	width: 1px;
+	border-radius: 1px;
+	background: currentColor;
+}
+@media (prefers-reduced-motion: reduce) {
+	.directory > summary svg {
+		transition: none;
+	}
+}
+.example .editor {
+	flex: 1;
+	min-width: 0;
+	height: var(--example-height);
+}
+.example .editor :global(.cm-scroller) {
+	padding-block: 8px;
+}
+.example .editor :global(.cm-content) {
+	padding: 0 4px;
+}
+.example .editor :global(.cm-line) {
+	padding-inline: 8px;
+}
+.example .editor :global(.cm-gutterElement) {
+	padding-inline: 8px 4px;
+}
+.example .editor :global(.cm-lineNumbers) {
+	font-size: 10px;
+	color: var(--example-secondary);
+}
+.example .preview {
+	height: var(--example-preview-height);
+}
+.launch {
+	min-height: calc(var(--example-height) + var(--example-heading-height));
+}
+.sourceExcerpt pre {
+	font: 13px/20px var(--font-code);
+	padding: 8px 12px;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	color: var(--example-foreground);
+	height: var(--example-height);
+	overflow: auto;
+}
+.launchAction {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	height: var(--example-preview-height);
+	padding: 16px;
+	gap: 8px;
+}
+.launchAction p {
+	font-size: 12px;
+	color: var(--example-secondary);
+}
+.runButton {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	min-height: 28px;
+	border: 1px solid var(--reading-rule);
+	border-radius: var(--reading-radius);
+	padding: 3px 9px;
+}
+.runButton:hover {
+	background: var(--reading-surface);
+}
+.runButton svg {
+	width: 12px;
+	height: 12px;
+}
+.loading {
+	min-height: calc(var(--example-height) + var(--example-heading-height));
+	display: grid;
+	place-items: center;
+	border: 1px solid var(--reading-rule);
+	border-radius: var(--reading-radius);
+	color: var(--example-secondary);
+}
+@media (prefers-color-scheme: dark) {
+	.example {
+		--example-surface: #0a0c10;
+		--example-warning: #e7c400;
+		--example-warning-surface: #332b0a;
+		--example-keyword: #ff9492;
+		--example-definition: #91cbff;
+		--example-string: #addcff;
+	}
+}
+@media (max-width: 760px) {
+	.example {
+		--example-height: 280px;
+		--example-preview-height: 220px;
+	}
+	.launch {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	.source,
+	.sourceExcerpt {
+		border-right: 0;
+		border-bottom: 1px solid var(--reading-rule);
+	}
+	.fileRail {
+		flex-basis: 132px;
+	}
+	.sourceExcerpt pre {
+		height: var(--example-height);
+		padding: 12px;
+	}
+	.launchAction {
+		padding: 16px;
+	}
+}
+
+/* One quiet toolbar; code and output share the same frame. */
+.workspace {
+	border: 1px solid var(--reading-rule);
+	border-radius: var(--reading-radius);
+	overflow: hidden;
+	background: var(--example-surface);
+}
+.workspaceToolbar {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	height: var(--example-heading-height);
+	padding-inline: 8px;
+	border-bottom: 1px solid var(--reading-rule);
+	background: var(--reading-surface);
+}
+.fileTabs {
+	display: flex;
+	align-self: stretch;
+	min-width: 0;
+	flex: 1;
+	overflow-x: auto;
+	scrollbar-width: thin;
+}
+.example .fileTab {
+	position: relative;
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+	padding: 5px 9px;
+	color: var(--example-secondary);
+	font-family: var(--font-code);
+	font-size: 11px;
+	white-space: nowrap;
+}
+.example .fileTab[aria-pressed="true"] {
+	color: var(--example-foreground);
+}
+.example .fileTab[aria-pressed="true"]::after {
+	content: "";
+	position: absolute;
+	inset: auto 9px 0;
+	height: 1px;
+	background: currentColor;
+}
+.example .fileTab:hover {
+	color: var(--example-foreground);
+}
+.actions {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	flex-shrink: 0;
+}
+.actions .iconButton {
+	margin: 0;
+}
+.example button:disabled {
+	opacity: 0.3;
+	cursor: default;
+}
+.example button:disabled:hover {
+	background: transparent;
+}
+.workspace .previewPanel {
+	padding: 0;
+	position: relative;
+	background: var(--example-surface);
+}
+/* Status remains announced; runtime errors are displayed by the preview overlay. */
+.previewStatus {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+.workspace .preview {
+	height: var(--example-preview-height);
+	border: 0;
+	border-radius: 0;
+}
+.workspace[data-expanded="true"] {
+	--example-height: 520px;
+	--example-preview-height: 520px;
+}
+.iconButton[aria-expanded="true"] {
+	color: var(--example-foreground);
+}
+@media (max-width: 760px) {
+	.workspaceToolbar {
+		gap: 4px;
+		padding-inline: 8px;
+	}
+	.example .fileTab {
+		padding-inline: 8px;
+	}
+	.workspace[data-expanded="true"] {
+		--example-height: 440px;
+		--example-preview-height: 340px;
+	}
+	.editorBody {
+		position: relative;
+	}
+	.fileRail {
+		position: absolute;
+		inset: 0 auto 0 0;
+		z-index: 2;
+		width: 184px;
+		background: var(--example-surface);
+	}
+}
+
+.consoleDisclosure {
+	position: relative;
+	border-top: 1px solid var(--reading-rule);
+}
+.consoleDetails > summary {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	height: 28px;
+	padding: 0 40px 0 14px;
+	list-style: none;
+	cursor: pointer;
+	color: var(--example-secondary);
+	font-size: 11px;
+}
+.consoleDetails > summary::-webkit-details-marker {
+	display: none;
+}
+.consoleDetails > summary svg {
+	width: 12px;
+	height: 12px;
+}
+.consoleDetails[open] > summary svg {
+	transform: rotate(90deg);
+}
+.consoleDetails > summary:hover {
+	color: var(--example-foreground);
+}
+.consoleDetails > summary:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: -2px;
+}
+.consoleBody {
+	border-top: 1px solid var(--reading-rule);
+}
+.clearConsole {
+	position: absolute;
+	top: 2px;
+	right: 8px;
+	display: grid;
+	place-items: center;
+	width: var(--example-control-size);
+	height: var(--example-control-size);
+	color: var(--example-secondary);
+	border-radius: var(--example-control-radius);
+}
+.clearConsole:hover {
+	color: var(--example-foreground);
+	background: var(--reading-surface);
+}
+.example .console {
+	height: 112px;
+	font-family: var(--font-code);
+	font-size: 12px;
+}
+
+.example .console :global(.sp-console-item) {
+	padding: 2px 10px;
+	font-size: 12px;
+	line-height: 18px;
+}
+.example .console :global(.cm-editor),
+.example .console :global(.cm-scroller) {
+	font-size: 12px;
+	line-height: 18px;
+}
+.example .console :global(.cm-content) {
+	padding: 0;
+}
+.example .console :global(.cm-line) {
+	padding: 0;
+	line-height: 18px;
+}
+.example .console :global(.sp-pre-placeholder) {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+/* The visible rule stays narrow; the library extends its pointer target. */
+.example .resizableFrame {
+	display: block;
+	border: 0;
+	border-radius: 0;
+	height: var(--example-height);
+}
+.resizableLayout .source {
+	border: 0;
+}
+.resizableLayout .editorBody,
+.editorGroup,
+.resizableLayout .editor,
+.workspace .resizableLayout .preview {
+	height: 100%;
+}
+.filePanel {
+	height: 100%;
+}
+.filePanel .fileRail {
+	height: 100%;
+	border: 0;
+}
+/* Keep the grip above both adjacent panels so neither half is painted over. */
+.resizeHandle {
+	position: relative;
+	z-index: 1;
+	width: 1px;
+	background: var(--reading-rule);
+	outline: none;
+}
+.resizeHandle::before {
+	content: "";
+	position: absolute;
+	width: 3px;
+	height: 20px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 2px;
+	background: var(--example-secondary);
+	opacity: 0.35;
+}
+.resizeHandle:hover::before,
+.resizeHandle:focus-visible::before,
+.resizeHandle[data-separator="active"]::before {
+	opacity: 1;
+}
+.resizeHandle[aria-orientation="horizontal"]::before {
+	width: 20px;
+	height: 3px;
+}
+.resizeHandle::after {
+	content: "";
+	position: absolute;
+	inset: 0 -3px;
+	z-index: 3;
+}
+.resizeHandle[aria-orientation="horizontal"] {
+	width: 100%;
+	height: 1px;
+}
+.resizeHandle[aria-orientation="horizontal"]::after {
+	inset: -3px 0;
+}
+.resizeHandle:hover,
+.resizeHandle:focus-visible,
+.resizeHandle[data-separator="active"] {
+	background: var(--example-secondary);
+}
+.resizeHandle:focus-visible::after {
+	outline: 1px solid var(--example-secondary);
+	outline-offset: -2px;
+}
+@media (max-width: 760px) {
+	.example .resizableFrame {
+		height: calc(var(--example-height) + var(--example-preview-height));
+	}
+}
+
+@media (pointer: coarse) {
+	.workspaceToolbar {
+		height: 36px;
+	}
+	.iconButton,
+	.clearConsole {
+		min-width: 28px;
+		min-height: 28px;
+	}
+	.consoleDetails > summary {
+		height: 32px;
+	}
+	.directory > summary,
+	.example .fileRow {
+		min-height: 28px;
+	}
+}
+
+/* Match editor selection and control feedback to the article's neutral surfaces. */
+.example .editor :global(.cm-editor.cm-focused .cm-activeLine) {
+	background: var(--reading-surface);
+	border-radius: 0;
+}
+.iconButton,
+.clearConsole,
+.fileTab,
+.fileRow,
+.consoleDetails > summary {
+	transition:
+		color 120ms ease,
+		background-color 120ms ease;
+}
+@media (prefers-reduced-motion: reduce) {
+	.iconButton,
+	.clearConsole,
+	.fileTab,
+	.fileRow,
+	.consoleDetails > summary {
+		transition: none;
+	}
+}

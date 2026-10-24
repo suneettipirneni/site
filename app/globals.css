@@ -1080,3 +1080,14 @@ body:has(.site-post-grid, .blog-index)::after {
 		display: none;
 	}
 }
+
+/* Wide playgrounds keep the outline in its disclosure so the preview never overlaps it. */
+.site-post-grid:has([data-react-example]) {
+	grid-template-columns: minmax(0, var(--reading-measure));
+}
+.site-post-grid:has([data-react-example]) .post-outline-rail {
+	display: none;
+}
+.site-post-grid:has([data-react-example]) .post-outline-mobile {
+	display: block;
+}

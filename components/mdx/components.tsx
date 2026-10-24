@@ -4,6 +4,7 @@ import { Image } from "./Image";
 import { InfoBlock } from "./InfoBlock";
 import { Figure } from "./Figure";
 import { Quote } from "./Quote";
+import { ReactExample } from "./ReactExample";
 
 function MarkdownTable(props: ComponentProps<"table">) {
 	return (
@@ -20,6 +21,7 @@ function MarkdownTable(props: ComponentProps<"table">) {
 
 export const mdxComponents: MDXComponents = {
 	table: MarkdownTable,
+	ReactExample,
 	Image,
 	InfoBlock: (props) => <InfoBlock {...props} />,
 	Figure,

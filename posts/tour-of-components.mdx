@@ -73,6 +73,84 @@ export function sumPositive(values: number[]) {
 }
 ```
 
+# Runnable React examples
+
+Run this example, edit a file, and watch the preview update. The component and hook live in separate folders; expand them in the file browser to explore how they fit together. Reset code restores the original example.
+
+<ReactExample
+  title="A counter across multiple files"
+  activeFile="/App.js"
+  files={{
+    "/App.js": `import Counter from "./components/Counter";
+import "./styles.css";
+
+export default function App() {
+  return <main><h1>A little counter</h1><Counter /></main>;
+}`,
+    "/components/Counter.js": `import { useCounter } from "../hooks/useCounter";
+
+export default function Counter() {
+  const { count, increment } = useCounter();
+  return <button onClick={increment}>Count: {count}</button>;
+}`,
+    "/hooks/useCounter.js": `import { useState } from "react";
+
+export function useCounter() {
+  const [count, setCount] = useState(0);
+  return { count, increment: () => setCount(n => n + 1) };
+}`,
+    "/styles.css": `body { font-family: system-ui; margin: 0; background: #fff; color: #202020; color-scheme: light dark; }
+main { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
+h1 { margin: 0; font-size: 24px; font-weight: 500; letter-spacing: -0.04em; }
+button { font: inherit; font-size: 14px; padding: 12px 24px; border: 0; border-radius: 8px; background: #202020; color: white; cursor: pointer; }
+button:hover { background: #404040; }
+button:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+@media (prefers-color-scheme: dark) {
+  body { background: #0a0c10; color: #f5f5f5; }
+  button { background: #f5f5f5; color: #202020; }
+  button:hover { background: #ddd; }
+}`
+  }}
+/>
+
+## TypeScript and Tailwind
+
+TypeScript files run directly, including components in separate folders. This example uses Tailwind utilities; edit a class to see the preview update.
+
+<ReactExample
+  title="Typed props, Tailwind styles"
+  tailwind
+  activeFile="/App.tsx"
+  files={{
+    "/App.tsx": `import { useState } from "react";
+import Counter from "./components/Counter";
+
+export default function App() {
+  const [count, setCount] = useState<number>(0);
+  return (
+    <main className="grid min-h-screen place-items-center bg-white p-6 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
+      <Counter count={count} onIncrement={() => setCount(n => n + 1)} />
+    </main>
+  );
+}`,
+    "/components/Counter.tsx": `type CounterProps = {
+  count: number;
+  onIncrement: () => void;
+};
+
+export default function Counter({ count, onIncrement }: CounterProps) {
+  return (
+    <button
+      className="rounded-md bg-neutral-800 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-700 dark:bg-neutral-200 dark:text-neutral-900"
+      onClick={onIncrement}
+    >
+      Count: {count}
+    </button>
+  );
+}`,
+  }}
+/>
+
 # Tables
 
 Tables work best when their columns answer the same question about different choices.

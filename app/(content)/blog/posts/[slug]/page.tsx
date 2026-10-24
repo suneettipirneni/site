@@ -35,6 +35,9 @@ async function PostMdx({ source }: { source: string }) {
 			source={source}
 			components={mdxComponents}
 			options={{
+				// Posts are trusted, repository-owned MDX. Allow object props such as
+				// playground files while retaining the dangerous-call filter.
+				blockJS: false,
 				mdxOptions: {
 					rehypePlugins: [
 						rehypeTaskListLabels,
